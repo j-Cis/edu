@@ -1,4 +1,6 @@
-# _q000 - **SurrealQL**_ [📓][SurrealQL000_original]
+# _q000 - **SurrealQL**_
+
+- [📓][SurrealQL000_original]
 
 ![SurrealQL][icon_SurrealQL]
 
@@ -35,7 +37,9 @@ SurrealQL empowers you to leverage the full potential of SurrealDB and enables y
 ---
 ---
 
-## _q001 - **Demo data**_ [📓][SurrealQL001_original]
+## _q001 - **Demo data**_
+
+- [📓][SurrealQL001_original]
 
 To quickly test out SurrealDB and SurrealQL functionality, we've included two demo datasets here in `.surql` files which you can download and [`import`][SurrealDB_cli_import] into SurrealDB using the [CLI][SurrealDB_cli].
 
@@ -121,7 +125,9 @@ Here are some sample queries you can run on the Surreal Deal Store dataset. We'v
 ---
 ---
 
-## _q002 - **Operators**_ [📓][SurrealQL002_original]
+## _q002 - **Operators**_
+
+- [📓][SurrealQL002_original]
 
 A variety of operators in SurrealQL allow for complex manipulation of data, and advanced logic.
 
@@ -1459,7 +1465,9 @@ value = "20dec"
 ---
 ---
 
-## _q003 - **Data types**_ [📓][SurrealQL003_original]
+## _q003 - **Data types**_
+
+- [📓][SurrealQL003_original]
 
 SurrealQL allows you to describe data with specific data types. These data types are used to validate data and to generate the appropriate database schema.
 
@@ -1510,7 +1518,9 @@ CREATE foo SET value = <bytes>"bar";
 ---
 ---
 
-## _q004 - **Arrays**_ [📓][SurrealQL004_original]
+## _q004 - **Arrays**_
+
+- [📓][SurrealQL004_original]
 
 An array is a collection of values contained inside `[]` (square brackets), each of which is stored at a certain index. Individual indexes and slices of indexes can be accesses using the same square bracket syntax.
 
@@ -1864,7 +1874,9 @@ value = "[1, 2, 3, 4]"
 ---
 ---
 
-## _q005 - **Booleans**_ [📓][SurrealQL005_original]
+## _q005 - **Booleans**_
+
+- [📓][SurrealQL005_original]
 
 Boolean values can be used to mark whether a field is `true` or `false`.
 
@@ -1968,7 +1980,9 @@ SELECT * FROM person:one;
 ---
 ---
 
-## _q006 - **Bytes**_ [📓][SurrealQL006_original]
+## _q006 - **Bytes**_
+
+- [📓][SurrealQL006_original]
 
 Bytes can be created by casting from a string, and are displayed using hexidecimal encoding.
 
@@ -2061,7 +2075,9 @@ b"486F6262697473";
 ---
 ---
 
-## _q008 - **Anonymous functions (closures)**_ [📓][SurrealQL008_original]
+## _q008 - **Anonymous functions (closures)**_
+
+- [📓][SurrealQL008_original]
 
 > Available since: V2.0.0
 
@@ -2287,7 +2303,9 @@ These anonymous functions provide a flexible way to define small, reusable piece
 ---
 ---
 
-## _q010 - **Files**_ [📓][SurrealQL010_original]
+## _q010 - **Files**_
+
+- [📓][SurrealQL010_original]
 
 > Available since: V3.0.0
 
@@ -2810,7 +2828,9 @@ SurrealDB offers a number of functions that can be used to perform complex logic
 ---
 ---
 
-## _q101 - **Array functions**_ [📓][SurrealQL101_original]
+## _q101 - **Array functions**_
+
+- [📓][SurrealQL101_original]
 
 These functions can be used when working with, and manipulating arrays of data.
 
@@ -5917,7 +5937,9 @@ array::join(array::push(["Again", "again"], "again"), " and ");
 ---
 ---
 
-## _q135 - **Transactions**_ [📓][SurrealQL135_original]
+## _q135 - **Transactions**_
+
+- [📓][SurrealQL135_original]
 
 Each statement within SurrealDB is run within its own transaction by default. If a set of changes need to be made together, then groups of statements can be run together as a single transaction. If all of the statements within a transaction succeed, and the transaction is successful, then all of the data modifications made during the transaction are committed and become a permanent part of the database. If a transaction encounters errors and must be cancelled or rolled back, then any data modification made within the transaction is rolled back, and will not become a permanent part of the database.
 
@@ -6141,7 +6163,9 @@ COMMIT TRANSACTION;
 ---
 ---
 
-## _q136 - **Comments**_ [📓][SurrealQL136_original]
+## _q136 - **Comments**_
+
+- [📓][SurrealQL136_original]
 
 In SurrealQL, comments can be written in a number of different ways.
 
