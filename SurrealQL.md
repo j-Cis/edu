@@ -1515,6 +1515,355 @@ CREATE foo SET value = <bytes>"bar";
 
 ## _q004 - **Arrays**_
 
+An array is a collection of values contained inside `[]` (square brackets), each of which is stored at a certain index. Individual indexes and slices of indexes can be accesses using the same square bracket syntax.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[1, 2, 3, 4, 5]"
+
+[[test.results]]
+value = "1"
+
+[[test.results]]
+value = "[1, 2, 3]"
+
+*/
+
+-- Return a full array
+RETURN [1,2,3,4,5];
+-- Return the first ("zeroeth") item
+RETURN [1,2,3,4,5][0];
+-- Return indexes 0 up to and including 2 of an array
+RETURN [1,2,3,4,5][0..=2];
+```
+
+```surql title="Output"
+-------- Query 2 (200µs) --------
+
+[
+  1,
+  2,
+  3,
+  4,
+  5
+]
+
+-------- Query 3 (99.999µs) --------
+
+1
+
+-------- Query 4 (100.001µs) --------
+
+[
+  1,
+  2,
+  3
+]
+```
+
+Working with arrays is one of the most important skills when working with SurrealDB, as [`SELECT`][SurrealQL079] statements return an array of values by default unless the `ONLY` keyword is used on an array that contains a single item.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[9]"
+
+[[test.results]]
+value = "9"
+
+[[test.results]]
+error = "'Expected a single result output when using the ONLY keyword'"
+
+*/
+
+-- Even this returns an array
+SELECT * FROM 9;
+-- Use the `ONLY` clause to return a single item
+SELECT * FROM ONLY 9;
+-- Error: array has more than one item
+SELECT * FROM ONLY [1,9];
+```
+
+```surql title="Output"
+-------- Query 1  --------
+
+[
+  9
+]
+
+-------- Query 2 --------
+
+9
+
+-------- Query 3 --------
+
+'Expected a single result output when using the ONLY keyword'
+```
+
+Similar to Object-based Record IDs, records in SurrealDB can store arrays of values, including arrays within arrays. Arrays can store any value stored within them, and can store different value types within the same array.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: person:0l7qs8rfxw32q8namhnx, results: [{ date: '2017-06-18T08:00:00Z', name: 'Algorithmics', score: 76 }, { date: '2018-03-21T08:00:00Z', name: 'Concurrent Programming', score: 83 }, { date: '2018-09-17T08:00:00Z', name: 'Advanced Computer Science 101', score: 69 }, { date: '2019-04-20T08:00:00Z', name: 'Distributed Databases', score: 73 }] }]"
+skip-record-id-key = true
+
+*/
+
+CREATE person SET results = [
+  { score: 76, date: "2017-06-18T08:00:00Z", name: "Algorithmics" },
+  { score: 83, date: "2018-03-21T08:00:00Z", name: "Concurrent Programming" },
+  { score: 69, date: "2018-09-17T08:00:00Z", name: "Advanced Computer Science 101" },
+  { score: 73, date: "2019-04-20T08:00:00Z", name: "Distributed Databases" },
+];
+```
+
+A required number of items can be specified for an array.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+error = ""Couldn't coerce value for field `employees` of `team:2pjsv6kmzs0x06ortqfl`: Expected `array<record<employee>,5>` but found a collection of length `6`""
+
+*/
+
+DEFINE FIELD employees ON TABLE team TYPE array<record<employee>, 5>;
+CREATE team SET employees = [
+  employee:one, 
+  employee:two, 
+  employee:three, 
+  employee:four, 
+  employee:five, 
+  employee:doesnt_belong
+];
+```
+
+```surql title="Response"
+"Couldn't coerce value for field `employees` of `team:2pjsv6kmzs0x06ortqfl`: Expected `array<record<employee>,5>` but found a collection of length `6`"
+```
+
+### _q004a - **Mapping and filtering on arrays**_
+
+The `[]` operator after an array can also be used to filter the items inside an array. The parameter `$this` is used to refer to each individual item, while `WHERE` (or its alias `?`, a question mark) is used to set the condition for the item to pass the filter.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[true, true]"
+
+*/
+[true, false, true][WHERE $this = true];
+```
+
+```surql title="Output"
+[true, true]
+```
+
+If a `WHERE` or `?` clause finds an item that by itself is not equal to `true` or `false`, it will check the item's [truthiness][SurrealQL027] to determine whether to pass it on or not.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[1, 2]"
+
+*/
+
+[1,2,NONE][? $this];
+
+-- [1, 2]
+```
+
+Filtering can be repeated if desired.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ first_mayor: 'Papa Smurf', name: 'Smurfville', population: 55 }]"
+
+*/
+
+[
+    {
+        name: "Boston",
+        population: NONE,
+        first_mayor: "John Phillips"
+    },
+    {
+        name: "Smurfville",
+        population: 55,
+        first_mayor: "Papa Smurf"
+    },
+    {
+        name: "Harrisburg",
+        population: 50183,
+        first_mayor: NONE
+    }
+][WHERE $this.population]
+ [WHERE $this.first_mayor];
+```
+
+```surql title="Output"
+[
+  {
+    first_mayor: 'Papa Smurf',
+    name: 'Smurfville',
+    population: 55
+  }
+]
+```
+
+> Available since: V2.0.0
+
+### _q004b - **Filtering and mapping with array functions**_
+
+SurrealDB also includes a number of methods for arrays that make it easier to filter and map. These methods take a closure (an anonymous function) that works in a similar way to the `$this` parameter above.
+
+Here is an example of the `array::filter()` method being used in contrast to the classic `WHERE` syntax. Note that the parameter name inside the closure is named by the user, so `$val` in the example below could be `$v` or `$some_val` or anything else.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[3, 5]"
+
+[[test.results]]
+value = "[3, 5]"
+
+*/
+
+[1,3,5].filter(|$val| $val > 2);
+[1,3,5][WHERE $this > 2];
+
+-- [3,5]
+```
+
+While the [array functions][SurrealQL101] section of the documentation contains the full details of each function, the following examples provide a glimpse into how they are commonly used.
+
+The [`array::map()`](/docs/surrealql/functions/database/array#arraymap) function provides access to each item in an array, allowing an opearation to be performed on it before being passed on.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[2, 3, 4]"
+
+*/
+
+[1,2,3].map(|$item| $item + 1);
+
+-- [2,3,4]
+```
+
+If desired, a second parameter can be passed in that holds the index of the item.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "['At index 0 we got a 1!', 'At index 1 we got a 2!', 'At index 2 we got a 3!']"
+
+*/
+
+[1,2,3].map(|$v, $i| "At index " + <string>$i + " we got a " + <string>$v + "!");
+```
+
+```surql title="Output"
+[
+  'At index 0 we got a 1!',
+  'At index 1 we got a 2!',
+  'At index 2 we got a 3!'
+]
+```
+
+Chaining these methods one after another is a convenient way to validate and modify data in a single statement. The example below removes any items with a `NONE`, checks to see if a the location data is a valid geometric point, and then returns the remaining items as objects with a different structure.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ coordinates: (98, 65.7), item: 0, name: 'Some city' }, { coordinates: (0, 0.1), item: 1, name: 'Other city' }]"
+
+*/
+
+[
+  NONE,
+  {
+    at: (98, 65.7),
+    name: "Some city"
+  },
+  {
+    at: (-190.7, 0),
+    name: NONE
+  },
+    {
+        name: "Other city",
+        at: (0.0, 0.1)
+    },
+  {
+        name: "Nonexistent city",
+        at: (200.0, 66.5)
+    }
+]
+    .filter(|$v| $v != NONE AND $v.name != NONE)
+    .filter(|$v| $v.at.is_valid())
+    .map(|$v, $i| {
+        item: $i,
+        name: $v.name,
+        coordinates: $v.at
+    });
+```
+
+```surql title="Output"
+[
+  {
+    coordinates: (98, 65.7),
+    item: 0,
+    name: 'Some city'
+  },
+  {
+    coordinates: (0, 0.1),
+    item: 1,
+    name: 'Other city'
+  }
+]
+```
+
+### _q004c - **Adding arrays**_
+
+> Available since: V3.0.0
+
+An array can be added to another array, resulting in a single array consisting of the items of the first followed by those of the second. This is identical to the `array::concat()` function.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[1, 2, 3, 4]"
+
+[[test.results]]
+value = "[1, 2, 3, 4]"
+
+*/
+
+[1,2] + [3,4];
+[1,2].concat([3,4]);
+```
+
+```surql title="Output"
+[1,2,3,4]
+```
+
 ---
 ---
 
@@ -1946,6 +2295,12 @@ RETURN [
 
 ## _q098 - **Functions**_
 
+SurrealDB offers a number of functions that can be used to perform complex logic. These functions are grouped into the following categories:
+
+- [Database functions][SurrealQL099]
+- [JavaScript functions][SurrealQL127]
+- [SurrealML functions][SurrealQL133]
+
 ---
 ---
 
@@ -1960,6 +2315,187 @@ RETURN [
 ---
 
 ## _q101 - **Array functions**_
+
+These functions can be used when working with, and manipulating arrays of data.
+
+| Function | Description |
+| :--- | :--- |
+| [`array::add()`][SurrealQL101_add] | Adds an item to an array if it doesn't exist |
+| [`array::all()`](#arrayall) | Checks whether all array values are truthy, or equal to a condition |
+| [`array::any()`](#arrayany) | Checks whether any array value is truthy, or equal to a condition |
+| [`array::at()`](#arrayat) | Returns value for X index, or in reverse for a negative index |
+| [`array::append()`](#arrayappend) | Appends an item to the end of an array |
+| [`array::boolean_and()`](#arrayboolean_and) | Perform the AND bitwise operations on two arrays |
+| [`array::boolean_or()`](#arrayboolean_or) | Perform the OR bitwise operations on two arrays |
+| [`array::boolean_xor()`](#arrayboolean_xor) | Perform the XOR bitwise operations on two arrays |
+| [`array::boolean_not()`](#arrayboolean_not) | Perform the NOT bitwise operations on an array |
+| [`array::combine()`](#arraycombine) | Combines all values from two arrays together |
+| [`array::complement()`](#arraycomplement) | Returns the complement of two arrays |
+| [`array::clump()`](#arrayclump) | Returns the original array split into multiple arrays of X size |
+| [`array::concat()`](#arrayconcat) | Returns the merged values from two arrays |
+| [`array::difference()`](#arraydifference) | Returns the difference between two arrays |
+| [`array::distinct()`](#arraydistinct) | Returns the unique items in an array |
+| [`array::fill()`](#arrayfill) | Fills an existing array of the same value |
+| [`array::filter()`](#arrayfilter) | Filters out values that do not match a pattern |
+| [`array::filter_index()`](#arrayfilter_index) | Returns the indexes of all occurrences of all matching X value |
+| [`array::find()`](#arrayfind) | Returns the first matching value |
+| [`array::find_index()`](#arrayfind_index) | Returns the index of the first occurrence of X value |
+| [`array::first()`](#arrayfirst) | Returns the first item in an array |
+| [`array::flatten()`](#arrayflatten) | Flattens multiple arrays into a single array |
+| [`array::fold()`](#arrayfold) | Applies an operation on an initial value plus every element in the array, returning the final result |
+| [`array::group()`](#arraygroup) | Flattens and returns the unique items in an array |
+| [`array::insert()`](#arrayinsert) | Inserts an item at the end of an array, or in a specific position |
+| [`array::intersect()`](#arrayintersect) | Returns the values which intersect two arrays |
+| [`array::is_empty()`](#arrayis_empty) | Checks if an array is empty |
+| [`array::join()`](#arrayjoin) | Returns concatenated value of an array with a string in between |
+| [`array::last()`](#arraylast) | Returns the last item in an array |
+| [`array::len()`](#arraylen) | Returns the length of an array |
+| [`array::logical_and()`](#arraylogical_and) | Performs the AND logical operations on two arrays |
+| [`array::logical_or()`](#arraylogical_or) | Performs the OR logical operations on two arrays |
+| [`array::logical_xor()`](#arraylogical_xor) | Performs the XOR logical operations on two arrays |
+| [`array::map()`](#arraymap) | Applies an operation to every item in an array and passes it on |
+| [`array::max()`](#arraymax) | Returns the greatest item from an array |
+| [`array::matches()`](#arraymatches) | Returns an array of booleans indicating which elements of the input array contain a specified value |
+| [`array::min()`](#arraymin) | Returns the least item from an array |
+| [`array::pop()`](#arraypop) | Returns the last item from an array |
+| [`array::prepend()`](#arrayprepend) | Prepends an item to the beginning of an array |
+| [`array::push()`](#arraypush) | Appends an item to the end of an array |
+| [`array::range()`](#arrayrange) | Creates a number array from a range (start to end) |
+| [`array::reduce()`](#arrayreduce) | Applies an operation on every element in the array, returning the final result |
+| [`array::remove()`](#arrayremove) | Removes an item at a specific position from an array |
+| [`array::repeat()`](#arrayrepeat) | Creates an array a given size with a specified value used for each element |
+| [`array::reverse()`](#arrayreverse) | Reverses the sorting order of an array |
+| [`array::sequence()`](#arrayshuffle) | Creates an array of sequential integers |
+| [`array::shuffle()`](#arrayshuffle) | Randomly shuffles the contents of an array |
+| [`array::slice()`](#arrayslice) | Returns a slice of an array |
+| [`array::sort()`](#arraysort) | Sorts the values in an array in ascending or descending order |
+| [`array::sort_lexical()`](#arraysort_lexical) | Sorts the values in an array, with strings sorted lexically |
+| [`array::sort_natural()`](#arraysort_natural) | Sorts the values in an array, with numeric strings sorted numerically |
+| [`array::sort_natural_lexical()`](#arraysort_natural_lexical) | Sorts values using natural numeric and lexical ordering |
+| [`array::sort::asc()`](#arraysortasc) | Sorts the values in an array in ascending order |
+| [`array::sort::desc()`](#arraysortdesc) | Sorts the values in an array in descending order |
+| [`array::swap()`](#arrayswap) | Swaps two items in an array |
+| [`array::transpose()`](#arraytranspose) | Performs 2D array transposition |
+| [`array::union()`](#arrayunion) | Returns the unique merged values from two arrays |
+| [`array::windows()`](#arraywindows) | Returns arrays of length `size`, sliding across the original array |
+
+### _q101aa - **`array::add`**_
+
+### _q101ab - **`array::all`**_
+
+### _q101ac - **`array::any`**_
+
+### _q101ad - **`array::at`**_
+
+### _q101ae - **`array::append`**_
+
+### _q101af - **`array::boolean_and`**_
+
+### _q101ag - **`array::boolean_or`**_
+
+### _q101ah - **`array::boolean_xor`**_
+
+### _q101ai - **`array::boolean_not`**_
+
+### _q101aj - **`array::combine`**_
+
+### _q101ak - **`array::complement`**_
+
+### _q101al - **`array::concat`**_
+
+### _q101am - **`array::clump`**_
+
+### _q101an - **`array::difference`**_
+
+### _q101ao - **`array::distinct`**_
+
+### _q101ap - **`array::fill`**_
+
+### _q101aq - **`array::filter`**_
+
+### _q101ar - **`array::filter_index`**_
+
+### _q101as - **`array::find`**_
+
+### _q101at - **`array::find_index`**_
+
+### _q101au - **`array::first`**_
+
+### _q101av - **`array::flatten`**_
+
+### _q101aw - **`array::fold`**_
+
+### _q101ax - **`array::group`**_
+
+### _q101ay - **`array::insert`**_
+
+### _q101az - **`array::intersect`**_
+
+### _q101ba - **`array::is_empty`**_
+
+### _q101bb - **`array::join`**_
+
+### _q101bc - **`array::last`**_
+
+### _q101bd - **`array::len`**_
+
+### _q101be - **`array::logical_and`**_
+
+### _q101bf - **`array::logical_or`**_
+
+### _q101bg - **`array::logical_xor`**_
+
+### _q101bh - **`array::map`**_
+
+### _q101bi - **`array::max`**_
+
+### _q101bj - **`array::matches`**_
+
+### _q101bk - **`array::min`**_
+
+### _q101bl - **`array::pop`**_
+
+### _q101bm - **`array::prepend`**_
+
+### _q101bn - **`array::push`**_
+
+### _q101bo - **`array::range`**_
+
+### _q101bp - **`array::reduce`**_
+
+### _q101bq - **`array::remove`**_
+
+### _q101br - **`array::repeat`**_
+
+### _q101bs - **`array::reverse`**_
+
+### _q101bt - **`array::sequence`**_
+
+### _q101bu - **`array::shuffle`**_
+
+### _q101bv - **`array::slice`**_
+
+### _q101bw - **`array::sort`**_
+
+### _q101bx - **`array::sort_lexical`**_
+
+### _q101by - **`array::sort_natural`**_
+
+### _q101bz - **`array::sort_natural_lexical`**_
+
+### _q101ca - **`array::sort::asc`**_
+
+### _q101cb - **`array::sort::desc`**_
+
+### _q101cc - **`array::swap`**_
+
+### _q101cd - **`array::transpose`**_
+
+### _q101ce - **`array::union`**_
+
+### _q101cf - **`array::windows`**_
+
+### _q101cg - **Method chaining**_
 
 ---
 ---
@@ -2658,6 +3194,65 @@ SELECT * FROM user;
 [SurrealQL099]:            <#q099---database-functions> "SurrealQL 🞂 Functions 🞂 Database Functions"
 [SurrealQL100]:            <#q100---api-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 API functions"
 [SurrealQL101]:            <#q101---array-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Array functions"
+[SurrealQL101_add]:        <#q101aa---array--add> "`array::all()`"
+[SurrealQL101_all]: <#q101ab---array--all> ""
+[SurrealQL101_any]: <#q101ac---array--any> ""
+[SurrealQL101_at]: <#q101ad---array--at> ""
+[SurrealQL101_append]: <#q101ae---array--append> ""
+[SurrealQL101_boolean_and]: <#q101af---array--boolean-and> ""
+[SurrealQL101_boolean_or]: <#q101ag---array--boolean-or> ""
+[SurrealQL101_boolean_xor]: <#q101ah---array--boolean-xor> ""
+[SurrealQL101_boolean_not]: <#q101ai---array--boolean-not> ""
+[SurrealQL101_combine]: <#q101aj---array--combine> ""
+[SurrealQL101_complement]: <#q101ak---array--complement> ""
+[SurrealQL101_clump]: <#q101al---array--clump> ""
+[SurrealQL101_concat]: <#q101am---array--concat> ""
+[SurrealQL101_difference]: <#q101an---array--difference> ""
+[SurrealQL101_distinct]: <#q101ao---array--distinct> ""
+[SurrealQL101_fill]: <#q101ap---array--fill> ""
+[SurrealQL101_filter]: <#q101aq---array--filter> ""
+[SurrealQL101_filter_index]: <#q101ar---array--filter-index> ""
+[SurrealQL101_find]: <#q101as---array--find> ""
+[SurrealQL101_find_index]: <#q101at---array--find-index> ""
+[SurrealQL101_first]: <#q101au---array--first> ""
+[SurrealQL101_flatten]: <#q101av---array--flatten> ""
+[SurrealQL101_fold]: <#q101aw---array--fold> ""
+[SurrealQL101_group]: <#q101ax---array--group> ""
+[SurrealQL101_insert]: <#q101ay---array--insert> ""
+[SurrealQL101_intersect]: <#q101az---array--intersect> ""
+[SurrealQL101_is_empty]: <#q101ba---array--is-empty> ""
+[SurrealQL101_join]: <#q101bb---array--join> ""
+[SurrealQL101_last]: <#q101bc---array--last> ""
+[SurrealQL101_len]: <#q101bd---array--len> ""
+[SurrealQL101_logical_and]: <#q101be---array--logical-and> ""
+[SurrealQL101_logical_or]: <#q101bf---array--logical-or> ""
+[SurrealQL101_logical_xor]: <#q101bg---array--logical-xor> ""
+[SurrealQL101_map]: <#q101bh---array--map> ""
+[SurrealQL101_max]: <#q101bi---array--max> ""
+[SurrealQL101_matches]: <#q101bj---array--matches> ""
+[SurrealQL101_min]: <#q101bk---array--min> ""
+[SurrealQL101_pop]: <#q101bl---array--pop> ""
+[SurrealQL101_prepend]: <#q101bm---array--prepend> ""
+[SurrealQL101_push]: <#q101bn---array--push> ""
+[SurrealQL101_range]: <#q101bo---array--range> ""
+[SurrealQL101_reduce]: <#q101bp---array--reduce> ""
+[SurrealQL101_remove]: <#q101bq---array--remove> ""
+[SurrealQL101_repeat]: <#q101br---array--repeat> ""
+[SurrealQL101_reverse]: <#q101bs---array--reverse> ""
+[SurrealQL101_sequence]: <#q101bt---array--sequence> ""
+[SurrealQL101_shuffle]: <#q101bu---array--shuffle> ""
+[SurrealQL101_slice]: <#q101bv---array--slice> ""
+[SurrealQL101_sort]: <#q101bw---array--sort> ""
+[SurrealQL101_sort_lexical]: <#q101bx---array--sort-lexical> ""
+[SurrealQL101_sort_natural]: <#q101by---array--sort-natural> ""
+[SurrealQL101_sort_natural_lexical]: <#q101bz---array--sort-natural-lexical> ""
+[SurrealQL101_sort_asc]: <#q101ca---array--sort-asc> ""
+[SurrealQL101_sort_desc]: <#q101cb---array--sort-desc> ""
+[SurrealQL101_swap]: <#q101cc---array--swap> ""
+[SurrealQL101_transpose]: <#q101cd---array--transpose> ""
+[SurrealQL101_union]: <#q101ce---array--union> ""
+[SurrealQL101_windows]: <#q101cf---array--windows> ""
+
 [SurrealQL102]:            <#q102---bytes-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Bytes functions"
 [SurrealQL103]:            <#q103---count-function> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Count function"
 [SurrealQL104]:            <#q104---crypto-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Crypto functions"
