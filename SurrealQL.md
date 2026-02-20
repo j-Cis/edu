@@ -6192,143 +6192,6 @@ SELECT * FROM user;
 
 ---
 ---
-[test000][surrealql000]
-[test001][surrealql001]
-[test002][surrealql002]
-[test003][surrealql003]
-[test004][surrealql004]
-[test005][surrealql005]
-[test006][surrealql006]
-[test007][surrealql007]
-[test008][surrealql008]
-[test009][surrealql009]
-[test010][surrealql010]
-[test011][surrealql011]
-[test012][surrealql012]
-[test013][surrealql013]
-[test014][surrealql014]
-[test015][surrealql015]
-[test016][surrealql016]
-[test017][surrealql017]
-[test018][surrealql018]
-[test019][surrealql019]
-[test020][surrealql020]
-[test021][surrealql021]
-[test022][surrealql022]
-[test023][surrealql023]
-[test024][surrealql024]
-[test025][surrealql025]
-[test026][surrealql026]
-[test027][surrealql027]
-[test028][surrealql028]
-[test029][surrealql029]
-[test030][surrealql030]
-[test031][surrealql031]
-[test032][surrealql032]
-[test033][surrealql033]
-[test034][surrealql034]
-[test035][surrealql035]
-[test036][surrealql036]
-[test037][surrealql037]
-[test038][surrealql038]
-[test039][surrealql039]
-[test040][surrealql040]
-[test041][surrealql041]
-[test042][surrealql042]
-[test043][surrealql043]
-[test044][surrealql044]
-[test045][surrealql045]
-[test046][surrealql046]
-[test047][surrealql047]
-[test048][surrealql048]
-[test049][surrealql049]
-[test050][surrealql050]
-[test051][surrealql051]
-[test052][surrealql052]
-[test053][surrealql053]
-[test054][surrealql054]
-[test055][surrealql055]
-[test056][surrealql056]
-[test057][surrealql057]
-[test058][surrealql058]
-[test059][surrealql059]
-[test060][surrealql060]
-[test061][surrealql061]
-[test062][surrealql062]
-[test063][surrealql063]
-[test064][surrealql064]
-[test065][surrealql065]
-[test066][surrealql066]
-[test067][surrealql067]
-[test068][surrealql068]
-[test069][surrealql069]
-[test070][surrealql070]
-[test071][surrealql071]
-[test072][surrealql072]
-[test073][surrealql073]
-[test074][surrealql074]
-[test075][surrealql075]
-[test076][surrealql076]
-[test077][surrealql077]
-[test078][surrealql078]
-[test079][surrealql079]
-[test080][surrealql080]
-[test081][surrealql081]
-[test082][surrealql082]
-[test083][surrealql083]
-[test084][surrealql084]
-[test085][surrealql085]
-[test086][surrealql086]
-[test087][surrealql087]
-[test088][surrealql088]
-[test089][surrealql089]
-[test090][surrealql090]
-[test091][surrealql091]
-[test092][surrealql092]
-[test093][surrealql093]
-[test094][surrealql094]
-[test095][surrealql095]
-[test096][surrealql096]
-[test097][surrealql097]
-[test098][surrealql098]
-[test099][surrealql099]
-[test100][surrealql100]
-[test101][surrealql101]
-[test102][surrealql102]
-[test103][surrealql103]
-[test104][surrealql104]
-[test105][surrealql105]
-[test106][surrealql106]
-[test107][surrealql107]
-[test108][surrealql108]
-[test109][surrealql109]
-[test110][surrealql110]
-[test111][surrealql111]
-[test112][surrealql112]
-[test113][surrealql113]
-[test114][surrealql114]
-[test115][surrealql115]
-[test116][surrealql116]
-[test117][surrealql117]
-[test118][surrealql118]
-[test119][surrealql119]
-[test120][surrealql120]
-[test121][surrealql121]
-[test122][surrealql122]
-[test123][surrealql123]
-[test124][surrealql124]
-[test125][surrealql125]
-[test126][surrealql126]
-[test127][surrealql127]
-[test128][surrealql128]
-[test129][surrealql129]
-[test130][surrealql130]
-[test131][surrealql131]
-[test132][surrealql132]
-[test133][surrealql133]
-[test134][surrealql134]
-[test135][surrealql135]
-[test136][surrealql136]
 
 [surrealql002_and]: <#q002aa----or-and> "`&&` or `AND`"
 
@@ -6345,95 +6208,183 @@ SELECT * FROM user;
 [surrealql002_equal]: <#q002ag----or-is> "`=` or `IS`"
 
 [surrealql002_notequal]: <#q002ah----or-is-not> "`=` or `IS`"
+
 [surrealql002_exact]: <#q002ai----exact> "`==` (exact)"
+
 [surrealql002_anyequal]: <#q002aj----any-equal> "`?=` (any equal)"
+
 [surrealql002_allequal]: <#q002ak----all-equal> "`*=` (all equal)"
+
 [surrealql002_similar]: <#q002al-------similarity> "`~` `?~` `!~` `*~` (similarity)"
+
 [surrealql002_less]: <#q002am----less> "`<` (less)"
+
 [surrealql002_lessequal]: <#q002an----less-or-equal> "`<=` (less or equal)"
+
 [surrealql002_more]: <#q002ao----more> "`>` (more)"
+
 [surrealql002_moreequal]: <#q002ap----more-or-equal> "`>=` (more or equal)"
+
 [surrealql002_add]: <#q002aq----add> "`+` (add)"
+
 [surrealql002_sub]: <#q002ar-----sub> "`-` (sub)"
+
 [surrealql002_mul]: <#q002as----or--mul> "`*` or `×` (mul)"
+
 [surrealql002_div]: <#q002at----or--div> "`/` or `÷` (div)"
+
 [surrealql002_pow]: <#q002au----pow> "`**` (pow)"
+
 [surrealql002_co_equ]: <#q002av---contains-or-> "`CONTAINS` or `∋`"
+
 [surrealql002_co_not]: <#q002aw---containsnot-or-> "`CONTAINSNOT` or `∌`"
+
 [surrealql002_co_all]: <#q002ax---containsall-or-> "`CONTAINSALL` or `⊇`"
+
 [surrealql002_co_any]: <#q002ay---containsany-or-> "`CONTAINSANY` or `⊃`"
+
 [surrealql002_co_non]: <#q002az---containsnone-or-> "`CONTAINSNONE` or `⊅`"
+
 [surrealql002_in_equ]: <#q002ba---inside-or--or-in> "`INSIDE` or `∈` or `IN`"
+
 [surrealql002_in_not]: <#q002bb---notinside-or--or-not-in> "`NOTINSIDE` or `∉` or `NOT IN`"
+
 [surrealql002_in_all]: <#q002bc---allinside-or-> "`ALLINSIDE` or `⊆`"
+
 [surrealql002_in_any]: <#q002bd---anyinside-or-> "`ANYINSIDE` or `⊂`"
+
 [surrealql002_in_non]: <#q002be---noneinside-or-> "`NONEINSIDE` or `⊄`"
+
 [surrealql002_outside]: <#q002bf---outside> "`OUTSIDE`"
+
 [surrealql002_inter]: <#q002bg---intersects> "`INTERSECTS`"
+
 [surrealql002_matches]: <#q002bh---matches> "`MATCHES`"
+
 [surrealql002_knn]: <#q002bi---knn> "`KNN`"
+
 [surrealql003_geometry]: <#q003a---example-geometry> "Example geometry"
+
 [surrealql003_bytes]: <#q003b---example-bytes> "Example bytes"
+
 [surrealql101_add]: <#q101aa---arrayadd> "`array::add`"
+
 [surrealql101_all]: <#q101ab---arrayall> "`array::all`"
+
 [surrealql101_any]: <#q101ac---arrayany> "`array::any`"
+
 [surrealql101_at]: <#q101ad---arrayat> "`array::at`"
+
 [surrealql101_append]: <#q101ae---arrayappend> "`array::append`"
+
 [surrealql101_boolean_and]: <#q101af---arrayboolean_and> "`array::boolean_and`"
+
 [surrealql101_boolean_or]: <#q101ag---arrayboolean_or> "`array::boolean_or`"
+
 [surrealql101_boolean_xor]: <#q101ah---arrayboolean_xor> "`array::boolean_xor`"
+
 [surrealql101_boolean_not]: <#q101ai---arrayboolean_not> "`array::boolean_not`"
+
 [surrealql101_combine]: <#q101aj---arraycombine> "`array::combine`"
+
 [surrealql101_complement]: <#q101ak---arraycomplement> "`array::complement`"
+
 [surrealql101_clump]: <#q101am---arrayclump> "`array::clump`"
+
 [surrealql101_concat]: <#q101al---arrayconcat> "`array::concat`"
+
 [surrealql101_difference]: <#q101an---arraydifference> "`array::difference`"
+
 [surrealql101_distinct]: <#q101ao---arraydistinct> "`array::distinct`"
+
 [surrealql101_fill]: <#q101ap---arrayfill> "`array::fill`"
+
 [surrealql101_filter]: <#q101aq---arrayfilter> "`array::filter`"
+
 [surrealql101_filter_index]: <#q101ar---arrayfilter_index> "`array::filter_index`"
+
 [surrealql101_find]: <#q101as---arrayfind> "`array::find`"
+
 [surrealql101_find_index]: <#q101at---arrayfind_index> "`array::find_index`"
+
 [surrealql101_first]: <#q101au---arrayfirst> "`array::first`"
+
 [surrealql101_flatten]: <#q101av---arrayflatten> "`array::flatten`"
+
 [surrealql101_fold]: <#q101aw---arrayfold> "`array::fold`"
+
 [surrealql101_group]: <#q101ax---arraygroup> "`array::group`"
+
 [surrealql101_insert]: <#q101ay---arrayinsert> "`array::insert`"
+
 [surrealql101_intersect]: <#q101az---arrayintersect> "`array::intersect`"
+
 [surrealql101_is_empty]: <#q101ba---arrayis_empty> "`array::is_empty`"
+
 [surrealql101_join]: <#q101bb---arrayjoin> "`array::join`"
+
 [surrealql101_last]: <#q101bc---arraylast> "`array::last`"
+
 [surrealql101_len]: <#q101bd---arraylen> "`array::len`"
+
 [surrealql101_logical_and]: <#q101be---arraylogical_and> "`array::logical_and`"
+
 [surrealql101_logical_or]: <#q101bf---arraylogical_or> "`array::logical_or`"
+
 [surrealql101_logical_xor]: <#q101bg---arraylogical_xor> "`array::logical_xor`"
+
 [surrealql101_map]: <#q101bh---arraymap> "`array::map`"
+
 [surrealql101_max]: <#q101bi---arraymax> "`array::max`"
+
 [surrealql101_matches]: <#q101bj---arraymatches> "`array::matches`"
+
 [surrealql101_min]: <#q101bk---arraymin> "`array::min`"
+
 [surrealql101_pop]: <#q101bl---arraypop> "`array::pop`"
+
 [surrealql101_prepend]: <#q101bm---arrayprepend> "`array::prepend`"
+
 [surrealql101_push]: <#q101bn---arraypush> "`array::push`"
+
 [surrealql101_range]: <#q101bo---arrayrange> "`array::range`"
+
 [surrealql101_reduce]: <#q101bp---arrayreduce> "`array::reduce`"
+
 [surrealql101_remove]: <#q101bq---arrayremove> "`array::remove`"
+
 [surrealql101_repeat]: <#q101br---arrayrepeat> "`array::repeat`"
+
 [surrealql101_reverse]: <#q101bs---arrayreverse> "`array::reverse`"
+
 [surrealql101_sequence]: <#q101bt---arraysequence> "`array::sequence`"
+
 [surrealql101_shuffle]: <#q101bu---arrayshuffle> "`array::shuffle`"
+
 [surrealql101_slice]: <#q101bv---arrayslice> "`array::slice`"
+
 [surrealql101_sort]: <#q101bw---arraysort> "`array::sort`"
+
 [surrealql101_sort_lexical]: <#q101bx---arraysort_lexical> "`array::sort_lexical`"
+
 [surrealql101_sort_natural]: <#q101by---arraysort_natural> "`array::sort_natural`"
+
 [surrealql101_sort_natural_lexical]: <#q101bz---arraysort_natural_lexical> "`array::sort_natural_lexical`"
+
 [surrealql101_sort_asc]: <#q101ca---arraysortasc> "`array::sort::asc`"
+
 [surrealql101_sort_desc]: <#q101cb---arraysortdesc> "`array::sort::desc`"
+
 [surrealql101_swap]: <#q101cc---arrayswap> "`array::swap`"
+
 [surrealql101_transpose]: <#q101cd---arraytranspose> "`array::transpose`"
+
 [surrealql101_union]: <#q101ce---arrayunion> "`array::union`"
+
 [surrealql101_windows]: <#q101cf---arraywindows> "`array::windows`"
 
----
+
+
 
 [surrealql000]: <#q000---surrealql> "SurrealQL"
 
@@ -6441,7 +6392,7 @@ SELECT * FROM user;
 
 [surrealql002]: <#q002---operators> "SurrealQL 🞂 Operators"
 
-[surrealql003]: <#q003---data-types "SurrealQL 🞂 Data types"
+[surrealql003]: <#q003---data-types> "SurrealQL 🞂 Data types"
 
 [surrealql004]: <#q004---arrays> "SurrealQL 🞂 Data type 🞂 Arrays"
 
@@ -6709,7 +6660,7 @@ SELECT * FROM user;
 
 [surrealql136]: <#q136---comments> "SurrealQL 🞂 Comments"
 
----
+
 
 [net__SurrealDB_Store]: <https://surrealdb.store/>
 
@@ -6739,7 +6690,7 @@ SELECT * FROM user;
 
 [net__geojson]: <https://geojson.org/>
 
----
+
 
 [getSURQL_001]: <https://datasets.surrealdb.com/surreal-deal-store.surql>
 
@@ -6747,7 +6698,7 @@ SELECT * FROM user;
 
 [trySURQL_001]: <https://app.surrealdb.com/mini?query=--+Query+1%3A+Using+record+links+to+select+from+the+seller+table+%0ASELECT%0A++name%2C%0A++seller.name%0AFROM+product+LIMIT+4%3B%0A%0A%0A--+Query+2%3A+Using+graph+relations+to+select+from+the+person+and+product+table%0ASELECT%0A++++time.created_at as order_date%2C%0A++++product_name%2C%0A++++%3C-person.name+as+person_name%2C%0A++++-%3Eproduct.details%0AFROM+order+LIMIT+4%3B%0A%0A%0A--+Query+3%3A+Conditional+filtering+based+on+an+embedded+object+property.%0ASELECT+%0A++name%2C%0A++email+%0AFROM+person+%0AWHERE+address.country+%3F%3D+%22England%22+LIMIT+4%3B%09%0A%0A%0A--+Query+4%3A+Conditional+filtering+using+relationships.%0ASELECT+*+FROM+review%0AWHERE+-%3Eproduct.sub_category+%3F%3D+%22Activewear%22+LIMIT+4%3B%0A%0A%0A--+Query+5%3A+Count+orders+based+on+order+status%0ASELECT+count%28%29+FROM+order%0AWHERE+order_status+IN+%5B+%22processed%22%2C+%22shipped%22%5D%0AGROUP+ALL+LIMIT+4%3B%0A%0A%0A--+Query+6%3A+Get+a+deduplicated+list+of+products+that+were+ordered%0ASELECT+%0A++++array%3A%3Adistinct%28product_name%29+as+ordered_products%0AFROM+order%0AGROUP+ALL+LIMIT+4%3B%0A%0A%0A--+Query+7%3A+Get+the+average+price+per+product+category%0ASELECT+%0A++++-%3Eproduct.category+AS+product_category%2C%0A++++math%3A%3Amean%28price%29+AS+avg_price%0AFROM+order%0AGROUP+BY+product_category%0AORDER+BY+avg_price+DESC+LIMIT+4%3B%0A%0A%0A--+Query+8%3A+encapsulating+logic+in+a+function%0ARETURN+fn%3A%3Anumber_of_unfulfilled_orders%28%29%3B%0A%0A%0A--+Query+9%3A+using+a+custom+fuction+for+currency+conversion%0ASELECT+%0A++++product_name%2C%0A++++fn%3A%3Apound_to_usd%28price%29+AS+price_usd%0AFROM+order+LIMIT+4%3B&dataset=surreal-deal-store&orientation=horizontal> "SurrealistMini"
 
----
+
 
 [yt01]: <https://www.youtube.com/watch?v=TyX45cyZ-W0> "SurrealDB: Document-Style Relationships in SurrealDB"
 
@@ -6757,7 +6708,7 @@ SELECT * FROM user;
 
 [img_demo_overview]: <https://surrealdb.com/docs/_astro/surreal-deal-store.C2015pX2_Z2r7lvb.webp>
 
----
+
 
 [SurrealDB_cli]: </docs/surrealdb/cli> "CLI"
 [SurrealDB_cli_import]: </docs/surrealdb/cli/import> "import"
@@ -6773,4 +6724,3 @@ SELECT * FROM user;
 [brakuje_func_db_encoding#encodingcbordecod]: </docs/surrealql/functions/database/encoding#encodingcbordecode>
 [brakuje_model_ids#record-ranges]: </docs/surrealql/datamodel/ids#record-ranges>
 [brakuje_stat_def_bucket]: </docs/surrealql/statements/define/bucket>
----
