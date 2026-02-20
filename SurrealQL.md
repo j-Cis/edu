@@ -1876,10 +1876,196 @@ value = "[1, 2, 3, 4]"
 
 ## _q005 - **Booleans**_
 
+[_fetch q005 at 2025-02-19 from_][SurrealQL005_original]
+
+Boolean values can be used to mark whether a field is `true` or `false`.
+
+```surql
+CREATE person SET newsletter = false, interested = true;
+```
+
+Many SurrealDB operators and functions return booleans.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: person:jhn1rlhusqypyyyy0gjg, name: 'Billy', name_is_billy: true, name_is_long: false }]"
+skip-record-id-key = true
+
+*/
+
+
+CREATE person SET 
+  name = "Billy", 
+  name_is_billy = name = "Billy",
+  name_is_long = string::len(name) > 10;
+```
+
+```surql title="Response"
+[
+  {
+    id: person:7j4t4higwb141v1v2xum,
+    name: 'Billy',
+    name_is_billy: true,
+    name_is_long: false
+  }
+]
+```
+
+Boolean values can be written in anycase.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: person:1vyseg5ig08xn1ie3h43, interested: true, newsletter: false, very_interested: true }]"
+skip-record-id-key = true
+
+*/
+
+CREATE person SET 
+    newsletter = FALSE,
+    interested = True,
+    very_interested = trUE;
+```
+
+### _q005a - **Booleans in `WHERE` clauses**_
+
+When performing a query on the database, accessing a record's ID directly or using a [record range][brakuje_model_ids#record-ranges] allows performance to be significantly sped up by avoiding the table scan which is used when a `WHERE` clause is included.
+
+However, if a `WHERE` clause is unavoidable, performance can still be improved by simplifying the portion after the clause as much as possible. As a boolean is the simplest possible datatype, having a boolean field that can be used in a `WHERE` clause can significantly improve performance compared to a more complex operation.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[]"
+
+[[test.results]]
+value = "[]"
+
+[[test.results]]
+value = "[{ data_length: 3, id: person:one, is_short: true, random_data: 'HI!' }]"
+
+[[test.results]]
+value = "[{ data_length: 3, id: person:one, is_short: true, random_data: 'HI!' }]"
+
+[[test.results]]
+value = "[{ data_length: 3, id: person:one, is_short: true, random_data: 'HI!' }]"
+
+[[test.results]]
+value = "[{ data_length: 3, id: person:one, is_short: true, random_data: 'HI!' }]"
+
+*/
+
+DEFINE FIELD data_length ON person VALUE random_data.len();
+DEFINE FIELD is_short ON person VALUE random_data.len() < 10;
+
+-- Fill up the database a bit with 10,000 records
+CREATE |person:10000| SET random_data = rand::string(1000) RETURN NONE;
+-- Add one outlier with short random_data
+CREATE person:one SET random_data = "HI!" RETURN NONE;
+
+-- Function call + compare operation: slowest
+SELECT * FROM person WHERE random_data.len() < 10;
+-- Compare operation: much faster
+SELECT * FROM person WHERE data_length < 10;
+-- Boolean check: even faster
+SELECT * FROM person WHERE is_short;
+-- Direct record access: almost instantaneous
+SELECT * FROM person:one;
+```
+
 ---
 ---
 
 ## _q006 - **Bytes**_
+
+[_fetch q006 at 2025-02-19 from_][SurrealQL006_original]
+
+Bytes can be created by casting from a string, and are displayed using hexidecimal encoding.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "b"4920616D20736F6D65206279746573""
+
+*/
+
+<bytes>"I am some bytes";
+```
+
+```surql title="Output"
+b"4920616D20736F6D65206279746573"
+```
+
+### _q006a - **Conversion from other types**_
+
+> Available since: V2.3.0
+
+Since SurrealDB 2.3.0, conversions can be performed between bytes, strings, and arrays.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "'cellar door'"
+
+[[test.results]]
+value = "[72, 111, 98, 98, 105, 116, 115]""
+
+*/
+
+-- array<int> to bytes to string
+<string><bytes>[ 99, 101, 108, 108, 97, 114, 32, 100, 111, 111, 114 ];
+-- string to bytes to array<int>
+<array><bytes>"Hobbits";
+```
+
+```surql title="Output"
+-------- Query --------
+
+'cellar door'
+
+-------- Query --------
+
+[ 72, 111, 98, 98, 105, 116, 115 ]
+```
+
+### _q006b - **Byte strings**_
+
+> Available since: V3.0.0
+
+A string preceded by a `b` prefix can be turned into bytes as long as the string represents a hexidecimal value.
+
+```surql
+b"486F6262697473";
+
+<string>b"486F6262697473";
+
+<string>b"This won't work though";
+```
+
+```surql title="Output"
+-------- Query --------
+
+b"486F6262697473";
+
+-------- Query --------
+
+'Hobbits'
+
+-------- Query --------
+
+"There was a problem with the database: Parse error: Unexpected character `T` expected hexidecimal digit
+--> [1:11]
+  |
+1 | <string>b\"This won't work though\";
+  |           ^ 
+"
+```
 
 ---
 ---
@@ -1891,6 +2077,224 @@ value = "[1, 2, 3, 4]"
 
 ## _q008 - **Anonymous functions (closures)**_
 
+[_fetch q008 at 2025-02-19 from_][SurrealQL008_original]
+
+> Available since: V2.0.0
+
+```syntax title="SurrealQL Syntax"
+LET $parameter = |@parameters| @expression;
+```
+
+One of the powerful features now available in SurrealDB is the ability to define anonymous functions. These functions can be used to encapsulate reusable logic and can be called from within your queries. Below are some examples demonstrating their capabilities:
+
+### _q008a - **Basic function definitions**_
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "4"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "'Hello, World!'"
+
+*/
+
+-- Define an anonymous function that doubles a number
+LET $double = |$n: number| $n * 2;
+RETURN $double(2);  -- Returns 4
+
+-- Define a function that concatenates two strings
+LET $concat = |$a: string, $b: string| $a + $b;
+RETURN $concat("Hello, ", "World!");  -- Returns "Hello, World!"
+```
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "'Hello, Alice!'"
+
+*/
+
+-- Define a function that greets a person
+LET $greet = |$name: string| -> string { "Hello, " + $name + "!" };
+RETURN $greet("Alice");   -- Returns "Hello, Alice!"
+```
+
+### _q008b - **Error Handling and Type Enforcement**_
+
+You can also enforce type constraints within your functions to prevent type mismatches:
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "'HELLO'"
+
+[[test.results]]
+error = "'Incorrect arguments for function ANONYMOUS(). Expected a value of type 'string' for argument $text'"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "16"
+
+[[test.results]]
+error = "'Incorrect arguments for function ANONYMOUS(). Expected a value of type 'number' for argument $num'"
+
+*/
+
+-- Define a function with a return type
+LET $to_upper = |$text: string| -> string { string::uppercase($text) };
+RETURN $to_upper("hello");  -- Returns "HELLO"
+RETURN $to_upper(123);      -- Error: type mismatch
+
+-- Define a function that accepts only numbers
+LET $square = |$num: number| $num * $num;
+RETURN $square(4);    -- Returns 16
+RETURN $square("4");  -- Error: type mismatch
+```
+
+### _q008c - **Closures in functions**_
+
+Many of SurrealDB's functions allow a closure to be passed in, making it easy to use complex logic on a value or the elements of an array.
+
+The `chain` function which performs an operation on a value before passing it on:
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "2000"
+
+*/
+
+"Two"
+  .replace("Two", "2")
+  .chain(|$num| <number>$num * 1000);
+```
+
+```surql title="Response"
+2000
+```
+
+We can see that the input to the `.chain()` method is indeed a closure by creating our own that is assigned to a parameter. This closure can be passed into `.chain()`, returning the same output as above.
+
+```surql
+LET $my_func = |$num| <number>$num * 1000;
+
+"Two"
+  .replace("Two", "2")
+  .chain($my_func);
+```
+
+The following example shows a chain of array functions used to remove useless data, followed by a check to see if all items in the array match a certain condition, and then a cast into another type. The [`array::filter`](/docs/surrealql/functions/database/array#arrayfilter) call in the middle ensures that the [`string::len`](/docs/surrealql/functions/database/string#stringlen) function that follows is being called on string values.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "'true'"
+
+*/
+
+[NONE, NONE, "good data", "Also good", "important", NULL]
+  .filter(|$v| $v.is_string())
+  .all(|$s| $s.len() > 5)
+  .chain(|$v| <string>$v);
+```
+
+```surql title="Response"
+'true'
+```
+
+### _q008d - **Closure limitations**_
+
+Closures work inside a read-only context, and cannot be used to modify database resources.
+
+```surql
+-- 1. Create a test table and function
+DEFINE TABLE test_table SCHEMAFULL;
+DEFINE FIELD name ON test_table TYPE string;
+
+DEFINE FUNCTION fn::test_create($name: string) -> object {
+    CREATE test_table CONTENT { name: $name };
+    { created: true, name: $name };
+};
+
+-- 2. Call the function directly - works
+fn::test_create("direct_call");
+
+-- 3. Call the function inside .map() - fails
+LET $names = ["Alice", "Bob", "Charlie"];
+$names.map(|$n| fn::test_create($n));
+-- Error: "Couldn't write to a read only transaction"
+```
+
+In many cases, a closure can be substituted by another operation such as a `FOR` loop or a regular `SELECT` statement.
+
+```surql
+DEFINE TABLE test_table SCHEMAFULL;
+DEFINE FIELD name ON test_table TYPE string;
+
+DEFINE FUNCTION fn::test_create($name: string) -> object {
+    CREATE test_table CONTENT { name: $name };
+    { created: true, name: $name };
+};
+
+-- Function to create a record called for each name
+SELECT VALUE fn::test_create($this) FROM ["Alice", "Bob", "Charlie"];
+```
+
+### _q008e - **Capturing parameters**_
+
+> Available since: V3.0.0
+
+The original implementation of closures did not allow them to capture parameters (variables) in their scope. Strictly speaking, this made them simple anonymous functions as closures did not "enclose" anything.
+
+```surql
+LET $okay_nums = [1,2,3];
+
+-- Returns [] because $okay_nums not present inside the closure
+[1,5,6,7,0].filter(|$n| $n IN $okay_nums);
+```
+
+This has since been resolved, allowing a parameter declared outside a closure to be recognized inside it.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[[1]]"
+
+*/
+
+LET $okay_nums = [1,2,3];
+
+[1,5,6,7,0].filter(|$n| $n IN $okay_nums);
+```
+
+### _q008f - **Conclusion**_
+
+These anonymous functions provide a flexible way to define small, reusable pieces of logic that can be used throughout your queries. By leveraging them, you can write more modular and maintainable SurrealQL code.
+
 ---
 ---
 
@@ -1900,6 +2304,111 @@ value = "[1, 2, 3, 4]"
 ---
 
 ## _q010 - **Files**_
+
+[_fetch q010 at 2025-02-19 from_][SurrealQL010_original]
+
+> Available since: V3.0.0
+
+Files are accessed by a path, which is prefixed with an `f` to differentiate it from a regular string.
+
+Some examples of file pointers:
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "f"bucket:/some/key/to/a/file.txt""
+
+*/
+
+f"bucket:/some/key/to/a/file.txt";
+f"bucket:/some/key/with\ escaped";
+```
+
+To work with the files that can be accessed through these pointers, use the following:
+
+- A [`DEFINE BUCKET`][brakuje_stat_def_bucket] statement to set up the bucket to hold the files
+- [Files functions][brakuje_func_db_file] such as `file::put()` and `file::get()`
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "b"536F6D65207465787420696E73696465""
+
+[[test.results]]
+value = "'Some text inside'"
+
+*/
+
+DEFINE BUCKET my_bucket BACKEND "memory";
+f"my_bucket:/some_file.txt".put("Some text inside");
+f"my_bucket:/some_file.txt".get();
+<string>f"my_bucket:/some_file.txt".get();
+```
+
+```surql title="Output"
+-------- Query --------
+
+b"536F6D65207465787420696E73696465"
+
+-------- Query --------
+
+'Some text inside'
+```
+
+### _q010a - **Using files for ad-hoc memory storage**_
+
+A combination of files and SurrealDB's [encoding functions][brakuje_func_db_encoding#encodingcbordecod] can be used to set up ad-hoc memory storage. This can be convenient when running an instance that saves data to disk but prefers to keep certain items in memory.
+
+The following example shows how this pattern might be used for temporary storage such as a user's shopping cart during a single session.
+
+```surql
+-- Set up the in-memory backend
+DEFINE BUCKET shopping_carts BACKEND "memory";
+
+-- Convenience functions to save, decode back into
+-- SurrealQL type, and delete
+DEFINE FUNCTION fn::save_file($file_name: string, $input: any) {
+    LET $file = type::file("shopping_carts", $file_name);
+    $file.put(encoding::cbor::encode($input));
+};
+
+DEFINE FUNCTION fn::get_file($file_name: string) {
+    encoding::cbor::decode(type::file("shopping_carts", $file_name).get())
+};
+
+DEFINE FUNCTION fn::delete_file($file_name: string) {
+    type::file("shopping_carts", $file_name).delete();
+};
+
+-- Save current shoppingcart
+fn::save_file("temp_cart_user_24567", {
+    items: ["shirt1"],
+    last_updated: time::now()
+});
+
+fn::get_file("temp_shopping_cart_user_24567");
+-- Returns { items: ['shirt1', 'deck_of_cards'], last_updated: d'2025-11-20T01:03:24.141080Z' }
+
+-- User adds item, save over file with newer information
+fn::save_file("temp_cart_user_24567", {
+    items: ["shirt1", "deck_of_cards"],
+    last_updated: time::now()
+});
+
+fn::get_file("temp_cart_user_24567");
+-- Returns { items: ['shirt1', 'deck_of_cards'], last_updated: d'2025-11-20T01:06:02.752429Z' }
+
+-- Session is over, delete temp file
+fn::delete_file("temp_cart_user_24567");
+```
 
 ---
 ---
@@ -5926,17 +6435,17 @@ SELECT * FROM user;
 [SurrealQL004]:            <#q004---arrays>                        "SurrealQL 🞂 Data type 🞂 Arrays"
 [SurrealQL004_original]:   <https://surrealdb.com/docs/3.x/surrealql/datamodel/arrays>
 [SurrealQL005]:            <#q005---booleans>                      "SurrealQL 🞂 Data type 🞂 Booleans"
-[SurrealQL005_original]:   <>
+[SurrealQL005_original]:   <https://surrealdb.com/docs/3.x/surrealql/datamodel/booleans>
 [SurrealQL006]:            <#q006---bytes>                         "SurrealQL 🞂 Data type 🞂 Bytes"
-[SurrealQL006_original]:   <>
+[SurrealQL006_original]:   <https://surrealdb.com/docs/3.x/surrealql/datamodel/bytes>
 [SurrealQL007]:            <#q007---casting>                       "SurrealQL 🞂 Data type 🞂 Casting"
 [SurrealQL007_original]:   <>
 [SurrealQL008]:            <#q008---anonymous-functions-closures>  "SurrealQL 🞂 Data type 🞂 Anonymous functions (closures)"
-[SurrealQL008_original]:   <>
+[SurrealQL008_original]:   <https://surrealdb.com/docs/3.x/surrealql/datamodel/closures>
 [SurrealQL009]:            <#q009---datetimes>                     "SurrealQL 🞂 Data type 🞂 Datetimes"
 [SurrealQL009_original]:   <>
 [SurrealQL010]:            <#q010---files>                         "SurrealQL 🞂 Data type 🞂 Files"
-[SurrealQL010_original]:   <>
+[SurrealQL010_original]:   <https://surrealdb.com/docs/3.x/surrealql/datamodel/files>
 [SurrealQL011]:            <#q011---formatters>                    "SurrealQL 🞂 Data type 🞂 Formatters"
 [SurrealQL011_original]:   <>
 [SurrealQL012]:            <#q012---futures-computed-clause>       "SurrealQL 🞂 Data type 🞂 Futures (`COMPUTED` clause)"
@@ -6225,4 +6734,8 @@ SELECT * FROM user;
 [brakuje_func_db_time#timemin]: </docs/surrealql/functions/database/time#timemin>
 [brakuje_func_db_values#comparing-and-ordering-values]: </docs/surrealql/datamodel/values#comparing-and-ordering-values>
 [brakuje_func_db_value#chain]: </docs/surrealql/functions/database/value#chain>
+[brakuje_func_db_file]: </docs/surrealql/functions/database/file>
+[brakuje_func_db_encoding#encodingcbordecod]: </docs/surrealql/functions/database/encoding#encodingcbordecode>
+[brakuje_model_ids#record-ranges]: </docs/surrealql/datamodel/ids#record-ranges>
+[brakuje_stat_def_bucket]: </docs/surrealql/statements/define/bucket>
 ---
