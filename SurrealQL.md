@@ -1,6 +1,6 @@
 # _q000 - **SurrealQL**_
 
-- [📓][SurrealQL000_original]
+- [📓](https://surrealdb.com/docs/3.x/surrealql)
 
 ![SurrealQL][icon_SurrealQL]
 
@@ -39,7 +39,7 @@ SurrealQL empowers you to leverage the full potential of SurrealDB and enables y
 
 ## _q001 - **Demo data**_
 
-- [📓][SurrealQL001_original]
+- [📓](https://surrealdb.com/docs/3.x/surrealql/demo)
 
 To quickly test out SurrealDB and SurrealQL functionality, we've included two demo datasets here in `.surql` files which you can download and [`import`][SurrealDB_cli_import] into SurrealDB using the [CLI][SurrealDB_cli].
 
@@ -127,7 +127,7 @@ Here are some sample queries you can run on the Surreal Deal Store dataset. We'v
 
 ## _q002 - **Operators**_
 
-- [📓][SurrealQL002_original]
+- [📓](https://surrealdb.com/docs/3.x/surrealql/operators)
 
 A variety of operators in SurrealQL allow for complex manipulation of data, and advanced logic.
 
@@ -1467,7 +1467,7 @@ value = "20dec"
 
 ## _q003 - **Data types**_
 
-- [📓][SurrealQL003_original]
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel)
 
 SurrealQL allows you to describe data with specific data types. These data types are used to validate data and to generate the appropriate database schema.
 
@@ -1520,7 +1520,7 @@ CREATE foo SET value = <bytes>"bar";
 
 ## _q004 - **Arrays**_
 
-- [📓][SurrealQL004_original]
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/arrays)
 
 An array is a collection of values contained inside `[]` (square brackets), each of which is stored at a certain index. Individual indexes and slices of indexes can be accesses using the same square bracket syntax.
 
@@ -1876,7 +1876,7 @@ value = "[1, 2, 3, 4]"
 
 ## _q005 - **Booleans**_
 
-- [📓][SurrealQL005_original]
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/booleans)
 
 Boolean values can be used to mark whether a field is `true` or `false`.
 
@@ -1982,7 +1982,7 @@ SELECT * FROM person:one;
 
 ## _q006 - **Bytes**_
 
-- [📓][SurrealQL006_original]
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/bytes)
 
 Bytes can be created by casting from a string, and are displayed using hexidecimal encoding.
 
@@ -2077,7 +2077,7 @@ b"486F6262697473";
 
 ## _q008 - **Anonymous functions (closures)**_
 
-- [📓][SurrealQL008_original]
+- [📓][SurrealQL008_original](https://surrealdb.com/docs/3.x/surrealql/datamodel/closures)
 
 > Available since: V2.0.0
 
@@ -2809,6 +2809,8 @@ RETURN [
 
 ## _q098 - **Functions**_
 
+- [📓](https://surrealdb.com/docs/3.x/surrealql/functions)
+
 SurrealDB offers a number of functions that can be used to perform complex logic. These functions are grouped into the following categories:
 
 - [Database functions][SurrealQL099]
@@ -2830,7 +2832,7 @@ SurrealDB offers a number of functions that can be used to perform complex logic
 
 ## _q101 - **Array functions**_
 
-- [📓][SurrealQL101_original]
+- [📓](https://surrealdb.com/docs/3.x/surrealql/functions/database/array)
 
 These functions can be used when working with, and manipulating arrays of data.
 
@@ -5939,7 +5941,7 @@ array::join(array::push(["Again", "again"], "again"), " and ");
 
 ## _q135 - **Transactions**_
 
-- [📓][SurrealQL135_original]
+- [📓](https://surrealdb.com/docs/3.x/surrealql/transactions)
 
 Each statement within SurrealDB is run within its own transaction by default. If a set of changes need to be made together, then groups of statements can be run together as a single transaction. If all of the statements within a transaction succeed, and the transaction is successful, then all of the data modifications made during the transaction are committed and become a permanent part of the database. If a transaction encounters errors and must be cancelled or rolled back, then any data modification made within the transaction is rolled back, and will not become a permanent part of the database.
 
@@ -6165,7 +6167,7 @@ COMMIT TRANSACTION;
 
 ## _q136 - **Comments**_
 
-- [📓][SurrealQL136_original]
+- [📓](https://surrealdb.com/docs/3.x/surrealql/comments)
 
 In SurrealQL, comments can be written in a number of different ways.
 
@@ -6328,376 +6330,239 @@ SELECT * FROM user;
 [test135][SurrealQL135]
 [test136][SurrealQL136]
 
-[SurrealQL002_and]:        <#q002aa----or-and> "`&&` or `AND`"
-[SurrealQL002_or]:         <#q002ab----or-or> "`||` or `OR`"
-[SurrealQL002_not]:        <#q002ac----not> "`!` (not)"
-[SurrealQL002_notnot]:     <#q002ad----not-not> "`!!` (not not)"
-[SurrealQL002_null]:       <#q002ae----null-coalescing> "`??` (null coalescing)"
-[SurrealQL002_truthy]:     <#q002af----truthy-coalescing> "`??` (truthy coalescing)"
-[SurrealQL002_equal]:      <#q002ag----or-is> "`=` or `IS`"
-[SurrealQL002_notequal]:   <#q002ah----or-is-not> "`=` or `IS`"
-[SurrealQL002_exact]:      <#q002ai----exact> "`==` (exact)"
-[SurrealQL002_anyequal]:   <#q002aj----any-equal> "`?=` (any equal)"
-[SurrealQL002_allequal]:   <#q002ak----all-equal> "`*=` (all equal)"
-[SurrealQL002_similar]:    <#q002al-------similarity> "`~` `?~` `!~` `*~` (similarity)"
-[SurrealQL002_less]:       <#q002am----less> "`<` (less)"
-[SurrealQL002_lessequal]:  <#q002an----less-or-equal> "`<=` (less or equal)"
-[SurrealQL002_more]:       <#q002ao----more> "`>` (more)"
-[SurrealQL002_moreequal]:  <#q002ap----more-or-equal> "`>=` (more or equal)"
-[SurrealQL002_add]:        <#q002aq----add> "`+` (add)"
-[SurrealQL002_sub]:        <#q002ar-----sub> "`-` (sub)"
-[SurrealQL002_mul]:        <#q002as----or--mul> "`*` or `×` (mul)"
-[SurrealQL002_div]:        <#q002at----or--div> "`/` or `÷`  (div)"
-[SurrealQL002_pow]:        <#q002au----pow> "`**` (pow)"
-[SurrealQL002_co_equ]:     <#q002av---contains-or-> "`CONTAINS` or `∋`"
-[SurrealQL002_co_not]:     <#q002aw---containsnot-or-> "`CONTAINSNOT` or `∌`"
-[SurrealQL002_co_all]:     <#q002ax---containsall-or-> "`CONTAINSALL` or `⊇`"
-[SurrealQL002_co_any]:     <#q002ay---containsany-or-> "`CONTAINSANY` or `⊃`"
-[SurrealQL002_co_non]:     <#q002az---containsnone-or-> "`CONTAINSNONE` or `⊅`"
-[SurrealQL002_in_equ]:     <#q002ba---inside-or--or-in> "`INSIDE` or `∈` or `IN`"
-[SurrealQL002_in_not]:     <#q002bb---notinside-or--or-not-in> "`NOTINSIDE` or `∉` or `NOT IN`"
-[SurrealQL002_in_all]:     <#q002bc---allinside-or-> "`ALLINSIDE` or `⊆`"
-[SurrealQL002_in_any]:     <#q002bd---anyinside-or-> "`ANYINSIDE` or `⊂`"
-[SurrealQL002_in_non]:     <#q002be---noneinside-or-> "`NONEINSIDE` or `⊄`"
-[SurrealQL002_outside]:    <#q002bf---outside> "`OUTSIDE`"
-[SurrealQL002_inter]:      <#q002bg---intersects> "`INTERSECTS`"
-[SurrealQL002_matches]:    <#q002bh---matches> "`MATCHES`"
-[SurrealQL002_knn]:        <#q002bi---knn> "`KNN`"
-[SurrealQL003_geometry]:   <#q003a---example-geometry> "Example geometry"
-[SurrealQL003_bytes]:      <#q003b---example-bytes> "Example bytes"
-[SurrealQL101_add]:        <#q101aa---arrayadd> "`array::add`"
-[SurrealQL101_all]: <#q101ab---arrayall> "`array::all`"
-[SurrealQL101_any]: <#q101ac---arrayany> "`array::any`"
-[SurrealQL101_at]: <#q101ad---arrayat> "`array::at`"
-[SurrealQL101_append]: <#q101ae---arrayappend> "`array::append`"
-[SurrealQL101_boolean_and]: <#q101af---arrayboolean_and> "`array::boolean_and`"
-[SurrealQL101_boolean_or]: <#q101ag---arrayboolean_or> "`array::boolean_or`"
-[SurrealQL101_boolean_xor]: <#q101ah---arrayboolean_xor> "`array::boolean_xor`"
-[SurrealQL101_boolean_not]: <#q101ai---arrayboolean_not> "`array::boolean_not`"
-[SurrealQL101_combine]: <#q101aj---arraycombine> "`array::combine`"
-[SurrealQL101_complement]: <#q101ak---arraycomplement> "`array::complement`"
-[SurrealQL101_clump]: <#q101am---arrayclump> "`array::clump`"
-[SurrealQL101_concat]: <#q101al---arrayconcat> "`array::concat`"
-[SurrealQL101_difference]: <#q101an---arraydifference> "`array::difference`"
-[SurrealQL101_distinct]: <#q101ao---arraydistinct> "`array::distinct`"
-[SurrealQL101_fill]: <#q101ap---arrayfill> "`array::fill`"
-[SurrealQL101_filter]: <#q101aq---arrayfilter> "`array::filter`"
-[SurrealQL101_filter_index]: <#q101ar---arrayfilter_index> "`array::filter_index`"
-[SurrealQL101_find]: <#q101as---arrayfind> "`array::find`"
-[SurrealQL101_find_index]: <#q101at---arrayfind_index> "`array::find_index`"
-[SurrealQL101_first]: <#q101au---arrayfirst> "`array::first`"
-[SurrealQL101_flatten]: <#q101av---arrayflatten> "`array::flatten`"
-[SurrealQL101_fold]: <#q101aw---arrayfold> "`array::fold`"
-[SurrealQL101_group]: <#q101ax---arraygroup> "`array::group`"
-[SurrealQL101_insert]: <#q101ay---arrayinsert> "`array::insert`"
-[SurrealQL101_intersect]: <#q101az---arrayintersect> "`array::intersect`"
-[SurrealQL101_is_empty]: <#q101ba---arrayis_empty> "`array::is_empty`"
-[SurrealQL101_join]: <#q101bb---arrayjoin> "`array::join`"
-[SurrealQL101_last]: <#q101bc---arraylast> "`array::last`"
-[SurrealQL101_len]: <#q101bd---arraylen> "`array::len`"
-[SurrealQL101_logical_and]: <#q101be---arraylogical_and> "`array::logical_and`"
-[SurrealQL101_logical_or]: <#q101bf---arraylogical_or> "`array::logical_or`"
-[SurrealQL101_logical_xor]: <#q101bg---arraylogical_xor> "`array::logical_xor`"
-[SurrealQL101_map]: <#q101bh---arraymap> "`array::map`"
-[SurrealQL101_max]: <#q101bi---arraymax> "`array::max`"
-[SurrealQL101_matches]: <#q101bj---arraymatches> "`array::matches`"
-[SurrealQL101_min]: <#q101bk---arraymin> "`array::min`"
-[SurrealQL101_pop]: <#q101bl---arraypop> "`array::pop`"
-[SurrealQL101_prepend]: <#q101bm---arrayprepend> "`array::prepend`"
-[SurrealQL101_push]: <#q101bn---arraypush> "`array::push`"
-[SurrealQL101_range]: <#q101bo---arrayrange> "`array::range`"
-[SurrealQL101_reduce]: <#q101bp---arrayreduce> "`array::reduce`"
-[SurrealQL101_remove]: <#q101bq---arrayremove> "`array::remove`"
-[SurrealQL101_repeat]: <#q101br---arrayrepeat> "`array::repeat`"
-[SurrealQL101_reverse]: <#q101bs---arrayreverse> "`array::reverse`"
-[SurrealQL101_sequence]: <#q101bt---arraysequence> "`array::sequence`"
-[SurrealQL101_shuffle]: <#q101bu---arrayshuffle> "`array::shuffle`"
-[SurrealQL101_slice]: <#q101bv---arrayslice> "`array::slice`"
-[SurrealQL101_sort]: <#q101bw---arraysort> "`array::sort`"
-[SurrealQL101_sort_lexical]: <#q101bx---arraysort_lexical> "`array::sort_lexical`"
-[SurrealQL101_sort_natural]: <#q101by---arraysort_natural> "`array::sort_natural`"
+[SurrealQL002_and]:                  <#q002aa----or-and> "`&&` or `AND`"
+[SurrealQL002_or]:                   <#q002ab----or-or> "`||` or `OR`"
+[SurrealQL002_not]:                  <#q002ac----not> "`!` (not)"
+[SurrealQL002_notnot]:               <#q002ad----not-not> "`!!` (not not)"
+[SurrealQL002_null]:                 <#q002ae----null-coalescing> "`??` (null coalescing)"
+[SurrealQL002_truthy]:               <#q002af----truthy-coalescing> "`??` (truthy coalescing)"
+[SurrealQL002_equal]:                <#q002ag----or-is> "`=` or `IS`"
+[SurrealQL002_notequal]:             <#q002ah----or-is-not> "`=` or `IS`"
+[SurrealQL002_exact]:                <#q002ai----exact> "`==` (exact)"
+[SurrealQL002_anyequal]:             <#q002aj----any-equal> "`?=` (any equal)"
+[SurrealQL002_allequal]:             <#q002ak----all-equal> "`*=` (all equal)"
+[SurrealQL002_similar]:              <#q002al-------similarity> "`~` `?~` `!~` `*~` (similarity)"
+[SurrealQL002_less]:                 <#q002am----less> "`<` (less)"
+[SurrealQL002_lessequal]:            <#q002an----less-or-equal> "`<=` (less or equal)"
+[SurrealQL002_more]:                 <#q002ao----more> "`>` (more)"
+[SurrealQL002_moreequal]:            <#q002ap----more-or-equal> "`>=` (more or equal)"
+[SurrealQL002_add]:                  <#q002aq----add> "`+` (add)"
+[SurrealQL002_sub]:                  <#q002ar-----sub> "`-` (sub)"
+[SurrealQL002_mul]:                  <#q002as----or--mul> "`*` or `×` (mul)"
+[SurrealQL002_div]:                  <#q002at----or--div> "`/` or `÷`  (div)"
+[SurrealQL002_pow]:                  <#q002au----pow> "`**` (pow)"
+[SurrealQL002_co_equ]:               <#q002av---contains-or-> "`CONTAINS` or `∋`"
+[SurrealQL002_co_not]:               <#q002aw---containsnot-or-> "`CONTAINSNOT` or `∌`"
+[SurrealQL002_co_all]:               <#q002ax---containsall-or-> "`CONTAINSALL` or `⊇`"
+[SurrealQL002_co_any]:               <#q002ay---containsany-or-> "`CONTAINSANY` or `⊃`"
+[SurrealQL002_co_non]:               <#q002az---containsnone-or-> "`CONTAINSNONE` or `⊅`"
+[SurrealQL002_in_equ]:               <#q002ba---inside-or--or-in> "`INSIDE` or `∈` or `IN`"
+[SurrealQL002_in_not]:               <#q002bb---notinside-or--or-not-in> "`NOTINSIDE` or `∉` or `NOT IN`"
+[SurrealQL002_in_all]:               <#q002bc---allinside-or-> "`ALLINSIDE` or `⊆`"
+[SurrealQL002_in_any]:               <#q002bd---anyinside-or-> "`ANYINSIDE` or `⊂`"
+[SurrealQL002_in_non]:               <#q002be---noneinside-or-> "`NONEINSIDE` or `⊄`"
+[SurrealQL002_outside]:              <#q002bf---outside> "`OUTSIDE`"
+[SurrealQL002_inter]:                <#q002bg---intersects> "`INTERSECTS`"
+[SurrealQL002_matches]:              <#q002bh---matches> "`MATCHES`"
+[SurrealQL002_knn]:                  <#q002bi---knn> "`KNN`"
+[SurrealQL003_geometry]:             <#q003a---example-geometry> "Example geometry"
+[SurrealQL003_bytes]:                <#q003b---example-bytes> "Example bytes"
+[SurrealQL101_add]:                  <#q101aa---arrayadd> "`array::add`"
+[SurrealQL101_all]:                  <#q101ab---arrayall> "`array::all`"
+[SurrealQL101_any]:                  <#q101ac---arrayany> "`array::any`"
+[SurrealQL101_at]:                   <#q101ad---arrayat> "`array::at`"
+[SurrealQL101_append]:               <#q101ae---arrayappend> "`array::append`"
+[SurrealQL101_boolean_and]:          <#q101af---arrayboolean_and> "`array::boolean_and`"
+[SurrealQL101_boolean_or]:           <#q101ag---arrayboolean_or> "`array::boolean_or`"
+[SurrealQL101_boolean_xor]:          <#q101ah---arrayboolean_xor> "`array::boolean_xor`"
+[SurrealQL101_boolean_not]:          <#q101ai---arrayboolean_not> "`array::boolean_not`"
+[SurrealQL101_combine]:              <#q101aj---arraycombine> "`array::combine`"
+[SurrealQL101_complement]:           <#q101ak---arraycomplement> "`array::complement`"
+[SurrealQL101_clump]:                <#q101am---arrayclump> "`array::clump`"
+[SurrealQL101_concat]:               <#q101al---arrayconcat> "`array::concat`"
+[SurrealQL101_difference]:           <#q101an---arraydifference> "`array::difference`"
+[SurrealQL101_distinct]:             <#q101ao---arraydistinct> "`array::distinct`"
+[SurrealQL101_fill]:                 <#q101ap---arrayfill> "`array::fill`"
+[SurrealQL101_filter]:               <#q101aq---arrayfilter> "`array::filter`"
+[SurrealQL101_filter_index]:         <#q101ar---arrayfilter_index> "`array::filter_index`"
+[SurrealQL101_find]:                 <#q101as---arrayfind> "`array::find`"
+[SurrealQL101_find_index]:           <#q101at---arrayfind_index> "`array::find_index`"
+[SurrealQL101_first]:                <#q101au---arrayfirst> "`array::first`"
+[SurrealQL101_flatten]:              <#q101av---arrayflatten> "`array::flatten`"
+[SurrealQL101_fold]:                 <#q101aw---arrayfold> "`array::fold`"
+[SurrealQL101_group]:                <#q101ax---arraygroup> "`array::group`"
+[SurrealQL101_insert]:               <#q101ay---arrayinsert> "`array::insert`"
+[SurrealQL101_intersect]:            <#q101az---arrayintersect> "`array::intersect`"
+[SurrealQL101_is_empty]:             <#q101ba---arrayis_empty> "`array::is_empty`"
+[SurrealQL101_join]:                 <#q101bb---arrayjoin> "`array::join`"
+[SurrealQL101_last]:                 <#q101bc---arraylast> "`array::last`"
+[SurrealQL101_len]:                  <#q101bd---arraylen> "`array::len`"
+[SurrealQL101_logical_and]:          <#q101be---arraylogical_and> "`array::logical_and`"
+[SurrealQL101_logical_or]:           <#q101bf---arraylogical_or> "`array::logical_or`"
+[SurrealQL101_logical_xor]:          <#q101bg---arraylogical_xor> "`array::logical_xor`"
+[SurrealQL101_map]:                  <#q101bh---arraymap> "`array::map`"
+[SurrealQL101_max]:                  <#q101bi---arraymax> "`array::max`"
+[SurrealQL101_matches]:              <#q101bj---arraymatches> "`array::matches`"
+[SurrealQL101_min]:                  <#q101bk---arraymin> "`array::min`"
+[SurrealQL101_pop]:                  <#q101bl---arraypop> "`array::pop`"
+[SurrealQL101_prepend]:              <#q101bm---arrayprepend> "`array::prepend`"
+[SurrealQL101_push]:                 <#q101bn---arraypush> "`array::push`"
+[SurrealQL101_range]:                <#q101bo---arrayrange> "`array::range`"
+[SurrealQL101_reduce]:               <#q101bp---arrayreduce> "`array::reduce`"
+[SurrealQL101_remove]:               <#q101bq---arrayremove> "`array::remove`"
+[SurrealQL101_repeat]:               <#q101br---arrayrepeat> "`array::repeat`"
+[SurrealQL101_reverse]:              <#q101bs---arrayreverse> "`array::reverse`"
+[SurrealQL101_sequence]:             <#q101bt---arraysequence> "`array::sequence`"
+[SurrealQL101_shuffle]:              <#q101bu---arrayshuffle> "`array::shuffle`"
+[SurrealQL101_slice]:                <#q101bv---arrayslice> "`array::slice`"
+[SurrealQL101_sort]:                 <#q101bw---arraysort> "`array::sort`"
+[SurrealQL101_sort_lexical]:         <#q101bx---arraysort_lexical> "`array::sort_lexical`"
+[SurrealQL101_sort_natural]:         <#q101by---arraysort_natural> "`array::sort_natural`"
 [SurrealQL101_sort_natural_lexical]: <#q101bz---arraysort_natural_lexical> "`array::sort_natural_lexical`"
-[SurrealQL101_sort_asc]: <#q101ca---arraysortasc> "`array::sort::asc`"
-[SurrealQL101_sort_desc]: <#q101cb---arraysortdesc> "`array::sort::desc`"
-[SurrealQL101_swap]: <#q101cc---arrayswap> "`array::swap`"
-[SurrealQL101_transpose]: <#q101cd---arraytranspose> "`array::transpose`"
-[SurrealQL101_union]: <#q101ce---arrayunion> "`array::union`"
-[SurrealQL101_windows]: <#q101cf---arraywindows> "`array::windows`"
+[SurrealQL101_sort_asc]:             <#q101ca---arraysortasc> "`array::sort::asc`"
+[SurrealQL101_sort_desc]:            <#q101cb---arraysortdesc> "`array::sort::desc`"
+[SurrealQL101_swap]:                 <#q101cc---arrayswap> "`array::swap`"
+[SurrealQL101_transpose]:            <#q101cd---arraytranspose> "`array::transpose`"
+[SurrealQL101_union]:                <#q101ce---arrayunion> "`array::union`"
+[SurrealQL101_windows]:              <#q101cf---arraywindows> "`array::windows`"
 
-[SurrealQL000]:            <#q000---surrealql>                     "SurrealQL"
-[SurrealQL000_original]:   <https://surrealdb.com/docs/3.x/surrealql>
-[SurrealQL001]:            <#q001---demo-data>                     "SurrealQL 🞂 Demo data"
-[SurrealQL001_original]:   <https://surrealdb.com/docs/3.x/surrealql/demo>
-[SurrealQL002]:            <#q002---operators>                     "SurrealQL 🞂 Operators"
-[SurrealQL002_original]:   <https://surrealdb.com/docs/3.x/surrealql/operators>
-[SurrealQL003]:            <#q003---data-types                     "SurrealQL 🞂 Data types"
-[SurrealQL003_original]:   <https://surrealdb.com/docs/3.x/surrealql/datamodel>
-[SurrealQL004]:            <#q004---arrays>                        "SurrealQL 🞂 Data type 🞂 Arrays"
-[SurrealQL004_original]:   <https://surrealdb.com/docs/3.x/surrealql/datamodel/arrays>
-[SurrealQL005]:            <#q005---booleans>                      "SurrealQL 🞂 Data type 🞂 Booleans"
-[SurrealQL005_original]:   <https://surrealdb.com/docs/3.x/surrealql/datamodel/booleans>
-[SurrealQL006]:            <#q006---bytes>                         "SurrealQL 🞂 Data type 🞂 Bytes"
-[SurrealQL006_original]:   <https://surrealdb.com/docs/3.x/surrealql/datamodel/bytes>
-[SurrealQL007]:            <#q007---casting>                       "SurrealQL 🞂 Data type 🞂 Casting"
-[SurrealQL007_original]:   <>
-[SurrealQL008]:            <#q008---anonymous-functions-closures>  "SurrealQL 🞂 Data type 🞂 Anonymous functions (closures)"
-[SurrealQL008_original]:   <https://surrealdb.com/docs/3.x/surrealql/datamodel/closures>
-[SurrealQL009]:            <#q009---datetimes>                     "SurrealQL 🞂 Data type 🞂 Datetimes"
-[SurrealQL009_original]:   <>
-[SurrealQL010]:            <#q010---files>                         "SurrealQL 🞂 Data type 🞂 Files"
-[SurrealQL010_original]:   <https://surrealdb.com/docs/3.x/surrealql/datamodel/files>
-[SurrealQL011]:            <#q011---formatters>                    "SurrealQL 🞂 Data type 🞂 Formatters"
-[SurrealQL011_original]:   <>
-[SurrealQL012]:            <#q012---futures-computed-clause>       "SurrealQL 🞂 Data type 🞂 Futures (`COMPUTED` clause)"
-[SurrealQL012_original]:   <>
-[SurrealQL013]:            <#q013---geometries>                    "SurrealQL 🞂 Data type 🞂 Geometries"
-[SurrealQL013_original]:   <>
-[SurrealQL014]:            <#q014---idioms>                        "SurrealQL 🞂 Data type 🞂 Idioms"
-[SurrealQL014_original]:   <>
-[SurrealQL015]:            <#q015---literals>                      "SurrealQL 🞂 Data type 🞂 Literals"
-[SurrealQL015_original]:   <>
-[SurrealQL016]:            <#q016---none-and-null>                 "SurrealQL 🞂 Data type 🞂 None and null"
-[SurrealQL016_original]:   <>
-[SurrealQL017]:            <#q017---numbers>                       "SurrealQL 🞂 Data type 🞂 Numbers"
-[SurrealQL017_original]:   <>
-[SurrealQL018]:            <#q018---objects>                       "SurrealQL 🞂 Data type 🞂 Objects"
-[SurrealQL018_original]:   <>
-[SurrealQL019]:            <#q019---ranges>                        "SurrealQL 🞂 Data type 🞂 Ranges"
-[SurrealQL019_original]:   <>
-[SurrealQL020]:            <#q020---record-ids>                    "SurrealQL 🞂 Data type 🞂 Record IDs"
-[SurrealQL020_original]:   <>
-[SurrealQL021]:            <#q021---record-links>                  "SurrealQL 🞂 Data type 🞂 Record links"
-[SurrealQL021_original]:   <>
-[SurrealQL022]:            <#q022---record-references>             "SurrealQL 🞂 Data type 🞂 Record references"
-[SurrealQL022_original]:   <>
-[SurrealQL023]:            <#q023---regex>                         "SurrealQL 🞂 Data type 🞂 Regex"
-[SurrealQL023_original]:   <>
-[SurrealQL024]:            <#q024---sets>                          "SurrealQL 🞂 Data type 🞂 Sets"
-[SurrealQL024_original]:   <>
-[SurrealQL025]:            <#q025---strings>                       "SurrealQL 🞂 Data type 🞂 Strings"
-[SurrealQL025_original]:   <>
-[SurrealQL026]:            <#q026---uuids>                         "SurrealQL 🞂 Data type 🞂 UUIDs"
-[SurrealQL026_original]:   <>
-[SurrealQL027]:            <#q027---values>                        "SurrealQL 🞂 Data type 🞂 Values"
-[SurrealQL027_original]:   <>
-[SurrealQL028]:            <#q028---statements>                    "SurrealQL 🞂 Statements"
-[SurrealQL028_original]:   <>
-[SurrealQL029]:            <#q029---access-statement>              "SurrealQL 🞂 Statement 🞂 `ACCESS`"
-[SurrealQL029_original]:   <>
-[SurrealQL030]:            <#q030---alter-statement>               "SurrealQL 🞂 Statement 🞂 `ALTER`"
-[SurrealQL030_original]:   <>
-[SurrealQL031]:            <#q031---alter-database-statement>      "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `DATABASE`"
-[SurrealQL031_original]:   <>
-[SurrealQL032]:            <#q032---alter-field-statement>         "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `FIELD`"
-[SurrealQL032_original]:   <>
-[SurrealQL033]:            <#q033---alter-index-statement>         "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `INDEX`"
-[SurrealQL033_original]:   <>
-[SurrealQL034]:            <#q034---alter-namespace-statement>     "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `NAMESPACE`"
-[SurrealQL034_original]:   <>
-[SurrealQL035]:            <#q035---alter-sequence-statement>      "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `SEQUENCE`"
-[SurrealQL035_original]:   <>
-[SurrealQL036]:            <#q036---alter-system-statement>        "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `SYSTEM`"
-[SurrealQL036_original]:   <>
-[SurrealQL037]:            <#q037---alter-table-statement>         "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `TABLE`"
-[SurrealQL037_original]:   <>
-[SurrealQL038]:            <#q038---begin-statement>               "SurrealQL 🞂 Statement 🞂 `BEGIN`"
-[SurrealQL038_original]:   <>
-[SurrealQL039]:            <#q039---break-statement>               "SurrealQL 🞂 Statement 🞂 `BREAK`"
-[SurrealQL039_original]:   <>
-[SurrealQL040]:            <#q040---cancel-statement>              "SurrealQL 🞂 Statement 🞂 `CANCEL`"
-[SurrealQL040_original]:   <>
-[SurrealQL041]:            <#q041---commit-statement>              "SurrealQL 🞂 Statement 🞂 `COMMIT`"
-[SurrealQL041_original]:   <>
-[SurrealQL042]:            <#q042---continue-statement>            "SurrealQL 🞂 Statement 🞂 `CONTINUE`"
-[SurrealQL042_original]:   <>
-[SurrealQL043]:            <#q043---create-statement>              "SurrealQL 🞂 Statement 🞂 `CREATE`"
-[SurrealQL043_original]:   <>
-[SurrealQL044]:            <#q044---define-statement>              "SurrealQL 🞂 Statement 🞂 `DEFINE`"
-[SurrealQL044_original]:   <>
-[SurrealQL045]:            <#q045---define-access-statement>       "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ACCESS`"
-[SurrealQL045_original]:   <>
-[SurrealQL046]:            <#q046---define-access--type-bearer>    "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ACCESS` 🞂 `TYPE BEARER`"
-[SurrealQL046_original]:   <>
-[SurrealQL047]:            <#q047---define-access--type-jwt>       "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ACCESS` 🞂 `TYPE JWT`"
-[SurrealQL047_original]:   <>
-[SurrealQL048]:            <#q048---define-access--type-record>    "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ACCESS` 🞂 `TYPE RECORD`"
-[SurrealQL048_original]:   <>
-[SurrealQL049]:            <#q049---define-analyzer-statement>     "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ANALYZER`"
-[SurrealQL049_original]:   <>
-[SurrealQL050]:            <#q050---define-api-statement>          "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `API`"
-[SurrealQL050_original]:   <>
-[SurrealQL051]:            <#q051---define-bucket-statement>       "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `BUCKET`"
-[SurrealQL051_original]:   <>
-[SurrealQL052]:            <#q052---define-config-statement>       "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `CONFIG`"
-[SurrealQL052_original]:   <>
-[SurrealQL053]:            <#q053---define-database-statement>     "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `DATABASE`"
-[SurrealQL053_original]:   <>
-[SurrealQL054]:            <#q054---define-event-statement>        "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `EVENT`"
-[SurrealQL054_original]:   <>
-[SurrealQL055]:            <#q055---define-field-statement>        "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `FIELD`"
-[SurrealQL055_original]:   <>
-[SurrealQL056]:            <#q056---define-function-statement>     "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `FUNCTION`"
-[SurrealQL056_original]:   <>
-[SurrealQL057]:            <#q057---define-index-statement>        "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `INDEX`"
-[SurrealQL057_original]:   <>
-[SurrealQL058]:            <#q058---define-module-statement>       "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `MODULE`"
-[SurrealQL058_original]:   <>
-[SurrealQL059]:            <#q059---define-namespace-statement>    "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `NAMESPACE`"
-[SurrealQL059_original]:   <>
-[SurrealQL060]:            <#q060---define-param-statement>        "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `PARAM`"
-[SurrealQL060_original]:   <>
-[SurrealQL061]:            <#q061---define-scope-statement>        "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `SCOPE`"
-[SurrealQL061_original]:   <>
-[SurrealQL062]:            <#q062---define-sequence-statement>     "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `SEQUENCE`"
-[SurrealQL062_original]:   <>
-[SurrealQL063]:            <#q063---define-table-statement>        "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `TABLE`"
-[SurrealQL063_original]:   <>
-[SurrealQL064]:            <#q064---define-token-statement>        "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `TOKEN`"
-[SurrealQL064_original]:   <>
-[SurrealQL065]:            <#q065---define-user-statement>         "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `USER`"
-[SurrealQL065_original]:   <>
-[SurrealQL066]:            <#q066---delete-statement>              "SurrealQL 🞂 Statement 🞂 `DELETE`"
-[SurrealQL066_original]:   <>
-[SurrealQL067]:            <#q067---explain-statement>             "SurrealQL 🞂 Statement 🞂 `EXPLAIN`"
-[SurrealQL067_original]:   <>
-[SurrealQL068]:            <#q068---for-statement>                 "SurrealQL 🞂 Statement 🞂 `FOR`"
-[SurrealQL068_original]:   <>
-[SurrealQL069]:            <#q069---if-else-statement>             "SurrealQL 🞂 Statement 🞂 `IF ELSE`"
-[SurrealQL069_original]:   <>
-[SurrealQL070]:            <#q070---info-statement>                "SurrealQL 🞂 Statement 🞂 `INFO`"
-[SurrealQL070_original]:   <>
-[SurrealQL071]:            <#q071---insert-statement>              "SurrealQL 🞂 Statement 🞂 `INSERT`"
-[SurrealQL071_original]:   <>
-[SurrealQL072]:            <#q072---kill-statement>                "SurrealQL 🞂 Statement 🞂 `KILL`"
-[SurrealQL072_original]:   <>
-[SurrealQL073]:            <#q073---let-statement>                 "SurrealQL 🞂 Statement 🞂 `LET`"
-[SurrealQL073_original]:   <>
-[SurrealQL074]:            <#q074---live-select-statement>         "SurrealQL 🞂 Statement 🞂 `LIVE SELECT`"
-[SurrealQL074_original]:   <>
-[SurrealQL075]:            <#q075---rebuild-statement>             "SurrealQL 🞂 Statement 🞂 `REBUILD`"
-[SurrealQL075_original]:   <>
-[SurrealQL076]:            <#q076---relate-statement>              "SurrealQL 🞂 Statement 🞂 `RELATE`"
-[SurrealQL076_original]:   <>
-[SurrealQL077]:            <#q077---remove-statement>              "SurrealQL 🞂 Statement 🞂 `REMOVE`"
-[SurrealQL077_original]:   <>
-[SurrealQL078]:            <#q078---return-statement>              "SurrealQL 🞂 Statement 🞂 `RETURN`"
-[SurrealQL078_original]:   <>
-[SurrealQL079]:            <#q079---select-statement>              "SurrealQL 🞂 Statement 🞂 `SELECT`"
-[SurrealQL079_original]:   <>
-[SurrealQL080]:            <#q080---show-statement>                "SurrealQL 🞂 Statement 🞂 `SHOW`"
-[SurrealQL080_original]:   <>
-[SurrealQL081]:            <#q081---sleep-statement>               "SurrealQL 🞂 Statement 🞂 `SLEEP`"
-[SurrealQL081_original]:   <>
-[SurrealQL082]:            <#q082---throw-statement>               "SurrealQL 🞂 Statement 🞂 `THROW`"
-[SurrealQL082_original]:   <>
-[SurrealQL083]:            <#q083---update-statement>              "SurrealQL 🞂 Statement 🞂 `UPDATE`"
-[SurrealQL083_original]:   <>
-[SurrealQL084]:            <#q084---upsert-statement>              "SurrealQL 🞂 Statement 🞂 `UPSERT`"
-[SurrealQL084_original]:   <>
-[SurrealQL085]:            <#q085---use-statement>                 "SurrealQL 🞂 Statement 🞂 `USE`"
-[SurrealQL085_original]:   <>
-[SurrealQL086]:            <#q086---clauses>                       "SurrealQL 🞂 Clauses"
-[SurrealQL086_original]:   <>
-[SurrealQL087]:            <#q087---explain-clauses>               "SurrealQL 🞂 Clauses 🞂 `EXPLAIN`"
-[SurrealQL087_original]:   <>
-[SurrealQL088]:            <#q088---fetch-clauses>                 "SurrealQL 🞂 Clauses 🞂 `FETCH`"
-[SurrealQL088_original]:   <>
-[SurrealQL089]:            <#q089---from-clauses>                  "SurrealQL 🞂 Clauses 🞂 `FROM`"
-[SurrealQL089_original]:   <>
-[SurrealQL090]:            <#q090---group-by-clauses>              "SurrealQL 🞂 Clauses 🞂 `GROUP BY`"
-[SurrealQL090_original]:   <>
-[SurrealQL091]:            <#q091---limit-clauses>                 "SurrealQL 🞂 Clauses 🞂 `LIMIT`"
-[SurrealQL091_original]:   <>
-[SurrealQL092]:            <#q092---omit-clauses>                  "SurrealQL 🞂 Clauses 🞂 `OMIT`"
-[SurrealQL092_original]:   <>
-[SurrealQL093]:            <#q093---order-by-clauses>              "SurrealQL 🞂 Clauses 🞂 `ORDER BY`"
-[SurrealQL093_original]:   <>
-[SurrealQL094]:            <#q094---split-clauses>                 "SurrealQL 🞂 Clauses 🞂 `SPLIT`"
-[SurrealQL094_original]:   <>
-[SurrealQL095]:            <#q095---where-clauses>                 "SurrealQL 🞂 Clauses 🞂 `WHERE`"
-[SurrealQL095_original]:   <>
-[SurrealQL096]:            <#q096---with-clauses>                  "SurrealQL 🞂 Clauses 🞂 `WITH`"
-[SurrealQL096_original]:   <>
-[SurrealQL097]:            <#q097---parameters>                    "SurrealQL 🞂 Parameters"
-[SurrealQL097_original]:   <>
-[SurrealQL098]:            <#q098---functions>                     "SurrealQL 🞂 Functions"
-[SurrealQL098_original]:   <https://surrealdb.com/docs/3.x/surrealql/functions>
-[SurrealQL099]:            <#q099---database-functions>            "SurrealQL 🞂 Functions 🞂 Database Functions"
-[SurrealQL099_original]:   <>
-[SurrealQL100]:            <#q100---api-functions>                 "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 API functions"
-[SurrealQL100_original]:   <>
-[SurrealQL101]:            <#q101---array-functions>               "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Array functions"
-[SurrealQL101_original]:   <https://surrealdb.com/docs/3.x/surrealql/functions/database/array>
-[SurrealQL102]:            <#q102---bytes-functions>               "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Bytes functions"
-[SurrealQL102_original]:   <>
-[SurrealQL103]:            <#q103---count-function>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Count function"
-[SurrealQL103_original]:   <>
-[SurrealQL104]:            <#q104---crypto-functions>              "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Crypto functions"
-[SurrealQL104_original]:   <>
-[SurrealQL105]:            <#q105---duration-functions>            "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Duration functions"
-[SurrealQL105_original]:   <>
-[SurrealQL106]:            <#q106---encoding-functions>            "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Encoding functions"
-[SurrealQL106_original]:   <>
-[SurrealQL107]:            <#q107---file-functions>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 File functions"
-[SurrealQL107_original]:   <>
-[SurrealQL108]:            <#q108---geo-functions>                 "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Geo functions"
-[SurrealQL108_original]:   <>
-[SurrealQL109]:            <#q109---http-functions>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 HTTP functions"
-[SurrealQL109_original]:   <>
-[SurrealQL110]:            <#q110---math-functions>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Math functions"
-[SurrealQL110_original]:   <>
-[SurrealQL111]:            <#q111---meta-functions>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Meta functions"
-[SurrealQL111_original]:   <>
-[SurrealQL112]:            <#q112---not-function>                  "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Not function"
-[SurrealQL112_original]:   <>
-[SurrealQL113]:            <#q113---object-functions>              "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Object functions"
-[SurrealQL113_original]:   <>
-[SurrealQL114]:            <#q114---parse-functions>               "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Parse functions"
-[SurrealQL114_original]:   <>
-[SurrealQL115]:            <#q115---rand-functions>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Rand functions"
-[SurrealQL115_original]:   <>
-[SurrealQL116]:            <#q116---record-functions>              "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Record functions"
-[SurrealQL116_original]:   <>
-[SurrealQL117]:            <#q117---search-functions>              "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Search functions"
-[SurrealQL117_original]:   <>
-[SurrealQL118]:            <#q118---sequence-functions>            "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Sequence functions"
-[SurrealQL118_original]:   <>
-[SurrealQL119]:            <#q119---session-functions>             "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Session functions"
-[SurrealQL119_original]:   <>
-[SurrealQL120]:            <#q120---set-functions>                 "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Set functions"
-[SurrealQL120_original]:   <>
-[SurrealQL121]:            <#q121---sleep-function>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Sleep function"
-[SurrealQL121_original]:   <>
-[SurrealQL122]:            <#q122---string-functions>              "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 String Functions"
-[SurrealQL122_original]:   <>
-[SurrealQL123]:            <#q123---time-functions>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Time Functions"
-[SurrealQL123_original]:   <>
-[SurrealQL124]:            <#q124---type-functions>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Type Functions"
-[SurrealQL124_original]:   <>
-[SurrealQL125]:            <#q125---value-functions>               "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Value functions"
-[SurrealQL125_original]:   <>
-[SurrealQL126]:            <#q126---vector-functions>              "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Vector functions"
-[SurrealQL126_original]:   <>
-[SurrealQL127]:            <#q127---embedded-scripting-functions>  "SurrealQL 🞂 Functions 🞂 Embedded scripting functions"
-[SurrealQL127_original]:   <>
-[SurrealQL128]:            <#q128---arguments>                     "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 Arguments"
-[SurrealQL128_original]:   <>
-[SurrealQL129]:            <#q129---built-in-functions>            "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 Built-in functions"
-[SurrealQL129_original]:   <>
-[SurrealQL130]:            <#q130---function-context>              "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 Function context"
-[SurrealQL130_original]:   <>
-[SurrealQL131]:            <#q131---type-conversion>               "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 Type conversion"
-[SurrealQL131_original]:   <>
-[SurrealQL132]:            <#q132---surrealql-functions>           "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 SurrealQL functions"
-[SurrealQL132_original]:   <>
-[SurrealQL133]:            <#q133---machine-learning-functions>    "SurrealQL 🞂 Functions 🞂 Machine Learning functions"
-[SurrealQL133_original]:   <>
-[SurrealQL134]:            <#q134---machine-learning-functions>    "SurrealQL 🞂 Functions 🞂 ML Functions 🞂 Machine Learning functions"
-[SurrealQL134_original]:   <>
-[SurrealQL135]:            <#q135---transactions>                  "SurrealQL 🞂 Transactions"
-[SurrealQL135_original]:   <https://surrealdb.com/docs/3.x/surrealql/transactions>
-[SurrealQL136]:            <#q136---comments>                      "SurrealQL 🞂 Comments"
-[SurrealQL136_original]:   <https://surrealdb.com/docs/3.x/surrealql/comments>
+[SurrealQL000]: <#q000---surrealql>                     "SurrealQL"
+[SurrealQL001]: <#q001---demo-data>                     "SurrealQL 🞂 Demo data"
+[SurrealQL002]: <#q002---operators>                     "SurrealQL 🞂 Operators"
+[SurrealQL003]: <#q003---data-types                     "SurrealQL 🞂 Data types"
+[SurrealQL004]: <#q004---arrays>                        "SurrealQL 🞂 Data type 🞂 Arrays"
+[SurrealQL005]: <#q005---booleans>                      "SurrealQL 🞂 Data type 🞂 Booleans"
+[SurrealQL006]: <#q006---bytes>                         "SurrealQL 🞂 Data type 🞂 Bytes"
+[SurrealQL007]: <#q007---casting>                       "SurrealQL 🞂 Data type 🞂 Casting"
+[SurrealQL008]: <#q008---anonymous-functions-closures>  "SurrealQL 🞂 Data type 🞂 Anonymous functions (closures)"
+[SurrealQL009]: <#q009---datetimes>                     "SurrealQL 🞂 Data type 🞂 Datetimes"
+[SurrealQL010]: <#q010---files>                         "SurrealQL 🞂 Data type 🞂 Files"
+[SurrealQL011]: <#q011---formatters>                    "SurrealQL 🞂 Data type 🞂 Formatters"
+[SurrealQL012]: <#q012---futures-computed-clause>       "SurrealQL 🞂 Data type 🞂 Futures (`COMPUTED` clause)"
+[SurrealQL013]: <#q013---geometries>                    "SurrealQL 🞂 Data type 🞂 Geometries"
+[SurrealQL014]: <#q014---idioms>                        "SurrealQL 🞂 Data type 🞂 Idioms"
+[SurrealQL015]: <#q015---literals>                      "SurrealQL 🞂 Data type 🞂 Literals"
+[SurrealQL016]: <#q016---none-and-null>                 "SurrealQL 🞂 Data type 🞂 None and null"
+[SurrealQL017]: <#q017---numbers>                       "SurrealQL 🞂 Data type 🞂 Numbers"
+[SurrealQL018]: <#q018---objects>                       "SurrealQL 🞂 Data type 🞂 Objects"
+[SurrealQL019]: <#q019---ranges>                        "SurrealQL 🞂 Data type 🞂 Ranges"
+[SurrealQL020]: <#q020---record-ids>                    "SurrealQL 🞂 Data type 🞂 Record IDs"
+[SurrealQL021]: <#q021---record-links>                  "SurrealQL 🞂 Data type 🞂 Record links"
+[SurrealQL022]: <#q022---record-references>             "SurrealQL 🞂 Data type 🞂 Record references"
+[SurrealQL023]: <#q023---regex>                         "SurrealQL 🞂 Data type 🞂 Regex"
+[SurrealQL024]: <#q024---sets>                          "SurrealQL 🞂 Data type 🞂 Sets"
+[SurrealQL025]: <#q025---strings>                       "SurrealQL 🞂 Data type 🞂 Strings"
+[SurrealQL026]: <#q026---uuids>                         "SurrealQL 🞂 Data type 🞂 UUIDs"
+[SurrealQL027]: <#q027---values>                        "SurrealQL 🞂 Data type 🞂 Values"
+[SurrealQL028]: <#q028---statements>                    "SurrealQL 🞂 Statements"
+[SurrealQL029]: <#q029---access-statement>              "SurrealQL 🞂 Statement 🞂 `ACCESS`"
+[SurrealQL030]: <#q030---alter-statement>               "SurrealQL 🞂 Statement 🞂 `ALTER`"
+[SurrealQL031]: <#q031---alter-database-statement>      "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `DATABASE`"
+[SurrealQL032]: <#q032---alter-field-statement>         "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `FIELD`"
+[SurrealQL033]: <#q033---alter-index-statement>         "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `INDEX`"
+[SurrealQL034]: <#q034---alter-namespace-statement>     "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `NAMESPACE`"
+[SurrealQL035]: <#q035---alter-sequence-statement>      "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `SEQUENCE`"
+[SurrealQL036]: <#q036---alter-system-statement>        "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `SYSTEM`"
+[SurrealQL037]: <#q037---alter-table-statement>         "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `TABLE`"
+[SurrealQL038]: <#q038---begin-statement>               "SurrealQL 🞂 Statement 🞂 `BEGIN`"
+[SurrealQL039]: <#q039---break-statement>               "SurrealQL 🞂 Statement 🞂 `BREAK`"
+[SurrealQL040]: <#q040---cancel-statement>              "SurrealQL 🞂 Statement 🞂 `CANCEL`"
+[SurrealQL041]: <#q041---commit-statement>              "SurrealQL 🞂 Statement 🞂 `COMMIT`"
+[SurrealQL042]: <#q042---continue-statement>            "SurrealQL 🞂 Statement 🞂 `CONTINUE`"
+[SurrealQL043]: <#q043---create-statement>              "SurrealQL 🞂 Statement 🞂 `CREATE`"
+[SurrealQL044]: <#q044---define-statement>              "SurrealQL 🞂 Statement 🞂 `DEFINE`"
+[SurrealQL045]: <#q045---define-access-statement>       "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ACCESS`"
+[SurrealQL046]: <#q046---define-access--type-bearer>    "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ACCESS` 🞂 `TYPE BEARER`"
+[SurrealQL047]: <#q047---define-access--type-jwt>       "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ACCESS` 🞂 `TYPE JWT`"
+[SurrealQL048]: <#q048---define-access--type-record>    "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ACCESS` 🞂 `TYPE RECORD`"
+[SurrealQL049]: <#q049---define-analyzer-statement>     "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ANALYZER`"
+[SurrealQL050]: <#q050---define-api-statement>          "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `API`"
+[SurrealQL051]: <#q051---define-bucket-statement>       "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `BUCKET`"
+[SurrealQL052]: <#q052---define-config-statement>       "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `CONFIG`"
+[SurrealQL053]: <#q053---define-database-statement>     "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `DATABASE`"
+[SurrealQL054]: <#q054---define-event-statement>        "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `EVENT`"
+[SurrealQL055]: <#q055---define-field-statement>        "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `FIELD`"
+[SurrealQL056]: <#q056---define-function-statement>     "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `FUNCTION`"
+[SurrealQL057]: <#q057---define-index-statement>        "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `INDEX`"
+[SurrealQL058]: <#q058---define-module-statement>       "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `MODULE`"
+[SurrealQL059]: <#q059---define-namespace-statement>    "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `NAMESPACE`"
+[SurrealQL060]: <#q060---define-param-statement>        "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `PARAM`"
+[SurrealQL061]: <#q061---define-scope-statement>        "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `SCOPE`"
+[SurrealQL062]: <#q062---define-sequence-statement>     "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `SEQUENCE`"
+[SurrealQL063]: <#q063---define-table-statement>        "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `TABLE`"
+[SurrealQL064]: <#q064---define-token-statement>        "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `TOKEN`"
+[SurrealQL065]: <#q065---define-user-statement>         "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `USER`"
+[SurrealQL066]: <#q066---delete-statement>              "SurrealQL 🞂 Statement 🞂 `DELETE`"
+[SurrealQL067]: <#q067---explain-statement>             "SurrealQL 🞂 Statement 🞂 `EXPLAIN`"
+[SurrealQL068]: <#q068---for-statement>                 "SurrealQL 🞂 Statement 🞂 `FOR`"
+[SurrealQL069]: <#q069---if-else-statement>             "SurrealQL 🞂 Statement 🞂 `IF ELSE`"
+[SurrealQL070]: <#q070---info-statement>                "SurrealQL 🞂 Statement 🞂 `INFO`"
+[SurrealQL071]: <#q071---insert-statement>              "SurrealQL 🞂 Statement 🞂 `INSERT`"
+[SurrealQL072]: <#q072---kill-statement>                "SurrealQL 🞂 Statement 🞂 `KILL`"
+[SurrealQL073]: <#q073---let-statement>                 "SurrealQL 🞂 Statement 🞂 `LET`"
+[SurrealQL074]: <#q074---live-select-statement>         "SurrealQL 🞂 Statement 🞂 `LIVE SELECT`"
+[SurrealQL075]: <#q075---rebuild-statement>             "SurrealQL 🞂 Statement 🞂 `REBUILD`"
+[SurrealQL076]: <#q076---relate-statement>              "SurrealQL 🞂 Statement 🞂 `RELATE`"
+[SurrealQL077]: <#q077---remove-statement>              "SurrealQL 🞂 Statement 🞂 `REMOVE`"
+[SurrealQL078]: <#q078---return-statement>              "SurrealQL 🞂 Statement 🞂 `RETURN`"
+[SurrealQL079]: <#q079---select-statement>              "SurrealQL 🞂 Statement 🞂 `SELECT`"
+[SurrealQL080]: <#q080---show-statement>                "SurrealQL 🞂 Statement 🞂 `SHOW`"
+[SurrealQL081]: <#q081---sleep-statement>               "SurrealQL 🞂 Statement 🞂 `SLEEP`"
+[SurrealQL082]: <#q082---throw-statement>               "SurrealQL 🞂 Statement 🞂 `THROW`"
+[SurrealQL083]: <#q083---update-statement>              "SurrealQL 🞂 Statement 🞂 `UPDATE`"
+[SurrealQL084]: <#q084---upsert-statement>              "SurrealQL 🞂 Statement 🞂 `UPSERT`"
+[SurrealQL085]: <#q085---use-statement>                 "SurrealQL 🞂 Statement 🞂 `USE`"
+[SurrealQL086]: <#q086---clauses>                       "SurrealQL 🞂 Clauses"
+[SurrealQL087]: <#q087---explain-clauses>               "SurrealQL 🞂 Clauses 🞂 `EXPLAIN`"
+[SurrealQL088]: <#q088---fetch-clauses>                 "SurrealQL 🞂 Clauses 🞂 `FETCH`"
+[SurrealQL089]: <#q089---from-clauses>                  "SurrealQL 🞂 Clauses 🞂 `FROM`"
+[SurrealQL090]: <#q090---group-by-clauses>              "SurrealQL 🞂 Clauses 🞂 `GROUP BY`"
+[SurrealQL091]: <#q091---limit-clauses>                 "SurrealQL 🞂 Clauses 🞂 `LIMIT`"
+[SurrealQL092]: <#q092---omit-clauses>                  "SurrealQL 🞂 Clauses 🞂 `OMIT`"
+[SurrealQL093]: <#q093---order-by-clauses>              "SurrealQL 🞂 Clauses 🞂 `ORDER BY`"
+[SurrealQL094]: <#q094---split-clauses>                 "SurrealQL 🞂 Clauses 🞂 `SPLIT`"
+[SurrealQL095]: <#q095---where-clauses>                 "SurrealQL 🞂 Clauses 🞂 `WHERE`"
+[SurrealQL096]: <#q096---with-clauses>                  "SurrealQL 🞂 Clauses 🞂 `WITH`"
+[SurrealQL097]: <#q097---parameters>                    "SurrealQL 🞂 Parameters"
+[SurrealQL098]: <#q098---functions>                     "SurrealQL 🞂 Functions"
+[SurrealQL099]: <#q099---database-functions>            "SurrealQL 🞂 Functions 🞂 Database Functions"
+[SurrealQL100]: <#q100---api-functions>                 "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 API functions"
+[SurrealQL101]: <#q101---array-functions>               "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Array functions"
+[SurrealQL102]: <#q102---bytes-functions>               "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Bytes functions"
+[SurrealQL103]: <#q103---count-function>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Count function"
+[SurrealQL104]: <#q104---crypto-functions>              "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Crypto functions"
+[SurrealQL105]: <#q105---duration-functions>            "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Duration functions"
+[SurrealQL106]: <#q106---encoding-functions>            "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Encoding functions"
+[SurrealQL107]: <#q107---file-functions>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 File functions"
+[SurrealQL108]: <#q108---geo-functions>                 "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Geo functions"
+[SurrealQL109]: <#q109---http-functions>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 HTTP functions"
+[SurrealQL110]: <#q110---math-functions>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Math functions"
+[SurrealQL111]: <#q111---meta-functions>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Meta functions"
+[SurrealQL112]: <#q112---not-function>                  "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Not function"
+[SurrealQL113]: <#q113---object-functions>              "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Object functions"
+[SurrealQL114]: <#q114---parse-functions>               "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Parse functions"
+[SurrealQL115]: <#q115---rand-functions>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Rand functions"
+[SurrealQL116]: <#q116---record-functions>              "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Record functions"
+[SurrealQL117]: <#q117---search-functions>              "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Search functions"
+[SurrealQL118]: <#q118---sequence-functions>            "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Sequence functions"
+[SurrealQL119]: <#q119---session-functions>             "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Session functions"
+[SurrealQL120]: <#q120---set-functions>                 "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Set functions"
+[SurrealQL121]: <#q121---sleep-function>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Sleep function"
+[SurrealQL122]: <#q122---string-functions>              "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 String Functions"
+[SurrealQL123]: <#q123---time-functions>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Time Functions"
+[SurrealQL124]: <#q124---type-functions>                "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Type Functions"
+[SurrealQL125]: <#q125---value-functions>               "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Value functions"
+[SurrealQL126]: <#q126---vector-functions>              "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Vector functions"
+[SurrealQL127]: <#q127---embedded-scripting-functions>  "SurrealQL 🞂 Functions 🞂 Embedded scripting functions"
+[SurrealQL128]: <#q128---arguments>                     "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 Arguments"
+[SurrealQL129]: <#q129---built-in-functions>            "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 Built-in functions"
+[SurrealQL130]: <#q130---function-context>              "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 Function context"
+[SurrealQL131]: <#q131---type-conversion>               "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 Type conversion"
+[SurrealQL132]: <#q132---surrealql-functions>           "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 SurrealQL functions"
+[SurrealQL133]: <#q133---machine-learning-functions>    "SurrealQL 🞂 Functions 🞂 Machine Learning functions"
+[SurrealQL134]: <#q134---machine-learning-functions>    "SurrealQL 🞂 Functions 🞂 ML Functions 🞂 Machine Learning functions"
+[SurrealQL135]: <#q135---transactions>                  "SurrealQL 🞂 Transactions"
+[SurrealQL136]: <#q136---comments>                      "SurrealQL 🞂 Comments"
 
 [net__SurrealDB_Store]:    <https://surrealdb.store/>
 [net__SurrealistMini]:     <https://app.surrealdb.com/mini>
@@ -6706,10 +6571,10 @@ SELECT * FROM user;
 [net__wiki_float64]:       <https://en.wikipedia.org/wiki/Double-precision_floating-point_format>
 [net__wiki_decimal128]:    <https://en.wikipedia.org/wiki/Decimal128_floating-point_format>
 [net__mdn_Logical_AND]:    <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_AND>
-[net__mdn_logical_OR]:    <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_OR>
+[net__mdn_logical_OR]:     <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_OR>
 [net__mdn_logical_XOR]:    <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_XOR>
 [net__mdn_Bitwise_AND]:    <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_AND>
-[net__mdn_Bitwise_OR]:    <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_OR>
+[net__mdn_Bitwise_OR]:     <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_OR>
 [net__mdn_Bitwise_XOR]:    <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_XOR>
 [net__mdn_Bitwise_NOT]:    <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_NOT>
 [net__geojson]:            <https://geojson.org/>
@@ -6728,14 +6593,14 @@ SELECT * FROM user;
 [SurrealDB_cli_import]:    </docs/surrealdb/cli/import> "import"
 [SurrealDB_cli_start]:     </docs/surrealdb/cli/start>
 
-[brakuje_func_db_math#mathmax]: </docs/surrealql/functions/database/math#mathmax>
-[brakuje_func_db_math#mathmin]: </docs/surrealql/functions/database/math#mathmin>
-[brakuje_func_db_time#timemax]: </docs/surrealql/functions/database/time#timemax>
-[brakuje_func_db_time#timemin]: </docs/surrealql/functions/database/time#timemin>
+[brakuje_func_db_math#mathmax]:                         </docs/surrealql/functions/database/math#mathmax>
+[brakuje_func_db_math#mathmin]:                         </docs/surrealql/functions/database/math#mathmin>
+[brakuje_func_db_time#timemax]:                         </docs/surrealql/functions/database/time#timemax>
+[brakuje_func_db_time#timemin]:                         </docs/surrealql/functions/database/time#timemin>
 [brakuje_func_db_values#comparing-and-ordering-values]: </docs/surrealql/datamodel/values#comparing-and-ordering-values>
-[brakuje_func_db_value#chain]: </docs/surrealql/functions/database/value#chain>
-[brakuje_func_db_file]: </docs/surrealql/functions/database/file>
-[brakuje_func_db_encoding#encodingcbordecod]: </docs/surrealql/functions/database/encoding#encodingcbordecode>
-[brakuje_model_ids#record-ranges]: </docs/surrealql/datamodel/ids#record-ranges>
-[brakuje_stat_def_bucket]: </docs/surrealql/statements/define/bucket>
+[brakuje_func_db_value#chain]:                          </docs/surrealql/functions/database/value#chain>
+[brakuje_func_db_file]:                                 </docs/surrealql/functions/database/file>
+[brakuje_func_db_encoding#encodingcbordecod]:           </docs/surrealql/functions/database/encoding#encodingcbordecode>
+[brakuje_model_ids#record-ranges]:                      </docs/surrealql/datamodel/ids#record-ranges>
+[brakuje_stat_def_bucket]:                              </docs/surrealql/statements/define/bucket>
 ---
