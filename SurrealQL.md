@@ -1936,7 +1936,7 @@ CREATE person SET
 
 ### _q005a - **Booleans in `WHERE` clauses**_
 
-When performing a query on the database, accessing a record's ID directly or using a [record range🚫][brakuje_model_ids#record-ranges] allows performance to be significantly sped up by avoiding the table scan which is used when a `WHERE` clause is included.
+When performing a query on the database, accessing a record's ID directly or using a [record range][SurrealQL020c_DataTypes_RecordIDs_Ranges] allows performance to be significantly sped up by avoiding the table scan which is used when a `WHERE` clause is included.
 
 However, if a `WHERE` clause is unavoidable, performance can still be improved by simplifying the portion after the clause as much as possible. As a boolean is the simplest possible datatype, having a boolean field that can be used in a `WHERE` clause can significantly improve performance compared to a more complex operation.
 
@@ -3378,10 +3378,9 @@ fn::delete_file("temp_cart_user_24567");
 > [!NOTE]
 > As of `v2.0.0`, SurrealDB no longer eagerly converts a string into a record. An [implicit `r` prefix or cast][SurrealQL007p2_DataTypes_CastingVaAffixes] is required instead.
 
-SurrealDB record IDs are composed of a table name and a record identifier separated by a `:` in between, allowing for a simple and consistent way to reference records across the database. Record IDs are used to uniquely identify records within a table, to [query][brakuje_stat_select], [update][brakuje_stat_update], and [delete][brakuje_stat_delete] records, and serve as [links][SurrealQL021_DataTypes_RecordLinks] from one record to another.
+SurrealDB record IDs are composed of a table name and a record identifier separated by a `:` in between, allowing for a simple and consistent way to reference records across the database. Record IDs are used to uniquely identify records within a table, to [query🚫][brakuje_stat_select], [update🚫][brakuje_stat_update], and [delete🚫][brakuje_stat_delete] records, and serve as [links][SurrealQL021_DataTypes_RecordLinks] from one record to another.
 
-Record IDs can be constructed from a number of ways, including [alphanumeric text](/docs/surrealql/datamodel/ids#text-record-ids), complex Unicode text and symbols, [numbers](/docs/surrealql/datamodel/ids#numeric-record-ids), arrays, objects, [built-in ID generation functions](/docs/surrealql/datamodel/ids#random-ids), and [a function to generate an ID from values][brakuje_func_db_type#typeis_record].
-
+Record IDs can be constructed from a number of ways, including [alphanumeric text][SurrealQL020a2_DataTypes_RecordIDs_Text], complex Unicode text and symbols, [numbers][SurrealQL020a3_DataTypes_RecordIDs_Numeric], arrays, objects, [built-in ID generation functions][SurrealQL020a1_DataTypes_RecordIDs_Random], and [a function to generate an ID from values🚫][brakuje_func_db_type#typeis_record].
 
 All of the following are examples of valid record IDs in SurrealQL.
 
@@ -3392,13 +3391,13 @@ reaction:`🤪`
 weather:['London', d'2025-02-14T01:52:50.375Z']
 ```
 
-As all record IDs are unique, trying to create a new record with an existing record ID will return an error. To create a record or modify it if the ID already exists, use an [`UPSERT`][brakuje_stat_upsert] statement or an [`INSERT`][brakuje_stat_insert#example-usage] statement with an `ON DUPLICATE KEY UPDATE` clause.
+As all record IDs are unique, trying to create a new record with an existing record ID will return an error. To create a record or modify it if the ID already exists, use an [`UPSERT`🚫][brakuje_stat_upsert] statement or an [`INSERT`🚫][brakuje_stat_insert#example-usage] statement with an `ON DUPLICATE KEY UPDATE` clause.
 
 ### _q020a - **Types of Record IDs**_
 
 #### _q020a1 - **Random IDs**_
 
-When you [create a record][brakuje_stat_create] without specifying the full ID, a random identifier is assigned after the table name. This differs from the traditional default of auto-increment or serial IDs that many developers are used to.
+When you [create a record🚫][brakuje_stat_create] without specifying the full ID, a random identifier is assigned after the table name. This differs from the traditional default of auto-increment or serial IDs that many developers are used to.
 
 ```surql
 /**[test]
@@ -3478,7 +3477,7 @@ CREATE company:surrealdb SET name = 'SurrealDB';
 CREATE user_version_2025 SET name = 'Alucard';
 ```
 
-To create a record ID with complex characters, use <code>`</code> (backticks) around the table name and/or record identifier.
+To create a record ID with complex characters, use `\`` (backticks) around the table name and/or record identifier.
 
 ```surql
 /**[test]
@@ -3499,7 +3498,7 @@ CREATE `Artykuł`:100 SET
     author = person:`Lech_Wałęsa`;
 ```
 
-The parts of record IDs with complex characters will display enclosed by <code>`</code> backticks.
+The parts of record IDs with complex characters will display enclosed by `\`` backticks.
 
 ```surql title="Output"
 -------- Query --------
@@ -3524,7 +3523,7 @@ The parts of record IDs with complex characters will display enclosed by <code>`
 
 #### _q020a3 - **Numeric Record IDs**_
 
-If you create a record ID with a number as a string, it will be stored with <code>`</code> backticks to differentiate it from a number.
+If you create a record ID with a number as a string, it will be stored with `\`` backticks to differentiate it from a number.
 
 ```surql
 /**[test]
@@ -3608,7 +3607,7 @@ CREATE year:29878977097987987979232 SET
 
 #### _q020a4 - **Array-based Record IDs**_
 
-Record IDs can be constructed out of arrays and even objects. This sort of record ID is most used when you have a field or two that will be used to look up records inside a [record range](/docs/surrealql/datamodel/ids#record-ranges), which is extremely performant. This is in contrast to using a `WHERE` clause to filter, which involves a table scan.
+Record IDs can be constructed out of arrays and even objects. This sort of record ID is most used when you have a field or two that will be used to look up records inside a [record range][SurrealQL020c_DataTypes_RecordIDs_Ranges], which is extremely performant. This is in contrast to using a `WHERE` clause to filter, which involves a table scan.
 
 Records in SurrealDB can store arrays of values, including other nested arrays or objects within them. Different types of values can be stored within the same array, unless defined otherwise.
 
@@ -3706,7 +3705,7 @@ CREATE weather:['London', time::now()] SET
     conditions = "cloudy";
 ```
 
-To create a record that uses a parameter or function call as its entire record identifier, the [`type::record()`][brakuje_func_db_type#typerecord] function can be used. (Note: this function was known as `type::thing()` before SurrealDB 3.0)
+To create a record that uses a parameter or function call as its entire record identifier, the [`type::record()`🚫][brakuje_func_db_type#typerecord] function can be used. (Note: this function was known as `type::thing()` before SurrealDB 3.0)
 
 ```surql
 /**[test]
@@ -3736,7 +3735,7 @@ CREATE type::record("weather", $now) SET city = 'London';
 
 ### _q020b - **Defining record IDs in a schema**_
 
-The type name of a record ID is `record`, which by default allows any sort of record. This type can be set inside a [`DEFINE FIELD`][brakuje_stat_def_field] statement.
+The type name of a record ID is `record`, which by default allows any sort of record. This type can be set inside a [`DEFINE FIELD`🚫][brakuje_stat_def_field] statement.
 
 ```surql
 /**[test]
@@ -3878,7 +3877,7 @@ The final query returning just the IDs shows that they have been recreated with 
 ]
 ```
 
-However, record IDs are also used as [record links][SurrealQL021_DataTypes_RecordLinks] and to create [graph relations][brakuje_stat_relate]. If this is the case, more work will have to be done in order to recreate the former state.
+However, record IDs are also used as [record links][SurrealQL021_DataTypes_RecordLinks] and to create [graph relations🚫][brakuje_stat_relate]. If this is the case, more work will have to be done in order to recreate the former state.
 
 The following example shows five `user` records, which each have a 50% chance of liking each of the other users.
 
@@ -3933,7 +3932,7 @@ FROM user;
 ]
 ```
 
-Surrealist's [graph visualization view][brakuje_blog_visualisation] can help as well.
+Surrealist's [graph visualization view🚫][brakuje_blog_visualisation] can help as well.
 
 ![Surrealist's graph view showing possible output from the previous randomized query in which each of the five user records may or may not like another user. In this case, the output resembles a rhombus with an extra line jutting out from the top left.🖼️][img__graph_view]
 
@@ -4195,7 +4194,7 @@ SELECT * FROM event:[user:one, "debug", d'2025-05-05']..[user:one, "debug", d'20
 
 #### _q020d4 - **Auto-incrementing IDs**_
 
-While SurrealDB does not use auto-incrementing IDs by default, this behaviour can be achieved in a number of ways. One is to use the [`record::id()`][brakuje_func_db_record#recordid] function on the latest record, which returns the latter part of a record ID (the '1' in the record ID `person:1`). This can then be followed up with the [`type::record()`][brakuje_func_db_type#typerecord] function to create a new record ID.
+While SurrealDB does not use auto-incrementing IDs by default, this behaviour can be achieved in a number of ways. One is to use the [`record::id()`🚫][brakuje_func_db_record#recordid] function on the latest record, which returns the latter part of a record ID (the '1' in the record ID `person:1`). This can then be followed up with the [`type::record()`🚫][brakuje_func_db_type#typerecord] function to create a new record ID.
 
 ```surql
 -- Create records from person:1 to person:10
@@ -4212,7 +4211,7 @@ CREATE type::record("person", $latest.id() + 1);
 ]
 ```
 
-When dealing with a large number of records, a more performant option is to use a separate record that holds a single value representing the latest ID. An [`UPSERT`][brakuje_stat_upsert] statement is best here, which will allow the counter to be initialized if it does not yet exist, and updated otherwise. This is best done [inside a manual transaction][brakuje_stat_begin] so that the latest ID will be rolled back if any failures occur when creating the next record.
+When dealing with a large number of records, a more performant option is to use a separate record that holds a single value representing the latest ID. An [`UPSERT`🚫][brakuje_stat_upsert] statement is best here, which will allow the counter to be initialized if it does not yet exist, and updated otherwise. This is best done [inside a manual transaction🚫][brakuje_stat_begin] so that the latest ID will be rolled back if any failures occur when creating the next record.
 
 ```surql
 /**[test]
@@ -4315,7 +4314,7 @@ SELECT id.* FROM $record;
 
 ### _q020e - **Limitations**_
 
-At present, the `VALUE` clause cannot be used inside a [`DEFINE FIELD`][brakuje_stat_def_field]: statement.
+At present, the `VALUE` clause cannot be used inside a [`DEFINE FIELD`🚫][brakuje_stat_def_field]: statement.
 
 ```surql
 /**[test]
@@ -4353,7 +4352,7 @@ CREATE user SET id = rand::int(1, 1000000000);
 
 ### _q020f - **Learn more**_
 
-Learn more about record IDs [in this blogpost][brakuje_blog_recordIDS] and on this [**youtube video**▶️][yt02].
+Learn more about record IDs [in this blogpost🚫][brakuje_blog_recordIDS] and on this [**youtube video**▶️][yt02].
 
 ---
 ---
@@ -5148,7 +5147,7 @@ value = "true"
 <regex> "((?i)col(o|ou)r|couleur)" = "COULEUR";
 ```
 
-While `regex` was added as a standalone type in version 2.3.0, regex matching has always been available via the [`string::matches()`][brakuje_func_db_string#stringmatches] function.
+While `regex` was added as a standalone type in version 2.3.0, regex matching has always been available via the [`string::matches()`🚫][brakuje_func_db_string#stringmatches] function.
 
 ```surql
 /**[test]
@@ -5379,7 +5378,7 @@ Previously, in SurrealQL version `1.0`, literal values of these types were simpl
 
 #### _q025a2 - **Record ID literal values using the `r` prefix**_
 
-The `r` prefix tells the parser that the contents of the string represent a [`record ID`🚫][brakuje_model_ids]. The parser expects record IDs to have the following format: `table_name:record ID`.
+The `r` prefix tells the parser that the contents of the string represent a [`record ID`][SurrealQL020_DataTypes_RecordIDs]. The parser expects record IDs to have the following format: `table_name:record ID`.
 
 > [!NOTE]
 > All strings since SurrealDB 2.0 without the `r` prefix are of type `string` and are not parsed as records unless the prefix is present.
@@ -9693,6 +9692,40 @@ SELECT * FROM user;
 
 [SurrealQL020_DataTypes_RecordIDs]: <#q020---record-ids> "SurrealQL 🞂 Data type 🞂 Record IDs"
 
+[SurrealQL020a_DataTypes_RecordIDs_Types]: <#q020a---types-of-record-ids> "Types of Record IDs"
+
+[SurrealQL020a1_DataTypes_RecordIDs_Random]: <#q020a1---random-ids> "Random IDs"
+
+[SurrealQL020a2_DataTypes_RecordIDs_Text]: <#q020a2---text-record-ids> "Text Record IDs"
+
+[SurrealQL020a3_DataTypes_RecordIDs_Numeric]: <#q020a3---numeric-record-ids> "Numeric Record IDs"
+
+[SurrealQL020a4_DataTypes_RecordIDs_Array]: <#q020a4---array-based-record-ids> "Array-based Record IDs"
+
+[SurrealQL020a5_DataTypes_RecordIDs_Performant]: <#q020a5---why-record-ranges-are-performant> "Why record ranges are performant"
+
+[SurrealQL020a6_DataTypes_RecordIDs_Parameters]: <#q020a6---ids-made-with-parameters-and-function-calls> "IDs made with parameters and function calls"
+
+[SurrealQL020b_DataTypes_RecordIDs_DefiningSchema]: <#q020b---defining-record-ids-in-a-schema> "Defining record IDs in a schema"
+
+[SurrealQL020c_DataTypes_RecordIDs_Ranges]: <#q020c---record-ranges> "Record ranges"
+
+[SurrealQL020d_DataTypes_RecordIDs_BestPractices]: <#q020d---tips-and-best-practices-for-record-ids> "Tips and best practices for record IDs"
+
+[SurrealQL020d1_DataTypes_RecordIDs_ChooseRight]: <#q020d1---why-choose-the-right-record-id-format> "Why choose the right record ID format"
+
+[SurrealQL020d2_DataTypes_RecordIDs_MeaningfulQuery]: <#q020d2---meaningful-sortable-ids-are-faster-to-query> "Meaningful sortable IDs are faster to query"
+
+[SurrealQL020d3_DataTypes_RecordIDs_MatchesArray]: <#q020d3---move-exact-matches-in-array-based-record-ids-to-the-front> "Move exact matches in array-based record IDs to the front"
+
+[SurrealQL020d4_DataTypes_RecordIDs_Incrementing]: <#q020d4---auto-incrementing-ids> "Auto-incrementing IDs"
+
+[SurrealQL020d5_DataTypes_RecordIDs_RecordLinks]: <#q020d5---record-ids-are-record-links> "Record IDs are record links"
+
+[SurrealQL020e_DataTypes_RecordIDs_Limitations]: <#q020e---limitations> "Limitations"
+
+[SurrealQL020f_DataTypes_RecordIDs_LearnMore]: <#q020f---learn-more> "Learn more"
+
 [SurrealQL021_DataTypes_RecordLinks]: <#q021---record-links> "SurrealQL 🞂 Data type 🞂 Record links"
 
 [SurrealQL022_DataTypes_RecordReferences]: <#q022---record-references> "SurrealQL 🞂 Data type 🞂 Record references"
@@ -10126,9 +10159,6 @@ SELECT * FROM user;
 [brakuje_func_db_encoding#encodingcbordecod]: </docs/surrealql/functions/database/encoding#encodingcbordecode>
 [brakuje_func_db_rand#randuuidv4]: </docs/surrealql/functions/database/rand#randuuidv4>
 
-
-[brakuje_model_ids]: </docs/surrealql/datamodel/ids>
-[brakuje_model_ids#record-ranges]: </docs/surrealql/datamodel/ids#record-ranges>
 
 [brakuje_stat_def_bucket]: </docs/surrealql/statements/define/bucket>
 [brakuje_stat_def_field]: </docs/surrealql/statements/define/field>
