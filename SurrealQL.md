@@ -9463,6 +9463,727 @@ RETURN [
 
 ## _q097 - **Parameters**_
 
+- [📓][surrealdb_docs_3x_surrealql_parameters]
+
+Parameters can be used like variables to store a value which can then be used in subsequent queries. To define a parameter in SurrealQL, use the [`LET`🚫][brakuje_stat_let] statement. The name of the parameter should begin with a `$` character.
+
+### _q097a - **Defining parameters within SurrealQL**_
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ id: person:hw8ha95g4gbegaox34gw, name: 'Tobie Morgan Hitchcock' }]"
+skip-record-id-key = true
+
+[[test.results]]
+value = "[{ id: person:q4htgstrmm5j4mvisnhp, name: 'Jaime Morgan Hitchcock' }]"
+skip-record-id-key = true
+
+*/
+
+-- Define the parameter
+LET $suffix = "Morgan Hitchcock";
+-- Use the parameter
+CREATE person SET name = "Tobie " + $suffix;
+-- (Another way to do the same)
+CREATE person SET name = string::join(" ", "Jaime", $suffix);
+```
+
+```surql title="Response"
+[
+  {
+    "id": "person:3vs17lb9eso9m7gd8mml",
+    "name": "Tobie Morgan Hitchcock"
+  }
+]
+
+[
+  {
+    "id": "person:xh4zbns5mgmywe6bo1pi",
+    "name": "Jaime Morgan Hitchcock"
+  }
+]
+```
+
+A parameter can store any value, including the result of a query.
+
+```surql
+-- Assuming the CREATE statements from the previous example
+LET $founders = (SELECT * FROM person);
+RETURN $founders.name;
+```
+
+```surql title="Response"
+[
+  "Tobie Morgan Hitchcock",
+  "Jaime Morgan Hitchcock"
+]
+```
+
+Parameters persist across the current connection, and thus can be reused between different namespaces and databases. In the example below, a created `person` record assigned to a parameter is reused in a query in a completely different namespace and database.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+error = "'Thrown error: Database record `person:billy` already exists'"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "'Thrown error: Database record `person:billy` already exists'"
+
+*/
+
+LET $billy = CREATE ONLY person:billy SET name = "Billy";
+-- Fails as `person:billy` already exists
+CREATE person CONTENT $billy;
+
+USE NAMESPACE other_namespace;
+USE DATABASE other_database;
+-- Succeeds as `person:billy` does not yet exist in this namespace and database
+CREATE person CONTENT $billy;
+```
+
+Parameters can be defined using SurrealQL as shown above, or can be passed in using the client libraries as request variables.
+
+### _q097b - **Redefining and shadowing parameters**_
+
+Parameters in SurrealQL are immutable. The same parameter can be redefined using a `LET` statement.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "'Sypha'"
+
+*/
+
+LET $my_name = "Alucard";
+LET $my_name = "Sypha";
+RETURN $my_name;
+```
+
+```surql title="Output"
+'Sypha'
+```
+
+Before SurrealDB 3.0, the `=` on its own was used as syntactic sugar for a `LET` statement. This has since been deprecated in order to make it clearer that parameters can be redeclared, but not modified.
+
+#### q097b1 - **Before 3.X**
+
+```surql
+LET $my_name = "Alucard";
+$my_name = "Sypha";
+RETURN $my_name;
+```
+
+```surql title="Output"
+'Sypha'
+```
+
+#### q097b2 - **Since 3.X**
+
+```surql
+LET $my_name = "Alucard";
+$my_name = "Sypha";
+RETURN $my_name;
+```
+
+```surql title="Output"
+'There was a problem with the database: Parse error: Variable declaration without `let` is deprecated
+ --> [4:1]
+  |
+4 | $my_name = "Sypha";
+  | ^^^^^^^^^^^^^^^^^^^ replace with `let $my_name = ..`
+'
+```
+
+If the parameter is redefined inside another scope, the original value will be shadowed. Shadowing refers to when a value is temporarily obstructed by a new value of the same name until the new scope has completed.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[1, 2, 3, 4]"
+
+[[test.results]]
+value = "[[1, 2], [3, 4]]"
+
+*/
+
+LET $nums = [
+  [1,2],
+  [3,4]
+];
+
+{
+  LET $nums = $nums.flatten();
+  -- Flattened into a single array,
+  -- so $nums is shadowed as [1,2,3,4]
+  RETURN $nums;
+};
+
+-- Returns original unflattened $nums:
+-- [[1,2], [3,4]]
+RETURN $nums;
+```
+
+Even a parameter defined using a [`DEFINE PARAM`🚫][brakuje_stat_def_/param] statement can be shadowed.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+*/
+
+DEFINE PARAM $USERNAME VALUE "user@user.com";
+
+LET $USERNAME = "some other email";
+```
+
+However, the parameter `$USERNAME` in this case is still defined as its original value, as can be seen via an [`INFO FOR DB`🚫][brakuje_stat_info] statement.
+
+```surql
+{
+  accesses: {},
+  analyzers: {},
+  apis: {},
+  configs: {},
+  functions: {},
+  models: {},
+  params: {
+  USERNAME: "DEFINE PARAM $USERNAME VALUE 'user@user.com' PERMISSIONS FULL"
+  },
+  tables: {},
+  users: {}
+}
+```
+
+As the shadowed `$USERNAME` parameter will persist over the length of the connection, the parameter `$USERNAME` will once again show up as its original defined value if the connection is discontinued and restarted.
+
+### _q097c - **Defining parameters within client libraries**_
+
+SurrealDB's client libraries allow parameters to be passed in as JSON values, which are then converted to SurrealDB data types when the query is run. The following example show a variable being used within a SurrealQL query from the JavaScript library.
+
+```javascript
+let people = await surreal.query("SELECT * FROM article WHERE status INSIDE $status", {
+  status: ["live", "draft"],
+});
+```
+
+### _q097d - **Reserved variable names**_
+
+SurrealDB automatically predefines certain variables depending on the type of operation being performed. For example, `$this` and `$parent` are automatically predefined for subqueries so that the fields of one can be compared to another if necessary. In addition, the predefined variables `$access`, `$auth`, `$token`, and `$session` are protected variables used to give access to parts of the current database configuration and can never be overwritten.
+
+```surql
+/**[test]
+
+[[test.results]]
+error = ""Thrown error: 'access' is a protected variable and cannot be set""
+
+[[test.results]]
+error = ""Thrown error: 'auth' is a protected variable and cannot be set""
+
+[[test.results]]
+error = ""Thrown error: 'token' is a protected variable and cannot be set""
+
+[[test.results]]
+error = ""Thrown error: 'session' is a protected variable and cannot be set""
+
+*/
+
+LET $access = true;
+LET $auth = 10;
+LET $token = "Mytoken";
+LET $session = rand::int(0, 100);
+```
+
+```surql title="Output"
+-------- Query 1 --------
+
+"'access' is a protected variable and cannot be set"
+
+-------- Query 2 --------
+
+"'auth' is a protected variable and cannot be set"
+
+-------- Query 3 --------
+
+"'token' is a protected variable and cannot be set"
+
+-------- Query 4 --------
+
+"'session' is a protected variable and cannot be set"
+```
+
+Other predefined variables listed below are not specifically protected, but should not be used in order to avoid unexpected behaviour.
+
+#### _q097d01 - **$access**_
+
+Represents the name of the access method used to authenticate the current session.
+
+```surql
+IF $access = "admin" { SELECT * FROM account }
+ELSE IF $access = "user" { SELECT * FROM $auth.account }
+ELSE {}
+```
+
+#### _q097d02 - **$action, $file, $target**_
+
+These three parameters are used in the context of the permissions of a [`DEFINE BUCKET`🚫][brakuje_stat_def_bucket] statement.
+
+- `$action` represents the type of operation: one of "Put", "Get", "Head", "Delete", "Copy", "Rename", "Exists", and "List".
+- `$file` represents the path to the file being accessed.
+- `$target` represents the target file ref in copy/rename operations.
+
+#### _q097d03 - **$auth**_
+
+Represents the currently authenticated record user.
+
+```surql
+DEFINE TABLE user SCHEMAFULL
+  PERMISSIONS
+    FOR select, update, delete WHERE id = $auth.id;
+```
+
+#### _q097d04 - **$before, $after**_
+
+Represent the values before and after a mutation on a field.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: cat:f148lyh3zygwenur9nck, name: 'Mr. Meow', nicknames: ['Mr. Cuddlebun'] }]"
+skip-record-id-key = true
+
+[[test.results]]
+value = "[{ after: { id: cat:f148lyh3zygwenur9nck, name: 'Mr. Meow', nicknames: ['Mr. Cuddlebun', 'Snuggles'] }, before: { id: cat:f148lyh3zygwenur9nck, name: 'Mr. Meow', nicknames: ['Mr. Cuddlebun'] } }]"
+skip-record-id-key = true
+
+*/
+
+CREATE cat SET name = "Mr. Meow", nicknames = ["Mr. Cuddlebun"];
+UPDATE cat SET nicknames += "Snuggles" WHERE name = "Mr. Meow" RETURN $before, $after;
+```
+
+```surql title="Response"
+[
+  {
+    "after": {
+      "id": "cat:6p71csv2zqianixf0dkz",
+      "name": "Mr. Meow",
+      "nicknames": [
+        "Mr. Cuddlebun",
+        "Snuggles"
+      ]
+    },
+    "before": {
+      "id": "cat:6p71csv2zqianixf0dkz",
+      "name": "Mr. Meow",
+      "nicknames": [
+        "Mr. Cuddlebun"
+      ]
+    }
+  }
+]
+```
+
+#### _q097d05 - **$event**_
+
+Represents the type of table event triggered on an event. This parameter will be one of either `"CREATE"`, `"UPDATE"`, or `"DELETE"`.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+*/
+
+DEFINE EVENT user_created ON TABLE user WHEN $event = "CREATE" THEN (
+  CREATE log SET table = "user", event = $event, created_at = time::now()
+);
+```
+
+#### _q097d06 - **$input**_
+
+Represents the initially inputted value in a field definition, as the value clause could have modified the $value variable.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ historical_data: [], id: city:london, population: 8900000, year: 2019 }]"
+
+[[test.results]]
+value = "[{ historical_data: [{ population: 8900000, year: 2019 }], id: city:london, population: 9600000, year: 2023 }]"
+
+*/
+
+CREATE city:london SET
+  population = 8900000,
+  year = 2019,
+  historical_data = [];
+
+INSERT INTO city [
+  { id: "london", population: 9600000, year: 2023 }
+]
+ON DUPLICATE KEY UPDATE
+-- Stick old data into historical_data
+historical_data += {
+  year: year,
+  population: population
+},
+-- Then update current record with the new input using $input
+population = $input.population,
+year = $input.year;
+```
+
+```surql output="Response"
+[
+  {
+    "historical_data": [
+      {
+        "population": 8900000,
+        "year": 2019
+      }
+    ],
+    "id": "city:london",
+    "population": 9600000,
+    "year": 2023
+  }
+]
+```
+
+#### _q097d07 - **$parent, $this**_
+
+`$this` represents the current record in a subquery, and `$parent` its parent.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: user:uz4nrrdn0xybrceh4bm9, member_of: 'group1', name: 'User1' }]"
+skip-record-id-key = true
+
+[[test.results]]
+value = "[{ id: user:07o9ep802fiorrr936u5, member_of: 'group1', name: 'User2' }]"
+skip-record-id-key = true
+
+[[test.results]]
+value = "[{ id: user:ij9yjba7n2428yz8nui0, member_of: 'group1', name: 'User3' }]"
+skip-record-id-key = true
+
+[[test.results]]
+value = "[{ group_members: ['User2', 'User3', 'User1'], name: 'User1' }]"
+
+*/
+
+CREATE user SET name = "User1", member_of = "group1";
+CREATE user SET name = "User2", member_of = "group1";
+CREATE user SET name = "User3", member_of = "group1";
+SELECT name, 
+  (SELECT VALUE name FROM user WHERE member_of = $parent.member_of)
+  AS group_members
+  FROM user
+  WHERE name = "User1";
+```
+
+```surql title="Response"
+[
+  {
+    "group_members": [
+      "User1",
+      "User3",
+      "User2"
+    ],
+    "name": "User1"
+  }
+]
+```
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: person:trgs6t98z3j5zlxsx1x5, name: 'John Doe' }, { id: person:xiysvpvqvglklrwy9tt5, name: 'John Doe' }, { id: person:qdpkqcb8gu5tt8jocuc8, name: 'Jane Doe' }]"
+skip-record-id-key = true
+
+[[test.results]]
+value = "[{ id: person:qdpkqcb8gu5tt8jocuc8, name: 'Jane Doe', people_with_same_name: [person:qdpkqcb8gu5tt8jocuc8] }, { id: person:trgs6t98z3j5zlxsx1x5, name: 'John Doe', people_with_same_name: [person:trgs6t98z3j5zlxsx1x5, person:xiysvpvqvglklrwy9tt5] }, { id: person:xiysvpvqvglklrwy9tt5, name: 'John Doe', people_with_same_name: [person:trgs6t98z3j5zlxsx1x5, person:xiysvpvqvglklrwy9tt5] }]"
+skip-record-id-key = true
+
+*/
+
+INSERT INTO person (name) VALUES ("John Doe"), ("John Doe"), ("Jane Doe");
+SELECT 
+  *,
+  (SELECT VALUE id FROM person WHERE $this.name = $parent.name) AS 
+  people_with_same_name
+  FROM person;
+```
+
+```surql title="Response"
+[
+  {
+    "id": "person:hwffcckiv61ylwiw43yf",
+    "name": "John Doe",
+    "people_with_same_name": [
+      "person:hwffcckiv61ylwiw43yf",
+      "person:tmscoy7bjj20xki0fld5"
+    ]
+  },
+  {
+    "id": "person:tmscoy7bjj20xki0fld5",
+    "name": "John Doe",
+    "people_with_same_name": [
+      "person:hwffcckiv61ylwiw43yf",
+      "person:tmscoy7bjj20xki0fld5"
+    ]
+  },
+  {
+    "id": "person:y7mdf3912rf5gynvxc7q",
+    "name": "Jane Doe",
+    "people_with_same_name": [
+      "person:y7mdf3912rf5gynvxc7q"
+    ]
+  }
+]
+```
+
+#### _q097d08 - **$reference**_
+
+This parameter represents the reference in question inside an [`ON DELETE`🚫][brakuje_model_references#specifying-deletion-behaviour] clause for record references.
+
+#### _q097d09 - **$request**_
+
+This parameter represents the value of a request to a custom API defined using the [`DEFINE API`🚫][brakuje_stat_def_api] statement.
+
+```surql
+DEFINE API OVERWRITE "/test"
+  FOR get, post 
+    MIDDLEWARE
+      api::timeout(1s)
+    THEN {
+      RETURN {
+        status: 404,
+        body: $request.body,
+        headers: {
+          'bla': '123'
+        }
+      };
+    };
+```
+
+The `$request` parameter may contain values at the following fields: `body`, `headers`, `params`, `method`, `query`, and `context`.
+
+#### _q097d10 - **$session**_
+
+Represents values from the session functions as an object.
+
+You can learn more about those values from the [security parameters🚫][brakuje_security_authentication#session] section.
+
+```surql
+CREATE user SET 
+  name = "Some User",
+  on_database = $session.db;
+```
+
+```surql title="Response"
+[
+  {
+    "id": "user:wa3ajflozlqoyurc4i4v",
+    "name": "Some User",
+    "on_database": "database"
+  }
+]
+```
+
+#### _q097d11 - **$token**_
+
+Represents values held inside the JWT token used for the current session.
+
+You can learn more about those values from the [security parameters🚫][brakuje_security_authentication#token] section.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+*/
+
+DEFINE TABLE user SCHEMAFULL
+  PERMISSIONS FOR select, update, delete, create
+  WHERE $access = "users"
+  AND email = $token.email;
+```
+
+#### _q097d12 - **$value**_
+
+Represents the value after a mutation on a field (identical to $after in the case of an event).
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+*/
+
+DEFINE EVENT email ON TABLE user WHEN $before.email != $after.email THEN (
+  CREATE event SET 
+    user = $value.id,
+    time = time::now(),
+    value = $after.email,
+    action = 'email_changed'
+);
+```
+
+### _q097e - **Improvements to parameters and expressions in statements**_
+
+> Available since: V3.0.0
+
+Parameters and expressions have traditionally only been available in a limited fashion in SurrealQL statements. As of the alpha versions of SurrealDB 3.0, work is undergoing to allow parameters and expressions to be used in many places that were not possible before.
+
+Some examples of this are:
+
+#### _q097e1 - **DEFINE statements**_
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "{ language_en: 'DEFINE TABLE language_en TYPE NORMAL SCHEMAFULL PERMISSIONS NONE', language_ie: 'DEFINE TABLE language_ie TYPE NORMAL SCHEMAFULL PERMISSIONS NONE', language_ja: 'DEFINE TABLE language_ja TYPE NORMAL SCHEMAFULL PERMISSIONS NONE', language_uk: 'DEFINE TABLE language_uk TYPE NORMAL SCHEMAFULL PERMISSIONS NONE', user: "DEFINE TABLE user TYPE NORMAL SCHEMAFULL PERMISSIONS FOR select, create, update, delete WHERE $access = 'users' AND email = $token.email" }"
+
+*/
+
+FOR $language IN ["en", "ja", "uk", "ie"] {
+  DEFINE TABLE "language_" + $language SCHEMAFULL;
+};
+
+(INFO FOR DB).tables;
+```
+
+```surql title="Output"
+{
+  language_en: 'DEFINE TABLE language_en TYPE NORMAL SCHEMAFULL PERMISSIONS NONE',
+  language_ie: 'DEFINE TABLE language_ie TYPE NORMAL SCHEMAFULL PERMISSIONS NONE',
+  language_ja: 'DEFINE TABLE language_ja TYPE NORMAL SCHEMAFULL PERMISSIONS NONE',
+  language_uk: 'DEFINE TABLE language_uk TYPE NORMAL SCHEMAFULL PERMISSIONS NONE'
+}
+```
+
+#### _q097e2 - **REMOVE statements**_
+
+Parameterization in `REMOVE` statements is particularly useful in the context of testing.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+*/
+
+FOR $table IN ["test_user", "test_client"] {
+  DEFINE TABLE $table;
+  // Do some tests
+  REMOVE TABLE $table;
+};
+```
+
+The following example shows an example of a test that might be performed using a `REMOVE FIELD` statement. Here, the `INFO FOR TABLE` statement is used to dynamically capture the defined fields of a table, followed by the [object::keys()🚫][brakuje_func_db_object#objectkeys] function to retrieve each field as a string. The fields can then be removed one by one inside a `REMOVE FIELD` statement, with the time elapsed logged in a separate table.
+
+```surql
+DEFINE FIELD string_test ON test TYPE string;
+DEFINE FIELD int_test ON test TYPE int;
+DEFINE FIELD datetime_test ON test TYPE datetime;
+
+CREATE |test:10000| SET 
+  string_test = rand::string(10),
+  int_test = rand::int(),
+  datetime_test = rand::time()
+RETURN NONE;
+
+FOR $field IN (INFO FOR TABLE test).fields.keys() {
+  LET $now = time::now();
+  REMOVE FIELD $field ON test;
+  LET $elapsed = time::now() - $now;
+  CREATE log SET results = { field_name: $field, removed_in: $elapsed }
+};
+```
+
+#### _q097e3 - **The TIMEOUT clause in queries**_
+
+```surql
+DEFINE FUNCTION fn::get_timeout() -> duration {
+  // Do some HTTP call to get status
+  // Simulate the output with rand::enum() function
+  rand::enum(100ms, 1s, 5s)
+};
+
+SELECT * FROM person TIMEOUT fn::get_timeout();
+```
+
+#### _q097e4 - **The OMIT clause in queries**_
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ age: 19, id: person:v5tk0ctrk8vjgpsjsr2n, name: 'Galen', surname: 'Pathwarden' }]"
+skip-record-id-key = true
+
+[[test.results]]
+value = "[{ age: 19, surname: 'Pathwarden' }]"
+
+*/
+
+CREATE person SET name = "Galen", surname = "Pathwarden", age = 19;
+
+SELECT * OMIT type::fields(["name", "id"]) FROM person;
+```
+
+```surql title="Output"
+[
+  {
+  age: 19,
+  surname: 'Pathwarden'
+  }
+]
+```
+
 ---
 ---
 
@@ -13515,6 +14236,8 @@ SELECT * FROM user;
 
 [surrealdb_docs_3x_surrealql_functions_database_array]: <https://surrealdb.com/docs/3.x/surrealql/functions/database/array>
 
+[surrealdb_docs_3x_surrealql_parameters]: <https://surrealdb.com/docs/3.x/surrealql/parameters>
+
 [surrealdb_docs_3x_surrealql_transactions]: <https://surrealdb.com/docs/3.x/surrealql/transactions>
 
 [surrealdb_docs_3x_surrealql_comments]: <https://surrealdb.com/docs/3.x/surrealql/comments>
@@ -13577,6 +14300,7 @@ SELECT * FROM user;
 [brakuje_func_db_math#mathmax]:  </docs/surrealql/functions/database/math#mathmax>
 [brakuje_func_db_math#mathmin]:  </docs/surrealql/functions/database/math#mathmin>
 [brakuje_func_db_object]:           </docs/surrealql/functions/database/object>
+[brakuje_func_db_object#objectkeys]:</docs/surrealql/functions/database/object#objectkeys>
 [brakuje_func_db_object#objectvalues]:</docs/surrealql/functions/database/object#objectvalues>
 [brakuje_func_db_record#recordid]:   </docs/surrealql/functions/database/record#recordid>
 [brakuje_func_db_rand#randuuidv4]: </docs/surrealql/functions/database/rand#randuuidv4>
@@ -13596,13 +14320,17 @@ SELECT * FROM user;
 
 [brakuje_model_idioms#destructuring]:   </docs/surrealql/datamodel/idioms#destructuring>
 
+[brakuje_stat_def_api]: </docs/surrealql/statements/define/api>
 [brakuje_stat_def_bucket]: </docs/surrealql/statements/define/bucket>
 [brakuje_stat_def_field]: </docs/surrealql/statements/define/field>
 [brakuje_stat_def_field#computed-fields]: </docs/surrealql/statements/define/field#computed-fields>
 [brakuje_stat_def_function]: </docs/surrealql/statements/define/function>
+[brakuje_stat_def_/param]: </docs/surrealql/statements/define/param>
 [brakuje_stat_select]: </docs/surrealql/statements/selectt>
 [brakuje_stat_select#basic-usage]: </docs/surrealql/statements/selectt#basic-usage>
 [brakuje_stat_for]: </docs/surrealql/statements/for>
+[brakuje_stat_let]: </docs/surrealql/statements/let>
+[brakuje_stat_info]: </docs/surrealql/statements/info>
 [brakuje_stat_begin]: </docs/surrealql/statements/begin>
 [brakuje_stat_create]: </docs/surrealql/statements/create>
 [brakuje_stat_update]: </docs/surrealql/statements/update>
@@ -13613,6 +14341,10 @@ SELECT * FROM user;
 [brakuje_stat_insert#example-usage]: </docs/surrealql/statements/insert#example-usage>
 
 [brakuje_parameters#parent-this]: </docs/surrealql/parameters#parent-this>
+[brakuje_model_references#specifying-deletion-behaviour]: </docs/surrealql/datamodel/references#specifying-deletion-behaviour>
+
+[brakuje_security_authentication#session]: </docs/surrealdb/security/authentication#session>
+[brakuje_security_authentication#token]: </docs/surrealdb/security/authentication#token>
 
 [brakuje_blog_recordIDS]: </blog/the-life-changing-magic-of-surrealdb-record-ids#the-performance-at-scale>
 [brakuje_blog_visualisation]: </blog/whats-new-in-surrealist-3-2#graph-visualisation>
