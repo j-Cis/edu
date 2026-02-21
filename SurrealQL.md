@@ -32,7 +32,7 @@ To start using [SurrealQL][SurrealQL038_Statement_BEGIN], refer to the documenta
 
 SurrealQL empowers you to leverage the full potential of SurrealDB and enables you to build robust and scalable applications. Let's dive into the world of SurrealQL and unlock the capabilities of SurrealDB together!
 
-[![**go to YouTube**🖼️][ico__YT]][yt01]
+[**go to YouTube**▶️][yt01]
 
 ---
 ---
@@ -3375,12 +3375,1124 @@ fn::delete_file("temp_cart_user_24567");
 
 - [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/ids)
 
+> [!NOTE]
+> As of `v2.0.0`, SurrealDB no longer eagerly converts a string into a record. An [implicit `r` prefix or cast][SurrealQL007p2_DataTypes_CastingVaAffixes] is required instead.
+
+SurrealDB record IDs are composed of a table name and a record identifier separated by a `:` in between, allowing for a simple and consistent way to reference records across the database. Record IDs are used to uniquely identify records within a table, to [query][brakuje_stat_select], [update][brakuje_stat_update], and [delete][brakuje_stat_delete] records, and serve as [links][SurrealQL021_DataTypes_RecordLinks] from one record to another.
+
+Record IDs can be constructed from a number of ways, including [alphanumeric text](/docs/surrealql/datamodel/ids#text-record-ids), complex Unicode text and symbols, [numbers](/docs/surrealql/datamodel/ids#numeric-record-ids), arrays, objects, [built-in ID generation functions](/docs/surrealql/datamodel/ids#random-ids), and [a function to generate an ID from values][brakuje_func_db_type#typeis_record].
+
+
+All of the following are examples of valid record IDs in SurrealQL.
+
+```surql
+company:surrealdb
+company:w6xb3izpgvz4n0gow6q7
+reaction:`🤪`
+weather:['London', d'2025-02-14T01:52:50.375Z']
+```
+
+As all record IDs are unique, trying to create a new record with an existing record ID will return an error. To create a record or modify it if the ID already exists, use an [`UPSERT`][brakuje_stat_upsert] statement or an [`INSERT`][brakuje_stat_insert#example-usage] statement with an `ON DUPLICATE KEY UPDATE` clause.
+
+### _q020a - **Types of Record IDs**_
+
+#### _q020a1 - **Random IDs**_
+
+When you [create a record][brakuje_stat_create] without specifying the full ID, a random identifier is assigned after the table name. This differs from the traditional default of auto-increment or serial IDs that many developers are used to.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: company:igtjgekhxfbd9km14j7t }]"
+skip-record-id-key = true
+
+*/
+
+
+CREATE company;
+```
+
+```surql title="Output"
+[
+  {
+    id: company:ezs644u19mae2p68404j
+  }
+]
+```
+
+Record IDs can be generated with a number of built-in ID generation functions, which are cryptographically secure and suitable for dispersion across a distributed datastore. These include a 20 digit alphanumeric ID (the default), sequentially incrementing and temporally sortable ULID Record identifiers, and UUID version 7 Record identifiers.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ celsius: 37.5f, id: temperature:f8xh13smeqhbg7h9o1rw, time: d'2025-10-03T01:03:27.756064Z' }]"
+skip-record-id-key = true
+
+[[test.results]]
+value = "[{ celsius: 37.5f, id: temperature:a5wxgrluu3n0qxrgkfb9, time: d'2025-10-03T01:03:27.756317Z' }]"
+skip-record-id-key = true
+
+[[test.results]]
+value = "[{ celsius: 37.5f, id: temperature:01K6KSGTGCZ631S0325WPW3KF1, time: d'2025-10-03T01:03:27.756405Z' }]"
+skip-record-id-key = true
+
+[[test.results]]
+value = "[{ celsius: 37.5f, id: temperature:u'0199a798-6a0c-7f51-8b87-e856013f98ec', time: d'2025-10-03T01:03:27.756501Z' }]"
+skip-record-id-key = true
+
+*/
+
+
+// Generate a random record ID 20 characters in length
+// Charset: `abcdefghijklmnopqrstuvwxyz0123456789`
+CREATE temperature:rand() SET time = time::now(), celsius = 37.5;
+// Identical to the above CREATE statement, because
+// :rand() is the default random ID format
+CREATE temperature SET time = time::now(), celsius = 37.5;
+
+// Generate a ULID-based record ID
+CREATE temperature:ulid() SET time = time::now(), celsius = 37.5;
+// Generate a UUIDv7-based record ID
+CREATE temperature:uuid() SET time = time::now(), celsius = 37.5;
+```
+
+#### _q020a2 - **Text Record IDs**_
+
+Text record IDs can contain letters, numbers and `_` characters.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: company:surrealdb, name: 'SurrealDB' }]"
+
+[[test.results]]
+value = "[{ id: user_version_2025:aajz3qh1nk0b27tztsa7, name: 'Alucard' }]"
+skip-record-id-key = true
+
+*/
+
+CREATE company:surrealdb SET name = 'SurrealDB';
+CREATE user_version_2025 SET name = 'Alucard';
+```
+
+To create a record ID with complex characters, use <code>`</code> (backticks) around the table name and/or record identifier.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ author: person:tobie, id: article:⟨8424486b-85b3-4448-ac8d-5d51083391c7⟩, time: d'2025-10-03T01:06:17.050210Z' }]"
+
+[[test.results]]
+value = "[{ author: person:⟨Lech_Wałęsa⟩, id: ⟨Artykuł⟩:100 }]"
+
+*/
+
+CREATE article:`8424486b-85b3-4448-ac8d-5d51083391c7` SET
+    time = time::now(),
+    author = person:tobie;
+
+CREATE `Artykuł`:100 SET
+    author = person:`Lech_Wałęsa`;
+```
+
+The parts of record IDs with complex characters will display enclosed by <code>`</code> backticks.
+
+```surql title="Output"
+-------- Query --------
+
+[
+  {
+    author: person:tobie,
+    id: article:`8424486b-85b3-4448-ac8d-5d51083391c7`,
+    time: d'2025-02-18T01:48:46.364Z'
+  }
+]
+
+-------- Query --------
+
+[
+  {
+    author: person:`Lech_Wałęsa`,
+    id: `Artykuł`:100
+  }
+]
+```
+
+#### _q020a3 - **Numeric Record IDs**_
+
+If you create a record ID with a number as a string, it will be stored with <code>`</code> backticks to differentiate it from a number.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: article:10 }]"
+
+[[test.results]]
+value = "[{ id: article:⟨10⟩ }]"
+
+[[test.results]]
+value = "[{ id: article:article10 }]"
+
+[[test.results]]
+value = "[article:10, article:⟨10⟩, article:article10]"
+
+*/
+
+CREATE article SET id = 10;
+CREATE article SET id = "10";
+CREATE article SET id = "article10";
+SELECT VALUE id FROM article;
+```
+
+As the record ID `article:10` is different from ```article:`10` ```, no errors are returned when creating and both records turn up in the output of the `SELECT` statement. Meanwhile, the article with the identifier `article10` does not use backticks as there is no `article10` number to differentiate it from.
+
+```surql title="Output"
+[
+  article:10,
+  article:`10`,
+    article:article10
+]
+```
+
+If a numeric value is specified without any decimal point suffix and is within the range `-9223372036854775808` to `9223372036854775807` then the value will be parsed, stored, and treated as a 64-bit signed integer.
+
+Any numeric numbers outside of the range of a signed 64-bit integer will be stored as a string.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ celsius: 37.5f, id: temperature:17493, time: d'2025-10-03T01:09:50.155406Z' }]"
+
+[[test.results]]
+value = "[{ events: ['Galactic senate convenes', 'Mr. Bean still waits in a field'], id: year:⟨29878977097987987979232⟩ }]"
+
+*/
+
+CREATE temperature:17493 SET time = time::now(), celsius = 37.5;
+CREATE year:29878977097987987979232 SET
+    events = [
+        "Galactic senate convenes",
+        "Mr. Bean still waits in a field"
+    ];
+```
+
+```surql title="Output"
+-------- Query --------
+
+[
+  {
+    celsius: 37.5f,
+    id: temperature:17493,
+    time: d'2025-02-17T06:21:08.911Z'
+  }
+]
+
+-------- Query s--------
+
+[
+  {
+    events: [
+      'Galactic senate convenes',
+      'Mr. Bean still waits in a field'
+    ],
+    id: year:`29878977097987987979232`
+  }
+]
+```
+
+#### _q020a4 - **Array-based Record IDs**_
+
+Record IDs can be constructed out of arrays and even objects. This sort of record ID is most used when you have a field or two that will be used to look up records inside a [record range](/docs/surrealql/datamodel/ids#record-ranges), which is extremely performant. This is in contrast to using a `WHERE` clause to filter, which involves a table scan.
+
+Records in SurrealDB can store arrays of values, including other nested arrays or objects within them. Different types of values can be stored within the same array, unless defined otherwise.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ conditions: 'cloudy', id: weather:['London', d'2025-02-13T05:00:00Z'], temperature: 5.7f }]"
+
+*/
+
+CREATE weather:['London', d'2025-02-13T05:00:00Z'] SET
+    temperature = 5.7,
+    conditions = "cloudy";
+```
+
+```surql title="Output"
+[
+  {
+    conditions: 'cloudy',
+    id: weather:[
+      'London',
+      d'2025-02-13T05:00:00Z'
+    ],
+    temperature: 5.7f
+  }
+]
+```
+
+#### _q020a5 - **Why record ranges are performant**_
+
+The main reason why record ranges are so performant is simply because the database knows ahead of time in which area to look for records in a query, and therefore has a smaller "surface area" to work in.
+
+This can be demonstrated by seeing what happens when a single record range query encompasses all of the records in a database. The example below creates 10,000 `player` records that have an array-based record ID that begins with `'mage'`, allowing them to be used in a record range query, as well as a field called `class` that is also `'mage'`, which will be used in a `WHERE` clause to compare performance.
+
+Interestingly, in this case a record range query is only somewhat more performant. This is because both queries end up iterating over 10,000 records, with the only difference being that the query with a `WHERE` clause also checks to see if the value of the `class` field is equal to `'mage'`.
+
+```surql
+FOR $_ IN 0..10000 {
+    CREATE player:['mage', rand::id()] SET class = 'mage';
+};
+
+LET $_ = SELECT * FROM player:['mage', NONE]..['mage', ..];
+LET $_ = SELECT * FROM player WHERE class = 'mage';
+```
+
+If the number of `player` records is extended to a larger number of classes, however, the difference in performance will be much larger. In this case the record range query is still only iterating a relatively small surface area of 10,000 records, while the second one has ten times this number to go through in addition to the `WHERE` clause on top.
+
+```surql
+FOR $_ IN 0..10000 {
+  CREATE player:['mage', rand::id()] SET class = 'mage';
+  CREATE player:['barbarian', rand::id()] SET class = 'barbarian';
+  CREATE player:['rogue', rand::id()]     SET class = 'rogue';
+  CREATE player:['bard', rand::id()]      SET class = 'bard';
+  CREATE player:['sage', rand::id()]      SET class = 'sage';
+  CREATE player:['psionic', rand::id()]   SET class = 'psionic';
+  CREATE player:['thief', rand::id()]     SET class = 'thief';
+  CREATE player:['paladin', rand::id()]   SET class = 'paladin';
+  CREATE player:['ranger', rand::id()]    SET class = 'ranger';
+  CREATE player:['cleric', rand::id()]    SET class = 'cleric';
+};
+
+LET $_ = SELECT * FROM player:['mage', NONE]..['mage', ..];
+LET $_ = SELECT * FROM player WHERE class = 'mage';
+```
+
+#### _q020a6 - **IDs made with parameters and function calls**_
+
+Parameters and function calls can be used inside array- and object-based record IDs in the same way as on standalone arrays and objects.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ conditions: 'cloudy', id: weather:['Seoul', d'2025-10-03T01:11:38.204589Z'], temperature: -2.3f }]"
+skip-datetime = true
+
+[[test.results]]
+value = "[{ conditions: 'cloudy', id: weather:['London', d'2025-10-03T01:11:38.204961Z'], temperature: 5.3f }]"
+skip-datetime = true
+
+*/
+
+LET $now = time::now();
+
+CREATE weather:['Seoul', $now] SET
+    temperature = -2.3,
+    conditions = "cloudy";
+
+CREATE weather:['London', time::now()] SET
+    temperature = 5.3,
+    conditions = "cloudy";
+```
+
+To create a record that uses a parameter or function call as its entire record identifier, the [`type::record()`][brakuje_func_db_type#typerecord] function can be used. (Note: this function was known as `type::thing()` before SurrealDB 3.0)
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ city: 'London', id: weather:⟨2025-10-03T01:13:14.238633Z⟩ }]"
+skip-record-id-key = true
+
+*/
+
+LET $now = time::now();
+
+CREATE type::record("weather", $now) SET city = 'London';
+```
+
+```surql title="Output"
+[
+  {
+    city: 'London',
+    id: weather:`2025-02-18T02:30:08.563Z`
+  }
+]
+```
+
+### _q020b - **Defining record IDs in a schema**_
+
+The type name of a record ID is `record`, which by default allows any sort of record. This type can be set inside a [`DEFINE FIELD`][brakuje_stat_def_field] statement.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ friends: [person:one, person:two], id: person:663uogu8gnw31irybeer, possessions: [book:one, house:one] }]"
+skip-record-id-key = true
+
+*/
+
+DEFINE FIELD possessions ON TABLE person TYPE option<array<record>>;
+DEFINE FIELD friends ON TABLE person TYPE option<array<record<person>>>;
+
+CREATE person SET
+    possessions = [ book:one, house:one],
+    friends = [ person:one, person:two ];
+```
+
+Be sure to use just `record` instead of `record<any>`, as `<any>` here would imply actual records of a table called `any`.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+match = "$error = "Couldn't coerce value for field `possessions` of `person:*`: Expected `none | array<record<any>>` but found `[book:one, house:one]`""
+error = true
+
+[[test.results]]
+value = "[{ id: person:u6qd2t4ij2h45bkf2gk4, possessions: [any:one, any:two] }]"
+skip-record-id-key = true
+
+*/
+
+DEFINE FIELD possessions ON TABLE person TYPE option<array<record<any>>>;
+
+-- Won't work, 'book' and 'house' are not of table 'any'
+CREATE person SET
+    possessions = [ book:one, house:one ];
+
+-- Actually expects this, which is probably
+-- not what the DEFINE FIELD intended
+CREATE person SET
+    possessions = [ any:one, any:two ];
+```
+
+### _q020c - **Record ranges**_
+
+SurrealDB supports the ability to query a range of records, using the record ID. Record ID range queries retrieve records using the natural sorting order of the record IDs, making a table scan unnecessary. These range queries can be used to query a range of records in a timeseries context.
+
+```surql
+-- Select all person records with IDs between the given range
+SELECT * FROM person:1..1000;
+
+-- Select all records for a particular location, inclusive
+SELECT * FROM temperature:['London', NONE]..=['London', ..];
+
+-- Select all temperature records with IDs less than a maximum value
+SELECT * FROM temperature:..['London', '2022-08-29T08:09:31'];
+
+-- Select all temperature records with IDs greater than a minimum value
+SELECT * FROM temperature:['London', '2022-08-29T08:03:39']..;
+
+-- Select all temperature records with IDs between the specified range
+SELECT * FROM temperature:['London', '2022-08-29T08:03:39']..['London', '2022-08-29T08:09:31'];
+```
+
+The following example shows the difference in performance between a regular query that uses a `WHERE` clause and a record range scan.
+
+```surql
+FOR $num IN 0..=100000 {
+  CREATE person SET id = $num, num = $num  
+};
+
+-- Assign the output to an unused parameter
+-- to avoid excessive output
+LET $_ = SELECT * FROM person WHERE num IN 0..=1000;
+LET $_ = SELECT * FROM person:0..=1000;
+```
+
+### _q020d - **Tips and best practices for record IDs**_
+
+#### _q020d1 - **Why choose the right record ID format**_
+
+Choosing an apt record ID format is especially important because record IDs is SurrealQL are immutable. Take the following `user` records for example:
+
+```surql
+FOR $i IN 0..5 {
+    CREATE user SET user_num = $i, name = "User number " + <string>user_num;
+};
+```
+
+Each of these `user` records will have a random ID, such as `user:wvjqjc5ebqvfg3aw7g61`. If a decision is made to move away from random IDs to some other form, such as an incrementing number, this will have to be done manually.
+
+```surql
+FOR $user IN SELECT * FROM user {
+    -- Use type::record to make a record ID
+    -- from the user_num field
+    CREATE type::record("user", $user.user_num);
+    -- Then delete the old user
+    DELETE $user;
+};
+
+SELECT * FROM user;
+```
+
+The final query returning just the IDs shows that they have been recreated with new IDs.
+
+```surql title="Output"
+[
+  {
+    id: user:0,
+    name: 'User number 0'
+  },
+  {
+    id: user:1,
+    name: 'User number 1'
+  },
+  {
+    id: user:2,
+    name: 'User number 2'
+  },
+  {
+    id: user:3,
+    name: 'User number 3'
+  },
+  {
+    id: user:4,
+    name: 'User number 4'
+  }
+]
+```
+
+However, record IDs are also used as [record links][SurrealQL021_DataTypes_RecordLinks] and to create [graph relations][brakuje_stat_relate]. If this is the case, more work will have to be done in order to recreate the former state.
+
+The following example shows five `user` records, which each have a 50% chance of liking each of the other users.
+
+```surql
+FOR $i IN 0..5 {
+    CREATE user SET user_num = $i, name = "User number " + <string>user_num;
+};
+
+LET $users = SELECT * FROM user;
+FOR $user IN $users {
+    LET $others = array::complement($users, [$user.id]);
+    FOR $counterpart IN $others {
+        IF rand::bool() {
+            RELATE $user->likes->$counterpart;
+        }
+    }
+};
+```
+
+Finding out the current relational state can be done with a query like the following which shows all of the graph tables in which a record is located at the `in` or `out` point. The `?` is a wildcard operator, returning any and all tables found at this point of the graph query.
+
+```surql
+SELECT
+    id,
+    ->?->? AS did, 
+    <-?<-? AS done_to
+FROM user;
+```
+
+```surql title="Output"
+[
+  {
+    did: [
+      user:zwfnk4by9gmopf6eeqm0
+    ],
+    done_to: [
+      user:d6bx6sch5li8qmhq3ljl,
+      user:ekovipptanvmgr8f48v6
+    ],
+    id: user:6ycb63zr0k3cpzwel1ga
+  },
+  {
+    did: [
+      user:ekovipptanvmgr8f48v6,
+      user:6ycb63zr0k3cpzwel1ga,
+      user:zk7tpaduzaiuswll58sg
+    ],
+    done_to: [],
+    id: user:d6bx6sch5li8qmhq3ljl
+  }
+    -- and so on..
+]
+```
+
+Surrealist's [graph visualization view][brakuje_blog_visualisation] can help as well.
+
+![Surrealist's graph view showing possible output from the previous randomized query in which each of the five user records may or may not like another user. In this case, the output resembles a rhombus with an extra line jutting out from the top left.🖼️][img__graph_view]
+
+With this in mind, here are some of the items to keep in mind when deciding what sort of record ID format to use.
+
+#### _q020d2 - **Meaningful sortable IDs are faster to query**_
+
+Records are returned in ascending record ID order by default. As the following query shows, a `SELECT` statement on a large number of `user` records with random IDs will show those with record identifiers starting with a large number of zeroes. While the IDs are sortable, the IDs themselves are completely random.
+
+```surql
+CREATE |user:200000| RETURN NONE;
+SELECT VALUE id FROM user LIMIT 4;
+```
+
+```surql title="Output"
+[
+  user:0001th0nnywnczi7mrvk,
+  user:000t5r3y7u8stqtecvht,
+  user:000tjk1nbi1it1bedplc,
+  user:001dfral92ltbdznypcd
+]
+```
+
+For a large number of records, pagination can be used to retrieve a certain amount of records at a time.
+
+```surql
+-- Returns the same four records as above
+SELECT VALUE id FROM user START 0 LIMIT 2;
+SELECT VALUE id FROM user START 2 LIMIT 2;
+```
+
+```surql title="Output"
+-------- Query --------
+
+[
+  user:0001th0nnywnczi7mrvk,
+  user:000t5r3y7u8stqtecvht
+]
+
+-------- Query --------
+
+[
+  user:001dfral92ltbdznypcd,
+  user:001hv9g1uzh32nophrpo
+]
+```
+
+As record ranges are very performant, consider moving any fields that may be used in a `WHERE` clause into the ID itself.
+
+In the following example, a number of `user` records are created using the default random ID, plus a `num` field that tracks in which order the user was created.
+
+```surql
+FOR $num IN 0..100 {
+    CREATE user SET num = $num;
+    sleep(1ms); -- Simulate a bit of time between user creation
+};
+
+SELECT * FROM user WHERE num IN 50..=51;
+SELECT * FROM user START 50 LIMIT 2;
+```
+
+As the output from the `SELECT` statements show, a `WHERE` clause is needed to find two users starting at a `num` of 50, as `START 50` starts based on the user of the record ID, which is entirely random.
+
+```surql
+-------- Query --------
+
+[
+  {
+    id: user:pqpeg0edt8kpda907o01,
+    num: 50
+  },
+  {
+    id: user:ty6qr7zyob5dh882it08,
+    num: 51
+  }
+]
+
+-------- Query --------
+
+[
+  {
+    id: user:hvfp5m5ty7n2k95dbamv,
+    num: 70
+  },
+  {
+    id: user:hvfumcmmveuolg4e2h26,
+    num: 36
+  }
+]
+```
+
+Using a ULID in this case will allow the IDs to remain random, but still sorted by date of creation.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ id: user:01K6KTHCCJW7ZA6NWBZEFEVDC9, num: 50 }, { id: user:01K6KTHCCNRMN565T2H6JW70D6, num: 51 }]"
+skip-record-id-key = true
+
+[[test.results]]
+value = "[{ id: user:01K6KTHCCJW7ZA6NWBZEFEVDC9, num: 50 }, { id: user:01K6KTHCCNRMN565T2H6JW70D6, num: 51 }]"
+skip-record-id-key = true
+
+*/
+
+FOR $num IN 0..100 {
+    CREATE user:ulid() SET num = $num;
+    sleep(1ms);
+};
+
+SELECT * FROM user WHERE num IN 50..=51;
+SELECT * FROM user START 50 LIMIT 2;
+```
+
+Not only is the `START 50 LIMIT 2` query more performant, but the entire `num` field could be removed if its only use is to return records by order of creation.
+
+```surql title="Same record IDs for both queries this time"
+-------- Query --------
+
+[
+  {
+    id: user:01JM1AHN7DDN7XM5KZ2RR2YM1S,
+    num: 50
+  },
+  {
+    id: user:01JM1AHN7FS4A3B6RNFCF64H90,
+    num: 51
+  }
+]
+
+-------- Query --------
+
+[
+  {
+    id: user:01JM1AHN7DDN7XM5KZ2RR2YM1S,
+    num: 50
+  },
+  {
+    id: user:01JM1AHN7FS4A3B6RNFCF64H90,
+    num: 51
+  }
+]
+```
+
+#### _q020d3 - **Move exact matches in array-based record IDs to the front**_
+
+Take the following `event` records which can be queried as a perfomant record range.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: event:[d'2025-05-05T08:00:00Z', user:one, 'debug'], info: 'Logged in' }]"
+
+[[test.results]]
+value = "[{ id: event:[d'2025-05-05T08:10:00Z', user:one, 'debug'], info: 'Logged out' }]"
+
+[[test.results]]
+value = "[{ id: event:[d'2025-05-05T08:01:00Z', user:two, 'debug'], info: 'Logged in' }]"
+
+*/
+
+CREATE event:[d'2025-05-05T08:00:00Z', user:one, "debug"] SET info = "Logged in";
+CREATE event:[d'2025-05-05T08:10:00Z', user:one, "debug"] SET info = "Logged out";
+CREATE event:[d'2025-05-05T08:01:00Z', user:two, "debug"] SET info = "Logged in";
+```
+
+The ordering of the ID in this case is likely not ideal, because the first item in the array, a `datetime`, will be the first to be evaluated in a range scan. A query such as the one below on a range of dates will effectively ignore the second and third parts of the ID.
+
+```surql
+SELECT * FROM event:[d'2025-05-05', user:one, "debug"]..[d'2025-05-06', user:one, "debug"];
+
+-- Same result! user name and "debug" are irrelevant
+-- SELECT * FROM event:[d'2025-05-05']..[d'2025-05-06'];
+```
+
+```surql title="Output"
+[
+  {
+    id: event:[
+      d'2025-05-05T08:00:00Z',
+      user:one,
+      'debug'
+    ],
+    info: 'Logged in'
+  },
+  {
+    id: event:[
+      d'2025-05-05T08:01:00Z',
+      user:two,
+      'debug'
+    ],
+    info: 'Logged in'
+  },
+  {
+    id: event:[
+      d'2025-05-05T08:10:00Z',
+      user:one,
+      'debug'
+    ],
+    info: 'Logged out'
+  }
+]
+```
+
+Instead, the parts of the array that are more likely to be exactly matched (such as `user:one` and `"debug"`) should be moved to the front.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: event:[user:one, 'debug', d'2025-05-05T08:00:00Z'], info: 'Logged in' }]"
+
+[[test.results]]
+value = "[{ id: event:[user:one, 'debug', d'2025-05-05T08:10:00Z'], info: 'Logged out' }]"
+
+[[test.results]]
+value = "[{ id: event:[user:two, 'debug', d'2025-05-05T08:01:00Z'], info: 'Logged in' }]"
+
+*/
+
+
+CREATE event:[user:one, "debug", d'2025-05-05T08:00:00Z'] SET info = "Logged in";
+CREATE event:[user:one, "debug", d'2025-05-05T08:10:00Z'] SET info = "Logged out";
+CREATE event:[user:two, "debug", d'2025-05-05T08:01:00Z'] SET info = "Logged in";
+```
+
+Using this format, queries can now be performed for a certain user and logging level, over a range of datetimes.
+
+```surql
+-- Only returns events for user:one and "debug"
+SELECT * FROM event:[user:one, "debug", d'2025-05-05']..[user:one, "debug", d'2025-05-06'];
+```
+
+```surql title="Output"
+[
+  {
+    id: event:[
+      user:one,
+      'debug',
+      d'2025-05-05T08:00:00Z'
+    ],
+    info: 'Logged in'
+  },
+  {
+    id: event:[
+      user:one,
+      'debug',
+      d'2025-05-05T08:10:00Z'
+    ],
+    info: 'Logged out'
+  }
+]
+```
+
+#### _q020d4 - **Auto-incrementing IDs**_
+
+While SurrealDB does not use auto-incrementing IDs by default, this behaviour can be achieved in a number of ways. One is to use the [`record::id()`][brakuje_func_db_record#recordid] function on the latest record, which returns the latter part of a record ID (the '1' in the record ID `person:1`). This can then be followed up with the [`type::record()`][brakuje_func_db_type#typerecord] function to create a new record ID.
+
+```surql
+-- Create records from person:1 to person:10
+CREATE |person:1..11|;
+LET $latest = SELECT VALUE id FROM ONLY person ORDER BY id DESC LIMIT 1;
+CREATE type::record("person", $latest.id() + 1);
+```
+
+```surql title="Output"
+[
+  {
+    id: person:11
+  }
+]
+```
+
+When dealing with a large number of records, a more performant option is to use a separate record that holds a single value representing the latest ID. An [`UPSERT`][brakuje_stat_upsert] statement is best here, which will allow the counter to be initialized if it does not yet exist, and updated otherwise. This is best done [inside a manual transaction][brakuje_stat_begin] so that the latest ID will be rolled back if any failures occur when creating the next record.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: person_id:counter, num: 1 }]"
+
+[[test.results]]
+value = "[{ id: person:1 }]"
+
+[[test.results]]
+error = "'The query was not executed due to a failed transaction'"
+
+[[test.results]]
+error = ""Expected `datetime` but found a `'2025_01+01'`""
+
+[[test.results]]
+value = "1"
+
+*/
+
+BEGIN TRANSACTION;
+UPSERT person_id:counter SET num += 1;
+-- Creates a person:1
+CREATE type::record("person", person_id:counter.num);
+COMMIT TRANSACTION;
+
+BEGIN TRANSACTION;
+-- Latest ID is now 2
+UPSERT person_id:counter SET num += 1;
+-- Whoops, invalid datetime format
+-- Transaction fails and all changes are rolled back
+CREATE type::record("person", person_id:counter.num) SET created_at = <datetime>'2025_01+01';
+COMMIT TRANSACTION;
+
+-- Latest ID is still 1
+RETURN person_id:counter.num;
+```
+
+#### _q020d5 - **Record IDs are record links**_
+
+As a record ID is a pointer to all of the data of a record, a single record ID is enough to access all of a record's fields. This behaviour is the key to the convenience of [record links][SurrealQL021_DataTypes_RecordLinks] in SurrealDB, as holding a record ID is all that is needed for one record to have a link to another.
+
+When using a standalone record ID as a record pointer, be sure to use the record ID itself.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ data: { data: 'for', demonstration: 'purposes', some: 'demo' }, id: person:1 }]"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ id: person:1 }]"
+
+*/
+
+CREATE person:1 SET data = {
+    some: "demo",
+    data: "for",
+    demonstration: "purposes"
+};
+
+LET $record = SELECT id FROM person:1;
+SELECT * FROM $record;
+```
+
+The output of the above query is just the `id` field on its own, as the `$record` parameter is an object with an `id` field, not the `id` field (the pointer) itself.
+
+```surql title="Output"
+[
+  {
+    id: person:1
+  }
+]
+```
+
+To rectify this, `id.*` can be used to follow the pointer to the entire data for the record.
+
+```surql
+SELECT id.* FROM $record;
+```
+
+```surql title="Output"
+[
+  {
+    id: {
+      data: {
+        data: 'for',
+        demonstration: 'purposes',
+        some: 'demo'
+      },
+      id: person:1
+    }
+  }
+]
+```
+
+### _q020e - **Limitations**_
+
+At present, the `VALUE` clause cannot be used inside a [`DEFINE FIELD`][brakuje_stat_def_field]: statement.
+
+```surql
+/**[test]
+
+[[test.results]]
+error = "'Cannot use the `VALUE` keyword on the `id` field.'"
+
+*/
+
+DEFINE FIELD id ON user VALUE rand::int(1, 1000000000) READONLY;
+```
+
+```surql title="Output"
+[
+  {
+    id: user:9ixn3oei6o532c2qyixa
+  }
+]
+```
+
+To achieve the desired behaviour, the `id` field can be set inside the statement to create the record.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: user:639167349 }]"
+skip-record-id-key = true
+
+*/
+
+
+CREATE user SET id = rand::int(1, 1000000000);
+```
+
+### _q020f - **Learn more**_
+
+Learn more about record IDs [in this blogpost][brakuje_blog_recordIDS] and on this [**youtube video**▶️][yt02].
+
 ---
 ---
 
 ## _q021 - **Record links**_
 
 - [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/records)
+
+One of the most powerful features of SurrealDB is the ability to traverse from record-to-record without the need for traditional SQL JOINs. Each record ID points directly to a specific record in the database, without needing to run a table scan query. Record IDs can be stored within other records, allowing them to be linked together.
+
+### _q021a - **Creating a record**_
+
+When you create a record without specifying the id, then a randomly generated id is created and used for the record id.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: person:lva0fwhgqxuk0m88ktn1, name: 'Tobie' }]"
+skip-record-id-key = true
+
+*/
+
+CREATE person SET name = 'Tobie';
+
+-- person:aio58g22n3upq16hsani
+```
+
+It's also possible to specify a specific record id when creating or updating records.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: person:tester, name: 'Tobie' }]"
+
+*/
+
+CREATE person:tester SET name = 'Tobie';
+
+-- person:tester
+```
+
+### _q021b - **Select directly off of Record IDs**_
+
+Because Record IDs are their own datatype in SurrealQL, you are able to select directly off of them.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ email: 'tobie@surrealdb.com', id: person:tobie, name: 'Tobie', opts: { enabled: true } }]"
+
+[[test.results]]
+value = "{ email: 'tobie@surrealdb.com', id: person:tobie, name: 'Tobie', opts: { enabled: true } }"
+
+[[test.results]]
+value = "{ email: 'tobie@surrealdb.com', name: 'Tobie' }"
+
+*/
+
+CREATE person:tobie SET name = 'Tobie', email = 'tobie@surrealdb.com', opts.enabled = true;
+
+-- Select the whole record
+person:tobie.*;
+
+-- Select specific fields
+person:tobie.{ name, email };
+```
+
+### _q021c - **Storing record links within records**_
+
+Records ids can be stored directly within other records, either as top-level properties, or nested within objects or arrays.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ friends: [person:tobie, person:simon], id: person:jaime, name: 'Jaime' }]"
+
+[[test.results]]
+value = "[{ friends: [person:simon, person:marcus], id: person:tobie, name: 'Tobie' }]"
+
+[[test.results]]
+value = "[{ friends: [person:jaime, person:tobie], id: person:simon, name: 'Simon' }]"
+
+[[test.results]]
+value = "[{ friends: [person:tobie], id: person:marcus, name: 'Marcus' }]"
+
+*/
+
+CREATE person:jaime SET name = 'Jaime', friends = [person:tobie, person:simon];
+CREATE person:tobie SET name = 'Tobie', friends = [person:simon, person:marcus];
+CREATE person:simon SET name = 'Simon', friends = [person:jaime, person:tobie];
+CREATE person:marcus SET name = 'Marcus', friends = [person:tobie];
+```
+
+### _q021d - **Fetching remote records from within records**_
+
+Nested field traversal can be used to fetch the properties from the remote records, as if the record was embedded within the record being queried.
+
+```surql
+SELECT friends.name FROM person:tobie;
+[
+  {
+    friends: {
+      name: ["Simon", "Marcus"]
+    }
+  }
+]
+```
+
+There is no limit to the number of remote traversals that can be performed in a query. Using `.` dot notation, SurrealDB does not differentiate between nested object properties, or remote records, and will fetch remote records asynchronously when needed for a query.
+
+```surql
+SELECT friends.friends.friends.name FROM person:tobie;
+[
+  {
+    friends: {
+      friends: {
+        friends: {
+          name: [
+            [ ["Tobie", "Simon"], ["Simon", "Marcus"] ],
+            [ ["Simon", "Marcus"] ]
+          ]
+        }
+      }
+    }
+  }
+]
+```
+
+### _q021e - **Next steps**_
+
+You've now seen how to create records using randomly generated ids, or specific record ids. This is just the beginning! The power and flexibility which is possible with the remote record fetching functionality within queries opens up a whole new set of possibilities for storing and querying traditional data, and connected datasets. The next page follows up with a feature available in SurrealDB since version 2.2.0: the ability to use record links in a bidirectional manner thanks to reference tracking.
+
+Also check out this explainer video on using record links in SurrealDB:
+
+[**go to YouTube**▶️][yt01]
 
 ---
 ---
@@ -3389,6 +4501,616 @@ fn::delete_file("temp_cart_user_24567");
 
 - [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/references)
 
+> Available since: V2.2.0
+
+### _q022a - **Basic concepts**_
+
+Reference tracking begins by adding a `REFERENCE` clause to any `DEFINE FIELD` statement, as long as the field is a top-level field of type `record` or array of records.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+*/
+
+DEFINE FIELD comics ON person TYPE option<array<record<comic_book>>> REFERENCE;
+-- Also works as `option` desugars to this syntax
+DEFINE FIELD comics ON person TYPE array<record<comic_book>> | NONE REFERENCE;
+
+-- `comics` field might not be a record, does not work
+DEFINE FIELD comics ON person TYPE array<record<comic_book>> | string REFERENCE;
+-- Not top-level field, does not work
+DEFINE FIELD metadata.comics ON person TYPE array<record<comic_book>> REFERENCE;
+```
+
+This incoming record can then be picked up with the `<~` syntax that works in the same way that graph queries do.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ comics: [comic_book:one], id: person:mat, name: 'Mat' }]"
+
+[[test.results]]
+value = "[{ comics: [comic_book:one], id: person:nynaeve, name: 'Nynaeve' }]"
+
+[[test.results]]
+value = "[{ id: comic_book:one, title: 'Loki, God of Stories' }]"
+
+[[test.results]]
+value = "[{ id: comic_book:one, owners: [person:mat, person:nynaeve], title: 'Loki, God of Stories' }]"
+
+[[test.results]]
+value = "[{ id: comic_book:one, owners: [{ id: person:mat, name: 'Mat' }, { id: person:nynaeve, name: 'Nynaeve' }], title: 'Loki, God of Stories' }]"
+
+*/
+
+DEFINE FIELD comics ON person TYPE option<array<record<comic_book>>> REFERENCE;
+CREATE person:mat SET 
+  name = "Mat", 
+  comics = [comic_book:one];
+CREATE person:nynaeve SET 
+  name = "Nynaeve", 
+  comics = [comic_book:one];
+CREATE comic_book:one SET title = "Loki, God of Stories";
+
+SELECT 
+  *, 
+  <~person AS owners
+FROM comic_book;
+
+SELECT 
+  *, 
+  <~person.{ id, name } AS owners
+FROM comic_book;
+```
+
+```surql title="Output"
+-------- Query --------
+
+[
+  {
+    id: comic_book:one,
+    owners: [
+      person:mat,
+      person:nynaeve
+    ],
+    title: 'Loki, God of Stories'
+  }
+]
+
+-------- Query --------
+
+[
+  {
+    id: comic_book:one,
+    owners: [
+      {
+        id: person:mat,
+        name: 'Mat'
+      },
+      {
+        id: person:nynaeve,
+        name: 'Nynaeve'
+      }
+    ],
+    title: 'Loki, God of Stories'
+  }
+]
+```
+
+### _q022b - **Specifying linking tables**_
+
+Incoming references can also be declared in a schema.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ comics: [comic_book:one], id: person:one }, { comics: [comic_book:one], id: person:two }]"
+
+[[test.results]]
+value = "[{ id: publisher:one, products: [comic_book:one, book:one] }]"
+
+[[test.results]]
+value = "[{ id: comic_book:one, owners: [person:one, person:two], publishers: [publisher:one], title: 'Loki, God of Stories' }]"
+
+[[test.results]]
+value = "[{ id: comic_book:one, owners: [person:one, person:two], publishers: [publisher:one], title: 'Loki, God of Stories' }]"
+
+*/
+
+DEFINE FIELD comics ON person TYPE option<array<record<comic_book>>> REFERENCE;
+DEFINE FIELD products ON publisher TYPE option<array<record<comic_book|book>>> REFERENCE;
+DEFINE FIELD owners ON comic_book COMPUTED <~person;
+DEFINE FIELD publishers ON comic_book COMPUTED <~publisher;
+
+CREATE person:one, person:two SET comics = [comic_book:one];
+CREATE publisher:one SET products = [comic_book:one, book:one];
+CREATE comic_book:one SET title = "Loki, God of Stories";
+SELECT * FROM comic_book;
+```
+
+```surql title="Output"
+[
+  {
+    id: comic_book:one,
+    owners: [
+      person:one,
+      person:two
+    ],
+    publishers: [
+      publisher:one
+    ],
+    title: 'Loki, God of Stories'
+  }
+]
+```
+
+A field of type `references` can be further narrowed down to specify not just the table name, but also the field name of the referencing record. This can be done by enclosing the part after `<~` in parentheses, adding the `FIELD` keyword and naming the field or fields via which incoming references will be shown.
+
+```surql
+DEFINE FIELD comics ON person TYPE option<array<record<comic_book>>> REFERENCE;
+DEFINE FIELD borrowed_comics ON person TYPE option<array<record<comic_book>>> REFERENCE;
+DEFINE FIELD owned_by ON comic_book COMPUTED <~(person FIELD comics);
+DEFINE FIELD borrowed_by ON comic_book COMPUTED <~(person FIELD borrowed_comics);
+DEFINE FIELD all_readers ON comic_book COMPUTED <~(person FIELD comics borrowed_comics);
+
+CREATE person:one SET comics = [comic_book:one];
+CREATE person:two SET borrowed_comics = [comic_book:one];
+CREATE comic_book:one SET title = "Loki, God of Stories";
+SELECT * FROM comic_book;
+```
+
+```surql title="Output"
+[
+  {
+    all_readers: [ person:one, person:two ],
+    borrowed_by: [ person:two ],
+    id: comic_book:one,
+    owned_by: [ person:one ],
+    title: 'Loki, God of Stories'
+  }
+]
+```
+
+### _q022c - **Specifying deletion behaviour**_
+
+When working with record links, it is very likely that you will want some behaviour to happen when a referencing link is deleted. Take the following example of a `person` who owns a `comic_book`, which is later deleted. Despite the deletion, a follow-up `SELECT * FROM person` still shows the comic book.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ id: comic_book:one, owned_by: [], title: 'Loki, God of Stories' }]"
+
+[[test.results]]
+value = "[{ comics: [comic_book:one], id: person:one }]"
+
+[[test.results]]
+value = "[]"
+
+[[test.results]]
+value = "[{ comics: [comic_book:one], id: person:one }]"
+
+*/
+
+DEFINE FIELD comics ON person TYPE option<array<record<comic_book>>> REFERENCE;
+DEFINE FIELD owned_by ON comic_book COMPUTED <~person;
+
+CREATE comic_book:one SET title = "Loki, God of Stories";
+CREATE person:one SET comics = [comic_book:one];
+DELETE comic_book:one;
+SELECT * FROM person;
+```
+
+```surql title="Output"
+[
+  {
+    comics: [
+      comic_book:one
+    ],
+    id: person:one
+  }
+]
+```
+
+A query using `INFO FOR TABLE person` shows that the actual statement created using `REFERENCE` does not finish at this point, but includes the clause `ON DELETE IGNORE`. This is the default behaviour for references.
+
+```surql
+{
+  events: {},
+  fields: {
+    comics: 'DEFINE FIELD comics ON person TYPE none | array<record<comic_book>> REFERENCE ON DELETE IGNORE PERMISSIONS FULL',
+    "comics.*": 'DEFINE FIELD comics.* ON person TYPE record<comic_book> REFERENCE ON DELETE IGNORE PERMISSIONS FULL'
+  },
+  indexes: {},
+  lives: {},
+  tables: {}
+}
+```
+
+This `ON DELETE` clause can be modified to have some other behaviour when a reference is deleted.
+
+#### _q022c1 - **ON DELETE IGNORE**_
+
+As shown in the previous section, `ON DELETE IGNORE` is the default behaviour for references and this clause will be added automatically if not specified. It can be added manually to a statement to hint to others reading the code that this behaviour is desired.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ friended_by: [], friends: [person:two], id: person:one }]"
+
+[[test.results]]
+value = "[{ friended_by: [person:one], id: person:two }]"
+
+[[test.results]]
+value = "[]"
+
+[[test.results]]
+value = "{ friended_by: [], id: person:two }"
+
+*/
+
+-- Default, behaviour, so identical to:
+-- DEFINE FIELD friends ON person TYPE option<array<record<person>>> REFERENCE;
+DEFINE FIELD friends ON person TYPE option<array<record<person>>> REFERENCE ON DELETE IGNORE;
+DEFINE FIELD friended_by ON person COMPUTED <~person;
+
+CREATE person:one SET friends = [person:two];
+CREATE person:two;
+DELETE person:one;
+person:two.*;
+```
+
+As the deletion of `person:one` is ignored when calculating the `friended_by` field, it will still show `person:one` even though the record itself has been deleted.
+
+```surql
+{
+  friended_by: [
+    person:one
+  ],
+  id: person:two
+}
+```
+
+#### _q022c2 - **ON DELETE UNSET**_
+
+`ON DELETE UNSET` will unset (remove) any linked records that are deleted. This can be thought of as the opposite of `ON DELETE IGNORE`.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ id: person:one }], [{ comments: [comment:rkvpjc0l9iruy21k89su], id: person:one }]"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ comments: [comment:rkvpjc0l9iruy21k89su, comment:tu5f72ouuydjvycg41st], id: person:one }]"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[]"
+
+[[test.results]]
+value = "[{ author: [person:one], id: comment:rkvpjc0l9iruy21k89su, text: 'Estonia is bigger than I expected!' }]"
+
+*/
+
+DEFINE FIELD comments ON person TYPE option<array<record<comment>>> REFERENCE ON DELETE UNSET;
+DEFINE FIELD author ON comment COMPUTED <~person;
+
+CREATE person:one;
+UPDATE person:one SET comments += (CREATE ONLY comment SET text = "Estonia is bigger than I expected!").id;
+-- Give this one a parameter name so it can be deleted later
+LET $comment = CREATE ONLY comment SET text = "I don't get the joke here?";
+UPDATE person:one SET comments += $comment.id;
+-- Now delete it
+DELETE $comment;
+-- Only one comment shows up for person:one now
+person:one.comments.*.*;
+```
+
+```surql title="Output of person:one queries"
+-------- Query --------
+
+[
+  {
+    comments: [
+      comment:gj1kb2e3tedn7kjcxxja,
+      comment:6sztlhd6fhgc91dg2lby
+    ],
+    id: person:one
+  }
+]
+
+-------- Query --------
+
+[
+  {
+    author: [
+      person:one
+    ],
+    id: comment:gj1kb2e3tedn7kjcxxja,
+    text: 'Estonia is bigger than I expected!'
+  }
+]
+```
+
+#### _q022c3 - **ON DELETE CASCADE**_
+
+The `ON DELETE CASCADE` will cause a record to be deleted if any record it references is deleted. This is useful for records that should not exist if a record that links to them no longer exists.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ comments: [], id: person:one }]"
+
+[[test.results]]
+value = "[{ author: person:one, id: comment:4u9gw4bl2q63zuos3v1y, text: '5/10 for this blog post. The problems I have with it are...' }]"
+
+[[test.results]]
+value = "[{ author: person:one, id: comment:em2543ghwy9k921eob3d, text: 'WOW! I never knew you could cut a rope with an arrow.' }]"
+
+[[test.results]]
+value = "[{ author: person:one, id: comment:4u9gw4bl2q63zuos3v1y, text: '5/10 for this blog post. The problems I have with it are...' }, { author: person:one, id: comment:em2543ghwy9k921eob3d, text: 'WOW! I never knew you could cut a rope with an arrow.' }]"
+
+[[test.results]]
+value = "[]"
+
+[[test.results]]
+value = "[]"
+
+*/
+
+DEFINE FIELD author ON comment TYPE record<person> REFERENCE ON DELETE CASCADE;
+DEFINE FIELD comments ON person COMPUTED <~comment;
+
+CREATE person:one;
+CREATE comment SET author = person:one, text = "5/10 for this blog post. The problems I have with it are...";
+CREATE comment SET author = person:one, text = "WOW! I never knew you could cut a rope with an arrow.";
+
+-- Show all the details of comments for 'person:one'
+person:one.comments.*.*;
+DELETE person:one;
+-- Comments no longer exist
+SELECT * FROM comment;
+```
+
+```surql title="Output"
+-------- Query --------
+
+[
+  {
+    author: person:one,
+    id: comment:8msvp0egg8cdlyu4vvn9,
+    text: 'WOW! I never knew you could cut a rope with an arrow.'
+  },
+  {
+    author: person:one,
+    id: comment:i72qfjy59vbn81hk6lrm,
+    text: '5/10 for this blog post. The problems I have with it are...'
+  }
+]
+
+-------- Query --------
+
+[]
+
+-------- Query --------
+
+[]
+```
+
+#### _q022c4 - **ON DELETE REJECT**_
+
+`ON DELETE REJECT` will outright make it impossible to delete a record that is referenced from somewhere else. For example, consider the case in which a house should not be demolished (deleted) until it has been disconnected from utilities such as gas, water, electricity, and so on. This can be simulated in a schema by adding a `REFERENCE ON DELETE REJECT` to the `utility` table, making it impossible for any `house` to be deleted if they link to it.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ id: house:one, using: [] }]"
+
+[[test.results]]
+value = "[{ connected_to: [house:one], id: utility:gas }, { connected_to: [house:one], id: utility:water }]"
+
+*/
+
+DEFINE FIELD connected_to ON utility TYPE option<array<record<house>>> REFERENCE ON DELETE REJECT;
+DEFINE FIELD using ON house COMPUTED <~utility;
+
+CREATE house:one;
+CREATE utility:gas, utility:water SET connected_to = [house:one];
+```
+
+At this point, the `using` field on `house:one` automatically picks up the two references. Due to these references, the `house` record cannot be deleted.
+
+```surql
+house:one.*;
+DELETE house:one;
+```
+
+```surql title="Output"
+-------- Query --------
+
+{
+  id: house:one,
+  using: [
+    utility:gas,
+    utility:water
+  ]
+}
+
+-------- Query --------
+
+'Cannot delete `house:one` as it is referenced by `utility:gas` with an ON DELETE REJECT clause'
+```
+
+To delete the `house`, the `connected_to` references will first have to be removed.
+
+```surql
+UPDATE utility:gas   SET connected_to -= house:one;
+UPDATE utility:water SET connected_to -= house:one;
+
+DELETE house:one;
+```
+
+Note that an `ON DELETE UNSET` for a required field is effectively the same as an `ON DELETE REJECT`. In both of the following two cases, a `person` that has any referencing `comment` records will not be able to be deleted.
+
+```surql
+-- Non-optional field that attempts an UNSET when referencing 'person' is deleted
+DEFINE FIELD author ON comment TYPE record<person> REFERENCE ON DELETE UNSET;
+LET $person = CREATE ONLY person;
+CREATE comment SET text = "Cats are so much better at climbing UP a tree than down! Lol", author = $person.id;
+DELETE person;
+
+-- Optional field which rejects the deletion of a referencing 'person'
+DEFINE FIELD author ON comment TYPE option<record<person>> REFERENCE ON DELETE REJECT;
+LET $person = CREATE ONLY person;
+CREATE comment SET text = "Cats are so much better at climbing UP a tree than down! Lol", author = $person.id;
+DELETE person;
+```
+
+The error message in these two cases will differ, but the behaviour is the same.
+
+```surql
+-------- Query --------
+
+"An error occured while updating references for `person:97sfkadd56hqhimbf69m`: Couldn't coerce value for field `author` of `comment:kkigvk5knsoeg53p08n1`: Expected `record<person>` but found `NONE`"
+
+-------- Query --------
+
+'Cannot delete `person:3fm76xztvfab99eq780l` as it is referenced by `comment:ig0ogusbm64cier5ovv9` with an ON DELETE REJECT clause'
+```
+
+#### _q022c5 - **ON DELETE THEN**_
+
+The `ON DELETE THEN` clause allows for custom logic when a reference is deleted. This clause includes a parameters called `$this` to refer to the record in question, and `$reference` for the reference.
+
+In the following example, a `person` record's `comments` field will remove any comments when they are deleted, but also add the same comment to a different field called `deleted_comments`.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ comments: [comment:7g857mbox5rdqvjuezxf], id: person:one }]"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ comments: [comment:7g857mbox5rdqvjuezxf, comment:o7qgd26uruvf3hracvrh], id: person:one }]"
+
+[[test.results]]
+value = "[]"
+
+[[test.results]]
+value = "[{ comments: [comment:7g857mbox5rdqvjuezxf], deleted_comments: [comment:o7qgd26uruvf3hracvrh], id: person:one }]"
+
+*/
+
+DEFINE FIELD comments ON person TYPE option<array<record<comment>>> REFERENCE ON DELETE THEN {
+    UPDATE $this SET
+        deleted_comments += $reference,
+        comments -= $reference;
+};
+DEFINE FIELD author ON comment COMPUTED <~person;
+
+CREATE person:one SET comments += (CREATE ONLY comment SET text = "Estonia is bigger than I expected!").id;
+LET $comment = CREATE ONLY comment SET text = "I don't get the joke here?";
+UPDATE person:one SET comments += $comment.id;
+DELETE $comment;
+SELECT * FROM person:one;
+```
+
+```surql title="person:one before and after comment is deleted"
+-------- Query --------
+
+[
+  {
+    comments: [
+      comment:lbeyh2icushpwo0ak5ux,
+      comment:90tdnyoa14cge2ocmep7
+    ],
+    id: person:one
+  }
+]
+
+-------- Query --------
+
+[
+  {
+    comments: [
+      comment:lbeyh2icushpwo0ak5ux
+    ],
+    deleted_comments: [
+      comment:90tdnyoa14cge2ocmep7
+    ],
+    id: person:one
+  }
+]
+```
+
 ---
 ---
 
@@ -3396,12 +5118,181 @@ fn::delete_file("temp_cart_user_24567");
 
 - [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/regex)
 
+> Available since: V3.0.0
+
+A `regex` can be created by casting from a string.
+
+The following examples all return `true`.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "true"
+
+[[test.results]]
+value = "true"
+
+[[test.results]]
+value = "true"
+
+*/
+
+-- Either 'a' or 'b'
+<regex> "a|b" = "a";
+
+-- Either color or colour
+<regex> "col(o|ou)r" = "colour";
+
+-- Case-insensitive match on English color, colour, or French couleur
+<regex> "((?i)col(o|ou)r|couleur)" = "COULEUR";
+```
+
+While `regex` was added as a standalone type in version 2.3.0, regex matching has always been available via the [`string::matches()`][brakuje_func_db_string#stringmatches] function.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "true"
+
+[[test.results]]
+value = "true"
+
+[[test.results]]
+value = "true"
+
+*/
+
+string::matches("a", "a|b");
+string::matches("colour", "col(o|ou)r");
+string::matches("COULEUR", "((?i)col(o|ou)r|couleur)");
+```
+
 ---
 ---
 
 ## _q024 - **Sets**_
 
 - [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/sets)
+
+> [!NOTE]
+> Before version 3.0.0-beta, sets were simply arrays that deduplicated their items. To emulate the former behaviour, add the clause `VALUE $value.distinct()` to a `DEFINE FIELD` definition.
+
+A set is similar to an array, but with two key differences:
+
+- The values in a set are automatically deduplicated.
+- The values in a set are automatically ordered.
+
+A set can be created using the literal syntax `{}`.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "{1, 2, 6}"
+
+*/
+
+RETURN {1, 6, 6, 2};
+-- {1, 2, 6}
+```
+
+To create a set with zero items or a single item, add a comma.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "true"
+
+[[test.results]]
+value = "true"
+
+[[test.results]]
+value = "false"
+
+[[test.results]]
+value = "false"
+
+*/
+{,}.is_set();  -- true
+{9,}.is_set(); -- true
+
+{}.is_set();   -- false
+{9}.is_set();  -- false
+```
+
+In addition to the `{}` literal syntax, an array can be cast into a set.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ bank_accounts: [55555, 55555, 98787], id: customer:q57ltnsy4rnpwtica0qa, languages: {'en', 'ja', 'kr'} }]"
+
+*/
+
+DEFINE FIELD bank_accounts ON TABLE customer TYPE array<int>;
+DEFINE FIELD languages ON TABLE customer TYPE set<string>;
+
+CREATE customer SET
+    bank_accounts = [
+      55555,
+      55555,
+      98787
+    ],
+    languages = <set>[
+        "en",
+        "ja",
+        "kr",
+        "kr"
+    ];
+```
+
+```surql title="Output"
+[
+  {
+    bank_accounts: [
+      55555,
+      98787
+    ],
+    id: customer:uv6mn62t8td9vzvfogh4,
+    languages: {
+      'en',
+      'ja',
+      'kr'
+    }
+  }
+]
+```
+
+Casting into a `set` and back into an array can be a convenient way to deduplicate items in the same way that the [`array::distinct()`][SurrealQL101ao_FunctionsDatabase_Array_distinct] and [`array::sort()`][SurrealQL101bw_FunctionsDatabase_Array_sort] functions are used.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[3, 4, 5, 6, 7, 9, 18]"
+
+[[test.results]]
+value = "[3, 4, 5, 6, 7, 9, 18]"
+
+*/
+
+<array><set>[18,7,6,6,6,6,5,4,3,9];
+[18,7,6,6,6,6,5,4,3,9].distinct().sort();
+```
+
+```surql title="Output"
+[3, 4, 5, 6, 7, 9, 18]
+```
 
 ---
 ---
@@ -3480,8 +5371,6 @@ lines";
 
 ### _q025a - **Specifying data type literal values using string prefixes**_
 
-
-
 #### _q025a1 - **Overview**_
 
 In SurrealQL, there are several data types for which literal values are specified using string values, with a prefix indicating the intended type for the value to be interpreted as.
@@ -3536,6 +5425,7 @@ RETURN type::is_string("person:john");
 RETURN type::is_record("person:john");
 RETURN type::is_record(r"person:john");
 ```
+
 ```surql title="Response"
 -------- Query 1 --------
 
@@ -3582,6 +5472,7 @@ RETURN d"2025-11-28T11:41:20.262-04:00";  --- Sub-second precision included, tim
 RETURN d"2025-11-28T11:41:20Z";           --- Sub-second precision excluded, timezone defaulted to UTC
 RETURN d"2025-11-28T11:41:20+04:00";      --- Sub-second precision excluded, timezone specified as UTC + 4:00
 ```
+
 ```surql title="Response"
 -------- Query 1 --------
 
@@ -3660,6 +5551,7 @@ As a result, incorrect input with a cast will generate an error:
 RETURN <uuid>"018f0e6a_9b95-7ecc-8a38-aea7bf3627dd";
 RETURN <datetime>"2024_06-06T12:00:00Z";
 ```
+
 ```surql title="Response"
 -------- Query 1 --------
 
@@ -5993,7 +7885,7 @@ See also:
 
 - [`math::max`🚫][brakuje_func_db_math#mathmax], which extracts the greatest number from an array of numbers
 - [`time::max`🚫][brakuje_func_db_time#timemax], which extracts the greatest datetime from an array of datetimes
-- [How values are compared and ordered in SurrealDB🚫][brakuje_func_db_values#comparing-and-ordering-values]
+- [How values are compared and ordered in SurrealDB🚫][SurrealQL027a_DataTypes_Values_ComparingOrdering]
 
 ### _q101bj - **`array::min`**_
 
@@ -6037,7 +7929,7 @@ See also:
 
 - [`math::min`🚫][brakuje_func_db_math#mathmin], which extracts the least number from an array of numbers
 - [`time::min`🚫][brakuje_func_db_time#timemin], which extracts the least datetime from an array of datetimes
-- [How values are compared and ordered in SurrealDB🚫][brakuje_func_db_values#comparing-and-ordering-values]
+- [How values are compared and ordered in SurrealDB🚫][SurrealQL027a_DataTypes_Values_ComparingOrdering]
 
 ### _q101bk - **`array::matches`**_
 
@@ -7771,9 +9663,9 @@ SELECT * FROM user;
 
 [SurrealQL007p_DataTypes_CastingGeneral]: <#q007p---general-notes-on-casting> "General notes on casting"
 
-[SurrealQL007p1_DataTypes_CastingGeneral1]: <#q007p1---syntax-and-order> "Syntax and order"
+[SurrealQL007p1_DataTypes_CastingSyntaxOrder]: <#q007p1---syntax-and-order> "Syntax and order"
 
-[SurrealQL007p2_DataTypes_CastingGeneral2]: <#q007p2---casting-vs-affixes> "Casting vs. affixes"
+[SurrealQL007p2_DataTypes_CastingVaAffixes]: <#q007p2---casting-vs-affixes> "Casting vs. affixes"
 
 [SurrealQL008_DataTypes_ClosuresAnonymousFunctions]: <#q008---anonymous-functions-closures> "SurrealQL 🞂 Data type 🞂 Anonymous functions (closures)"
 
@@ -7830,6 +9722,10 @@ SELECT * FROM user;
 [SurrealQL026_DataTypes_UUIDs]: <#q026---uuids> "SurrealQL 🞂 Data type 🞂 UUIDs"
 
 [SurrealQL027_DataTypes_Values]: <#q027---values> "SurrealQL 🞂 Data type 🞂 Values"
+
+[SurrealQL027a_DataTypes_Values_ComparingOrdering]: <#q027a---comparing-and-ordering-values> "Comparing and ordering values"
+
+[SurrealQL027b_DataTypes_ValuesTruthiness]: <#q027b---values-and-truthiness> "Values and truthiness"
 
 [SurrealQL028_Statements]: <#q028---statements> "SurrealQL 🞂 Statements"
 
@@ -8173,6 +10069,8 @@ SELECT * FROM user;
 
 [yt01]: <https://www.youtube.com/watch?v=TyX45cyZ-W0> "SurrealDB: Document-Style Relationships in SurrealDB"
 
+[yt02]: <https://www.youtube.com/watch?v=c0cqmWRYP8c> "SurrealDB Stream #4: Record IDs with Tobie & Alex"
+
 [net__SurrealDB_Store]: <https://surrealdb.store/>
 
 [net__SurrealistMini]: <https://app.surrealdb.com/mini>
@@ -8201,12 +10099,11 @@ SELECT * FROM user;
 
 [net__geojson]: <https://geojson.org/>
 
-[ico__YT]: <https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/YouTube_2024.svg/300px-YouTube_2024.svg.webp>
-
 [ico__SurrealQL]: <https://surrealdb.com/docs/_astro/ql-light.70PDiXa1_Z2othTk.webp>
 
 [img__demo_overview]: <https://surrealdb.com/docs/_astro/surreal-deal-store.C2015pX2_Z2r7lvb.webp>
 [img__parse_error]: <https://surrealdb.com/docs/_astro/surrealql-parse-error.g1VFFr3O_1ncJQv.webp>
+[img__graph_view]: <https://surrealdb.com/docs/_astro/graph_view.B3oQAj0s_Z12bT6L.webp>
 
 [SurrealDB_cli]: </docs/surrealdb/cli> "CLI"
 [SurrealDB_cli_import]: </docs/surrealdb/cli/import> "import"
@@ -8219,14 +10116,30 @@ SELECT * FROM user;
 [brakuje_func_db_time#timemin]:  </docs/surrealql/functions/database/time#timemin>
 [brakuje_func_db_type#typeis_string]:  </docs/surrealql/functions/database/type#typeis_strin>
 [brakuje_func_db_type#typeis_record]:  </docs/surrealql/functions/database/type#typeis_record>
+[brakuje_func_db_type#typerecord]:  </docs/surrealql/functions/database/type#typerecord>
 [brakuje_func_db_value#chain]:   </docs/surrealql/functions/database/value#chain>
+[brakuje_func_db_record#recordid]:   </docs/surrealql/functions/database/record#recordid>
+
+
 
 [brakuje_func_db_file]:           </docs/surrealql/functions/database/file>
 [brakuje_func_db_encoding#encodingcbordecod]: </docs/surrealql/functions/database/encoding#encodingcbordecode>
 [brakuje_func_db_rand#randuuidv4]: </docs/surrealql/functions/database/rand#randuuidv4>
 
-[brakuje_func_db_values#comparing-and-ordering-values]: </docs/surrealql/datamodel/values#comparing-and-ordering-values>
+
 [brakuje_model_ids]: </docs/surrealql/datamodel/ids>
 [brakuje_model_ids#record-ranges]: </docs/surrealql/datamodel/ids#record-ranges>
 
 [brakuje_stat_def_bucket]: </docs/surrealql/statements/define/bucket>
+[brakuje_stat_def_field]: </docs/surrealql/statements/define/field>
+[brakuje_stat_select]: </docs/surrealql/statements/selectt>
+[brakuje_stat_begin]: </docs/surrealql/statements/begin>
+[brakuje_stat_create]: </docs/surrealql/statements/create>
+[brakuje_stat_update]: </docs/surrealql/statements/update>
+[brakuje_stat_relate]: </docs/surrealql/statements/relate>
+[brakuje_stat_upsert]: </docs/surrealql/statements/upsert>
+[brakuje_stat_delete]: </docs/surrealql/statements/delete>
+[brakuje_stat_insert#example-usage]: </docs/surrealql/statements/insert#example-usage>
+
+[brakuje_blog_recordIDS]: </blog/the-life-changing-magic-of-surrealdb-record-ids#the-performance-at-scale>
+[brakuje_blog_visualisation]: </blog/whats-new-in-surrealist-3-2#graph-visualisation>
