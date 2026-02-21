@@ -2971,6 +2971,230 @@ These anonymous functions provide a flexible way to define small, reusable piece
 
 ## _q009 - **Datetimes**_
 
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/datetimes)
+
+SurrealDB has native support for datetimes with nanosecond precision. SurrealDB automatically parses and understands datetimes which are written as strings in the SurrealQL language. Times must also be formatted in [RFC 3339][net__RFC_3339] format.
+
+
+> [!NOTE]
+> As of `v2.0.0`, SurrealDB no longer eagerly converts a string into a datetime. An implicit `d` prefix or cast using `<datetime>` is required instead.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: event:s9mfw7f45qhlzs0ogche, time: d'2025-07-03T07:18:52Z' }]"
+skip-record-id-key = true
+
+*/
+
+CREATE event SET time = d"2025-07-03T07:18:52Z";
+```
+
+SurrealDB handles all datetimes with nanosecond precision.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: event:g7cdb2ny6qozzsrlp9qj, time: d'2025-07-03T07:18:52.841147Z' }]"
+skip-record-id-key = true
+
+*/
+
+CREATE event SET time = d"2025-07-03T07:18:52.841147Z";
+```
+
+SurrealDB handles all timezones, and automatically converts and stores datetimes as a UTC date.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: event:wieqqme8hybzpnh043d2, time: d'2025-07-03T05:18:52.841147Z' }]"
+skip-record-id-key = true
+
+*/
+
+CREATE event SET time = d"2025-07-03T07:18:52.841147+02:00";
+```
+
+A `datetime` can also be created by using `<datetime>` to cast from a string.
+
+With correct input:
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: event:9r69r6c6ovkky3pg7oko, time: d'2025-07-03T07:18:52.841147Z' }]"
+skip-record-id-key = true
+
+*/
+
+CREATE event SET time = <datetime>"2025-07-03T07:18:52.841147Z";
+```
+
+```surql title="Response"
+[{ id: event:jwm8ncmfi30nrxdf24ws, time: d'2025-07-03T07:18:52.841147Z' }]
+```
+
+With incorrect input (missing final Z):
+
+```surql
+/**[test]
+
+[[test.results]]
+error = "'"Expected `datetime` but found a `'2025-07-03T07:18:52.841147'`"'"
+
+*/
+
+CREATE event SET time = <datetime>"2025-07-03T07:18:52.841147";
+```
+
+```surql title="Response"
+"Expected a datetime but cannot convert '2025-07-03T07:18:52.841147' into a datetime"
+```
+
+As a convenience, a date containing a year, month and day but no time will also parse correctly as a datetime.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: event:ob9p04agl2aoqipet339, time: d'2024-04-03T00:00:00Z' }]"
+skip-record-id-key = true
+
+*/
+
+CREATE event SET time = <datetime>"2024-04-03";
+```
+
+```surql title="Response"
+[{ id: event:4t50wjjlne9v8km2qcwq, time: d'2024-04-03T00:00:00Z' }]
+```
+
+### _q009a - **Datetime types in `DEFINE FIELD` statements**_
+
+Defining a field with a set `datetime` type will ensure that datetimes are properly formatted and not passed on as simple strings.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+error = ""Couldn't coerce value for field `time` of `event:qv8qcjf0w9oowekl36w6`: Expected `datetime` but found `'2025-07-03T07:18:52.841147'`""
+
+*/
+
+DEFINE FIELD time ON event TYPE datetime;
+// highlight-next-line
+CREATE event SET time = "2025-07-03T07:18:52.841147";
+```
+
+```surql title="Response"
+"Couldn't coerce value for field `time` of `event:qv8qcjf0w9oowekl36w6`: Expected `datetime` but found `'2025-07-03T07:18:52.841147'`"
+```
+
+The above query will fail because the datetime is not cast as a datetime type. The correct query is:
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ id: event:w2lhv58f7c9z7xo4nqkq, time: d'2025-07-03T07:18:52.841140Z' }]"
+skip-record-id-key = true
+
+*/
+
+DEFINE FIELD time ON event TYPE datetime;
+// highlight-next-line
+CREATE event SET time = d"2025-07-03T07:18:52.84114Z";
+```
+
+```surql title="Response"
+[
+    { 
+        id: event:w2lhv58f7c9z7xo4nqkq, 
+        time: d'2025-07-03T07:18:52.841140Z' 
+    }
+]
+```
+
+#### _q009a1 - **Datetime comparison**_
+A datetime can be compared with another using the advanced SurrealDB operators.
+
+```surql
+d"2025-07-03T07:18:52Z" < d"2025-07-03T07:18:52.84114Z";
+```
+    
+```surql title="Response"
+true
+```
+
+### _q009b - **Durations and datetimes**_
+
+A duration can be used to alter a datetime.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: event:nyk8onbwm2e1n8z32rj9, time: d'2025-07-17T07:18:52Z' }]"
+skip-record-id-key = true
+
+*/
+
+CREATE event SET time = d"2025-07-03T07:18:52Z" + 2w;
+```
+    
+```surql title="Response"
+[{ id: event:`9ey7v8r0fd46xblf9dsf`, time: d'2025-07-17T07:18:52Z' }]
+```
+
+Multi-part durations can also be used to modify datetimes.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: event:5uuzy32t48yutxyszi7p, time: d'2025-07-03T08:49:14.191147Z' }]"
+skip-record-id-key = true
+
+*/
+
+CREATE event SET time = d"2025-07-03T07:18:52.841147Z" + 1h30m20s1350ms;
+```
+
+```surql title="Response"
+[{ id: event:5uuzy32t48yutxyszi7p, time: d'2025-07-03T08:49:14.191147Z' }]
+```
+
+#### _q009b1 - **Duration units**_
+
+Durations can be specified in any of the following units:
+
+| Unit | Description |
+| :--- | :--- |
+| **`ns`** | Nanoseconds |
+| **`us`** | Microseconds, alternative: µs |
+| **`ms`** | Milliseconds |
+| **`s`** | Seconds |
+| **`m`** | Minutes |
+| **`h`** | Hours |
+| **`d`** | Days |
+| **`w`** | Weeks |
+| **`y`** | Years |
+
+### _q009c - **Next steps**_
+
+You've now seen how to store, modify, and handle dates and times in SurrealDB. For more advanced functionality, take a look at the [time🚫][brakuje_func_db_time] functions, which enable extracting, altering, rounding, and grouping datetimes into specific time intervals.
+
 ---
 ---
 
@@ -7412,6 +7636,7 @@ SELECT * FROM user;
 
 [brakuje_func_db_math#mathmax]: </docs/surrealql/functions/database/math#mathmax>
 [brakuje_func_db_math#mathmin]: </docs/surrealql/functions/database/math#mathmin>
+[brakuje_func_db_time]: </docs/surrealql/functions/database/time>
 [brakuje_func_db_time#timemax]: </docs/surrealql/functions/database/time#timemax>
 [brakuje_func_db_time#timemin]: </docs/surrealql/functions/database/time#timemin>
 [brakuje_func_db_value#chain]: </docs/surrealql/functions/database/value#chain>
