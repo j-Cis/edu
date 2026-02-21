@@ -3312,12 +3312,286 @@ fn::delete_file("temp_cart_user_24567");
 
 - [📓][surrealdb_docs_3x_surrealql_datamodel_formatters]
 
+The [string::is_datetime🚫][brakuje_func_db_string#stringisdatetime]: and [time::format🚫][brakuje_func_db_time#timeformat] functions in SurrealQL accept certain text formats for date/time formatting. The possible formats are listed below.
+
+### _q011a - **formatters for date and time**_
+
+#### _q011a1 - **Date formatters**_
+
+| Specifier | Example | Description |
+| :--- | :--- | :--- |
+| %Y | 2001 | The full proleptic Gregorian year, zero-padded to 4 digits. |
+| %C | 20 | The proleptic Gregorian year divided by 100, zero-padded to 2 digits. |
+| %y | 01 | The proleptic Gregorian year modulo 100, zero-padded to 2 digits. |
+| %m | 07 | Month number (01 to 12), zero-padded to 2 digits. |
+| %b | Jul | Abbreviated month name. Always 3 letters. |
+| %B | July | Full month name. |
+| %h | Jul | Same as %b. |
+| %d | 08 | Day number (01 to 31), zero-padded to 2 digits. |
+| %e | 8 | Same as %d but space-padded. Same as %_d. |
+| %a | Sun | Abbreviated weekday name. Always 3 letters. |
+| %A | Sunday | Full weekday name. |
+| %w | 0 | Day of the week. Sunday = 0, Monday = 1, ..., Saturday = 6. |
+| %u | 7 | Day of the week. Monday = 1, Tuesday = 2, ..., Sunday = 7. ([RFC 3339][net__RFC_3339]) |
+| %U | 28 | Week number starting with Sunday (00 to 53), zero-padded to 2 digits. |
+| %W | 27 | Same as %U, but week 1 starts with the first Monday in that year instead. |
+| %G | 2001 | Same as %Y but uses the year number in [RFC 3339][net__RFC_3339] week date. |
+| %g | 01 | Same as %y but uses the year number in [RFC 3339][net__RFC_3339] week date. |
+| %V | 27 | Same as %U but uses the week number in [RFC 3339][net__RFC_3339] week date (01 to 53). |
+| %j | 189 | Day of the year (001 to 366), zero-padded to 3 digits. |
+| %D | 07/08/01 | Month-day-year format. Same as %m/%d/%y. |
+| %x | 07/08/01 | Locale's date representation. |
+| %F | 2001-07-08 | Year-month-day format ([RFC 3339][net__RFC_3339]). Same as %Y-%m-%d. |
+| %v | 8-Jul-2001 | Day-month-year format. Same as %e-%b-%Y. |
+
+#### _q011a2 - **Time formatters**_
+
+| Specifier | Example | Description |
+| :--- | :--- | :--- |
+| %H | 00 | Hour number (00 to 23), zero-padded to 2 digits. |
+| %k | 0 | Same as %H but space-padded. Same as %_H. |
+| %I | 12 | Hour number in 12-hour clocks (01 to 12), zero-padded to 2 digits. |
+| %l | 12 | Same as %I but space-padded. Same as %_I. |
+| %P | am | am or pm in 12-hour clocks. |
+| %p | AM | AM or PM in 12-hour clocks. |
+| %M | 34 | Minute number (00 to 59), zero-padded to 2 digits. |
+| %S | 60 | Second number (00 to 60), zero-padded to 2 digits. |
+| %f | 026490000 | The fractional seconds (in nanoseconds) since last whole second. |
+| %.f | .026490 | Similar to %f but left-aligned. |
+| %.3f | .026 | Similar to .%f but left-aligned but fixed to a length of 3. |
+| %.6f | .026490 | Similar to .%f but left-aligned but fixed to a length of 6. |
+| %.9f | .026490000 | Similar to .%f but left-aligned but fixed to a length of 9. |
+| %3f | 026 | Similar to %.3f but without the leading dot. |
+| %6f | 026490 | Similar to %.6f but without the leading dot. |
+| %9f | 026490000 | Similar to %.9f but without the leading dot. |
+| %R | 00:34 | Hour-minute format. Same as %H:%M. |
+| %T | 00:34:59 | Hour-minute-second format. Same as %H:%M:%S. |
+| %X | 00:34:59 | Locale's time representation. |
+| %r | 12:34:59 AM | Hour-minute-second format in 12-hour clocks. Same as %I:%M:%S %p. |
+| %x | 07/08/01 | Locale's date representation. |
+| %F | 2001-07-08 | Year-month-day format [net__RFC_3339]. Same as %Y-%m-%d. |
+| %v | 8-Jul-2001 | Day-month-year format. Same as %e-%b-%Y. |
+
+#### _q011a3 - **Timezones formatters**_
+
+| Specifier | Example | Description |
+| :--- | :--- | :--- |
+| %Z | ACST | Local time zone name. |
+| %z | +0930 | Offset from the local time to UTC (with UTC being +0000). |
+| %:z | +09:30 | Same as %z but with a colon. |
+
+#### _q011a4 - **Date & time formatters**_
+
+| Specifier | Example | Description |
+| :--- | :--- | :--- |
+| %c | Sun Jul 8 00:34:59 2001 | Locale's date and time. |
+| %+ | 2001-07-08T00:34:59.026490+09:30 | RFC 3339 / RFC 3339 date & time format. |
+| %s | 994518299 | UNIX timestamp, the number of seconds since 1970-01-01T00:00:00. |
+
+#### _q011a5 - **Other formatters**_
+
+| Specifier | Example | Description |
+| :--- | :--- | :--- |
+| %t | - | Literal tab (\t). |
+| %n | - | Literal newline (\n). |
+| %% | - | Literal percent sign. |
+
+### _q011b - **Examples**_
+
+Seeing if an input with a date and time conforms to an expected format:
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "true"
+
+*/
+
+string::is_datetime("5sep2024pm012345.6789", "%d%b%Y%p%I%M%S%.f");
+```
+
+```surql title="Response"
+true
+```
+
+Another example with a different format:
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "false"
+
+*/
+
+string::is_datetime("23:56:00 2015-09-05", "%Y-%m-%d %H:%M");
+```
+
+```surql title="Response"
+false
+```
+
+Using a formatter to generate a string from a datetime:
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "'2021-11-01'"
+
+*/
+
+time::format(d"2021-11-01T08:30:17+00:00", "%Y-%m-%d");
+```
+
+```surql title="Response"
+"2021-11-01"
+```
+
 ---
 ---
 
 ## _q012 - **Futures (`COMPUTED` clause)**_
 
 - [📓][surrealdb_docs_3x_surrealql_datamodel_futures]
+
+> [!NOTE]
+> The `future` type is only available up to SurrealDB 2.x. Since version 3.0.0-beta, it has been replaced by [defined fields using the `COMPUTED` clause🚫][brakuje_stat_def_field#computed-fields]. Most examples in this page include an equivalent `COMPUTED` clause to aid in migrating to the new implementation.
+
+Futures are values which are only computed when the data is selected and returned to the client. Futures can be stored inside records, to enable dynamic values which are always calculated when queried.
+
+### _q012a - **Simple futures**_
+
+Any value or expression can be used inside a future. This value will be dynamically computed on every access to the record.
+
+#### _q012a1 - **Legacy future type**
+
+```surql
+CREATE person SET accessed_date = <future> { time::now() };
+```
+
+#### _q012a2 - **With COMPUTED clause**
+
+```surql
+-- Only used inside a DEFINE FIELD statement
+DEFINE FIELD accessed_date ON person COMPUTED time::now();
+```
+
+### _q012b - **Futures inside schema definitions
+
+A future can be added to a schema definition as well.
+
+#### _q012b1 - **Legacy future type**
+
+```surql
+DEFINE FIELD accessed_at ON TABLE user VALUE <future> { time::now() };
+
+CREATE user:one;
+SELECT * FROM ONLY user:one;
+-- Sleep for one second
+SLEEP 1s;
+-- `accessed_at` is a different value now
+SELECT * FROM ONLY user:one;
+```
+
+#### _q012b2 - **With COMPUTED clause**
+
+```surql
+DEFINE FIELD accessed_at ON TABLE user COMPUTED time::now();
+
+CREATE user:one;
+SELECT * FROM ONLY user:one;
+-- Sleep for one second
+SLEEP 1s;
+-- `accessed_at` is a different value now
+SELECT * FROM ONLY user:one;
+```
+
+This differs from a `VALUE` clause which is only calculated when it is modified (created or updated), but is not recalculated during a `SELECT` query which does not modify a record.
+
+```surql
+DEFINE FIELD updated ON TABLE user VALUE time::now();
+
+CREATE user:one;
+SELECT * FROM ONLY user:one;
+-- Sleep for one second
+SLEEP 1s;
+-- `updated` is still the same
+SELECT * FROM ONLY user:one;
+```
+
+### _q012c - **Futures depending on statements**_
+
+If the value of a future is the result of a statement, it must be wrapped in parentheses.
+
+#### _q012c1 - **Legacy future type**
+
+```surql
+DEFINE FIELD random_movie
+    ON app_screen
+    VALUE <future> { (SELECT * FROM ONLY movie ORDER BY RAND() LIMIT 1) };
+```
+
+#### _q012c2 - **With COMPUTED clause**
+
+```surql
+-- No need for parentheses
+DEFINE FIELD random_movie
+    ON app_screen
+    COMPUTED SELECT * FROM ONLY movie ORDER BY RAND() LIMIT 1;
+```
+
+If your statement is wrapped in parentheses, you need to access the fields using the $parent variable.
+
+```surql
+DEFINE FIELD OVERWRITE followers
+    ON user
+    VALUE <future> { (SELECT VALUE count FROM ONLY follower_count WHERE user = $parent.id LIMIT 1) ?? 0 };
+```
+
+### _q012d - **Avoiding infinite recursion**_
+
+When defining a future on a field, be sure to avoid any statements that would cause infinite recursion. In the following example, the `random_friend` field is defined by a statement that uses a `SELECT` statement on all the fields of the same `person` table, one of which will also use the same `future` to compute its value.
+
+```surql
+CREATE |person:10| SET name = "Person " + <string>id.id() RETURN NONE;
+
+DEFINE FIELD random_friend
+    ON person
+    VALUE <future> { (SELECT * FROM ONLY person ORDER BY RAND() LIMIT 1) };
+
+CREATE person;
+```
+
+```surql title="Output"
+'Reached excessive computation depth due to functions, subqueries, or futures'
+```
+
+A `SELECT` query that does not access the field defined by a future will avoid the infinite recursion.
+
+```surql
+CREATE |person:10| SET name = "Person " + <string>id.id() RETURN NONE;
+
+DEFINE FIELD random_friend
+    ON person
+    VALUE <future> { (SELECT VALUE name FROM ONLY person ORDER BY RAND() LIMIT 1) };
+
+CREATE person;
+```
+
+```surql title="Output"
+[
+  {
+    id: person:4o973bouhd6xrj8l2x69,
+    random_friend: 'Person imoy71qbhnsgjtczybiq'
+  }
+]
+```
+
+### _q012e - **Next steps**_
+
+You've now seen how to create dynamically computed properties on records, using either simple values, and values which depend on local and remote record fields. Take a look at the next chapter to get into SurrealDB's geospatial types.
 
 ---
 ---
@@ -13308,10 +13582,12 @@ SELECT * FROM user;
 [brakuje_func_db_rand#randuuidv4]: </docs/surrealql/functions/database/rand#randuuidv4>
 [brakuje_func_db_string#stringlen]: </docs/surrealql/functions/database/string#stringlen>
 [brakuje_func_db_string#stringuppercase]: </docs/surrealql/functions/database/string#stringuppercase>
-[brakuje_func_db_string#method-chaining]: </docs/surrealql/functions/database/string#method-chaining>
+[brakuje_func_db_string#stringuppercase]: </docs/surrealql/functions/database/string#stringuppercase>
+[brakuje_func_db_string#stringisdatetime]: </docs/surrealql/functions/database/string#stringisdatetime>
 [brakuje_func_db_time]:          </docs/surrealql/functions/database/time>
 [brakuje_func_db_time#timemax]:  </docs/surrealql/functions/database/time#timemax>
 [brakuje_func_db_time#timemin]:  </docs/surrealql/functions/database/time#timemin>
+[brakuje_func_db_time#timeformat]:  </docs/surrealql/functions/database/time#timeformat>
 [brakuje_func_db_type#typeis_geometry]:  </docs/surrealql/functions/database/type#typeis_geometry>
 [brakuje_func_db_type#typeis_string]:  </docs/surrealql/functions/database/type#typeis_strin>
 [brakuje_func_db_type#typeis_record]:  </docs/surrealql/functions/database/type#typeis_record>
@@ -13322,6 +13598,7 @@ SELECT * FROM user;
 
 [brakuje_stat_def_bucket]: </docs/surrealql/statements/define/bucket>
 [brakuje_stat_def_field]: </docs/surrealql/statements/define/field>
+[brakuje_stat_def_field#computed-fields]: </docs/surrealql/statements/define/field#computed-fields>
 [brakuje_stat_def_function]: </docs/surrealql/statements/define/function>
 [brakuje_stat_select]: </docs/surrealql/statements/selectt>
 [brakuje_stat_select#basic-usage]: </docs/surrealql/statements/selectt#basic-usage>
