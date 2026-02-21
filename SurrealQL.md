@@ -2,7 +2,7 @@
 
 - [📓](https://surrealdb.com/docs/3.x/surrealql)
 
-![SurrealQL][icon_SurrealQL]
+![SurrealQL🖼️][ico__SurrealQL]
 
 SurrealQL is a powerful and intuitive database query language that closely resembles traditional SQL but comes with unique differences and improvements.
 
@@ -28,11 +28,11 @@ SurrealQL offers several key features that make it a powerful tool for working w
 
 ## _q000b - **Getting Started**_
 
-To start using [SurrealQL🔖][SurrealQL038], refer to the documentation on the various statement types and their syntax. The statements page provides comprehensive examples and explanations for each statement type, helping you understand how to construct queries and interact with SurrealDB effectively.
+To start using [SurrealQL][SurrealQL038_Statement_BEGIN], refer to the documentation on the various statement types and their syntax. The statements page provides comprehensive examples and explanations for each statement type, helping you understand how to construct queries and interact with SurrealDB effectively.
 
 SurrealQL empowers you to leverage the full potential of SurrealDB and enables you to build robust and scalable applications. Let's dive into the world of SurrealQL and unlock the capabilities of SurrealDB together!
 
-[![**go to YouTube**][icon_YT]][yt01]
+[![**go to YouTube**🖼️][ico__YT]][yt01]
 
 ---
 ---
@@ -46,11 +46,11 @@ To quickly test out SurrealDB and SurrealQL functionality, we've included two de
 ### _q001a - **Surreal Deal Store - there is a lot in store for you!**_
 
 Surreal Deal Store is our new and improved demo dataset based on our [SurrealDB Store🚀][net__SurrealDB_Store].
-The dataset is made up of 12 tables using both [graph relations🔖][SurrealQL076] and [record links🔖][SurrealQL021].
+The dataset is made up of 12 tables using both [graph relations][SurrealQL076_Statement_RELATE] and [record links][SurrealQL021_DataTypes_RecordLinks].
 
-In the diagram below, the nodes in pink are the [standard tables🔖][SurrealQL063], the ones in purple represent the [edge tables🔖][SurrealQL076] which shows relationships between records and SurrealDB as a graph database. The nodes in grey are the [pre-computed table views🔖][SurrealQL063].
+In the diagram below, the nodes in pink are the [standard tables][SurrealQL063_Statement_DEFINE_TABLE], the ones in purple represent the [edge tables][SurrealQL076_Statement_RELATE] which shows relationships between records and SurrealDB as a graph database. The nodes in grey are the [pre-computed table views][SurrealQL063_Statement_DEFINE_TABLE].
 
-![Surreal Deal Data Mode][img_demo_overview]
+![Surreal Deal Data Mode🖼️][img__demo_overview]
 
 #### _q001a1 - **Download**_
 
@@ -133,48 +133,48 @@ A variety of operators in SurrealQL allow for complex manipulation of data, and 
 
 | Operator | Description |
 | :--- | :--- |
-| [`&&`🔖][SurrealQL002_and] [`AND`🔖][SurrealQL002_and] | Checks whether both of two values are truthy |
-| [`\|\|`🔖][SurrealQL002_or] [`OR`🔖][SurrealQL002_or] | Checks whether either of two values is truthy |
-| [`!`🔖][SurrealQL002_not] | Reverses the truthiness of a value |
-| [`!!`🔖][SurrealQL002_notnot] | Determines the truthiness of a value |
-| [`??`🔖][SurrealQL002_null] | Check whether either of two values are truthy and not NULL |
-| [`?:`🔖][SurrealQL002_truthy] | Check whether either of two values are truthy |
-| [`=`🔖][SurrealQL002_equal] [`IS`🔖][SurrealQL002_equal] | Check whether two values are equal |
-| [`!=`🔖][SurrealQL002_notequal] [`IS NOT`🔖][SurrealQL002_notequal] | Check whether two values are not equal |
-| [`==`🔖][SurrealQL002_exact] | Check whether two values are exactly equal |
-| [`?=`🔖][SurrealQL002_anyequal] | Check whether any value in a set is equal to a value |
-| [`*=`🔖][SurrealQL002_allequal] | Check whether all values in a set are equal to a value |
-| [`~`🔖][SurrealQL002_similar] | Compare two values for equality using fuzzy matching |
-| [`!~`🔖][SurrealQL002_similar] | Compare two values for inequality using fuzzy matching |
-| [`?~`🔖][SurrealQL002_similar] | Check whether any value in a set is equal to a value using fuzzy matching |
-| [`*~`🔖][SurrealQL002_similar] | Check whether all values in a set are equal to a value using fuzzy matching |
-| [`<`🔖][SurrealQL002_less] | Check whether a value is less than another value |
-| [`<=`🔖][SurrealQL002_lessequal] | Check whether a value is less than or equal to another value |
-| [`>`🔖][SurrealQL002_more] | Check whether a value is greater than another value |
-| [`>=`🔖][SurrealQL002_moreequal] | Check whether a value is greater than or equal to another value |
-| [`+`🔖][SurrealQL002_add] | Add two values together |
-| [`-`🔖][SurrealQL002_sub] | Subtract a value from another value |
-| [`*`🔖][SurrealQL002_mul] [`×`🔖][SurrealQL002_mul] | Multiply two values together |
-| [`/`🔖][SurrealQL002_div] [`÷`🔖][SurrealQL002_div] | Divide a value by another value |
-| [`**`🔖][SurrealQL002_pow] | Raises a base value by another value |
-| [`CONTAINS`🔖][SurrealQL002_co_equ] [`∋`🔖][SurrealQL002_co_equ] | Checks whether a value contains another value |
-| [`CONTAINSNOT`🔖][SurrealQL002_co_not] [`∌`🔖][SurrealQL002_co_not] | Checks whether a value does not contain another value |
-| [`CONTAINSALL`🔖][SurrealQL002_co_all] [`⊇`🔖][SurrealQL002_co_all] | Checks whether a value contains all other values |
-| [`CONTAINSANY`🔖][SurrealQL002_co_any] [`⊃`🔖][SurrealQL002_co_any] | Checks whether a value contains any other value |
-| [`CONTAINSNONE`🔖][SurrealQL002_co_non] [`⊅`🔖][SurrealQL002_co_non] | Checks whether a value contains none of the following values |
-| [`INSIDE`🔖][SurrealQL002_in_equ] [`IN`🔖][SurrealQL002_in_equ] [`∈`🔖][SurrealQL002_in_equ] | Checks whether a value is contained within another value |
-| [`NOTINSIDE`🔖][SurrealQL002_in_not] [`NOT IN`🔖][SurrealQL002_in_not] [`∉`🔖][SurrealQL002_in_not] | Checks whether a value is not contained within another value |
-| [`ALLINSIDE`🔖][SurrealQL002_in_all] [`⊆`🔖][SurrealQL002_in_all] | Checks whether all values are contained within other values |
-| [`ANYINSIDE`🔖][SurrealQL002_in_any] [`⊂`🔖][SurrealQL002_in_any] | Checks whether any value is contained within other values |
-| [`NONEINSIDE`🔖][SurrealQL002_in_non] [`⊄`🔖][SurrealQL002_in_non] | Checks whether no value is contained within other values |
-| [`OUTSIDE`🔖][SurrealQL002_outside] | Checks whether a geometry type is outside of another geometry type |
-| [`INTERSECTS`🔖][SurrealQL002_inter] | Checks whether a geometry type intersects another geometry type |
-| [`@@`🔖][SurrealQL002_matches] [`@[ref]@`🔖][SurrealQL002_matches] | Checks whether the terms are found in a full-text indexed field |
-| [`<\|4\|>`🔖][SurrealQL002_knn] [`<\|3,HAMMING\| >`🔖][SurrealQL002_knn] | Performs a K-Nearest Neighbors (KNN) search to find a specified number of records closest to a given data point, optionally using a defined distance metric. Supports customizing the number of results and choice of distance calculation method. |
+| [`&&`][SurrealQL002aa_OperatorAND] [`AND`][SurrealQL002aa_OperatorAND] | Checks whether both of two values are truthy |
+| [`\|\|`][SurrealQL002ab_OperatorOR] [`OR`][SurrealQL002ab_OperatorOR] | Checks whether either of two values is truthy |
+| [`!`][SurrealQL002ac_OperatorNOT] | Reverses the truthiness of a value |
+| [`!!`][SurrealQL002ad_OperatorNotNOT] | Determines the truthiness of a value |
+| [`??`][SurrealQL002ae_OperatorCoalescingNULL] | Check whether either of two values are truthy and not NULL |
+| [`?:`][SurrealQL002af_OperatorCoalescingTRUTHY] | Check whether either of two values are truthy |
+| [`=`][SurrealQL002ag_OperatorEQUAL] [`IS`][SurrealQL002ag_OperatorEQUAL] | Check whether two values are equal |
+| [`!=`][SurrealQL002ah_OperatorNOTEQUAL] [`IS NOT`][SurrealQL002ah_OperatorNOTEQUAL] | Check whether two values are not equal |
+| [`==`][SurrealQL002ai_OperatorEXACT] | Check whether two values are exactly equal |
+| [`?=`][SurrealQL002ai_OperatorANYEQUAL] | Check whether any value in a set is equal to a value |
+| [`*=`][SurrealQL002ak_OperatorALLEQUAL] | Check whether all values in a set are equal to a value |
+| [`~`][SurrealQL002al_OperatorSIMILARITY] | Compare two values for equality using fuzzy matching |
+| [`!~`][SurrealQL002al_OperatorSIMILARITY] | Compare two values for inequality using fuzzy matching |
+| [`?~`][SurrealQL002al_OperatorSIMILARITY] | Check whether any value in a set is equal to a value using fuzzy matching |
+| [`*~`][SurrealQL002al_OperatorSIMILARITY] | Check whether all values in a set are equal to a value using fuzzy matching |
+| [`<`][SurrealQL002am_OperatorLESS] | Check whether a value is less than another value |
+| [`<=`][SurrealQL002an_OperatorLESSEQUAL] | Check whether a value is less than or equal to another value |
+| [`>`][SurrealQL002ao_OperatorMORE] | Check whether a value is greater than another value |
+| [`>=`][SurrealQL002ap_OperatorMOREEQUAL] | Check whether a value is greater than or equal to another value |
+| [`+`][SurrealQL002aq_OperatorADD] | Add two values together |
+| [`-`][SurrealQL002ar_OperatorSUB] | Subtract a value from another value |
+| [`*`][SurrealQL002as_OperatorMUL] [`×`][SurrealQL002as_OperatorMUL] | Multiply two values together |
+| [`/`][SurrealQL002at_OperatorDIV] [`÷`][SurrealQL002at_OperatorDIV] | Divide a value by another value |
+| [`**`][SurrealQL002au_OperatorPOW] | Raises a base value by another value |
+| [`CONTAINS`][SurrealQL002av_OperatorCoEQU] [`∋`][SurrealQL002av_OperatorCoEQU] | Checks whether a value contains another value |
+| [`CONTAINSNOT`][SurrealQL002aw_OperatorCoNOT] [`∌`][SurrealQL002aw_OperatorCoNOT] | Checks whether a value does not contain another value |
+| [`CONTAINSALL`][SurrealQL002ax_OperatorCoALL] [`⊇`][SurrealQL002ax_OperatorCoALL] | Checks whether a value contains all other values |
+| [`CONTAINSANY`][SurrealQL002ay_OperatorCoANY] [`⊃`][SurrealQL002ay_OperatorCoANY] | Checks whether a value contains any other value |
+| [`CONTAINSNONE`][SurrealQL002az_OperatorCoNON] [`⊅`][SurrealQL002az_OperatorCoNON] | Checks whether a value contains none of the following values |
+| [`INSIDE`][SurrealQL002ba_OperatorInEQU] [`IN`][SurrealQL002ba_OperatorInEQU] [`∈`][SurrealQL002ba_OperatorInEQU] | Checks whether a value is contained within another value |
+| [`NOTINSIDE`][SurrealQL002bb_OperatorInNOT] [`NOT IN`][SurrealQL002bb_OperatorInNOT] [`∉`][SurrealQL002bb_OperatorInNOT] | Checks whether a value is not contained within another value |
+| [`ALLINSIDE`][SurrealQL002bc_OperatorInALL] [`⊆`][SurrealQL002bc_OperatorInALL] | Checks whether all values are contained within other values |
+| [`ANYINSIDE`][SurrealQL002bd_OperatorInANY] [`⊂`][SurrealQL002bd_OperatorInANY] | Checks whether any value is contained within other values |
+| [`NONEINSIDE`][SurrealQL002be_OperatorInNON] [`⊄`][SurrealQL002be_OperatorInNON] | Checks whether no value is contained within other values |
+| [`OUTSIDE`][SurrealQL002bf_OperatorOUTSIDE] | Checks whether a geometry type is outside of another geometry type |
+| [`INTERSECTS`][SurrealQL002bg_OperatorINTERSECTS] | Checks whether a geometry type intersects another geometry type |
+| [`@@`][SurrealQL002bh_OperatorMATCHES] [`@[ref]@`][SurrealQL002bh_OperatorMATCHES] | Checks whether the terms are found in a full-text indexed field |
+| [`<\|4\|>`][SurrealQL002bi_OperatorKNN] [`<\|3,HAMMING\| >`][SurrealQL002bi_OperatorKNN] | Performs a K-Nearest Neighbors (KNN) search to find a specified number of records closest to a given data point, optionally using a defined distance metric. Supports customizing the number of results and choice of distance calculation method. |
 
 ### _q002aa - **`&&` or `AND`**_
 
-The `and` operator checks whether both of two values are [truthy🔖][SurrealQL027].
+The `and` operator checks whether both of two values are [truthy][SurrealQL027_DataTypes_Values].
 
 ```surql
 /**[test]
@@ -191,7 +191,7 @@ SELECT * FROM 10 AND 20 AND 30;
 
 ### _q002ab - **`||` or `OR`**_
 
-The `or` operator checks whether either of two values are [truthy🔖][SurrealQL027].
+The `or` operator checks whether either of two values are [truthy][SurrealQL027_DataTypes_Values].
 
 ```surql
 /**[test]
@@ -246,7 +246,7 @@ SELECT * FROM !!"Has a value";
 
 ### _q002ae - **`??` (null coalescing)**_
 
-The `null coalescing operator` checks whether either of two values are [truthy🔖][SurrealQL027] and not `NONE` or `NULL`.
+The `null coalescing operator` checks whether either of two values are [truthy][SurrealQL027_DataTypes_Values] and not `NONE` or `NULL`.
 
 ```surql
 /**[test]
@@ -263,7 +263,7 @@ SELECT * FROM NULL ?? 0 ?? false ?? 10;
 
 ### _q002af - **`?:` (truthy coalescing)**_
 
-The `truthy coalescing operator` checks whether either of two values are [truthy🔖][SurrealQL027].
+The `truthy coalescing operator` checks whether either of two values are [truthy][SurrealQL027_DataTypes_Values].
 
 ```surql
 /**[test]
@@ -875,7 +875,7 @@ true
 
 > Available since: V2.1.0
 
-This operator can also be used to check for the existence of a key inside an [object🔖][SurrealQL018]. To do so, precede `IN` with the field name as a string.
+This operator can also be used to check for the existence of a key inside an [object][SurrealQL018_DataTypes_Objects]. To do so, precede `IN` with the field name as a string.
 
 ```surql
 /**[test]
@@ -1476,17 +1476,17 @@ SurrealQL allows you to describe data with specific data types. These data types
 | `any` | Use this when you explicitly don't want to specify the field's data type. The field will allow any data type supported by SurrealDB. |
 | `array` | An array of items. The array type also allows you to define which types can be stored in the array and the required length.  `array`, `array<string>`, `array<string, 10>` |
 | `bool` | Describes whether something is truthy or not. |
-| [`bytes`🔖][SurrealQL003_bytes] | Stores a value in a byte array. `<bytes>value`, `bytes` |
+| [`bytes`][SurrealQL003_bytes] | Stores a value in a byte array. `<bytes>value`, `bytes` |
 | `datetime` | An [RFC 3339🚀][net__RFC_3339] compliant data type that stores a date with time and time zone. |
 | `decimal` | Data type for storing [decimal floating point🚀][net__wiki_decimal128] numbers. |
 | `duration` | Store a value representing a length of time. Can be added or subtracted from datetimes or other durations. |
 | `float` | Data type for storing [floating point🚀][net__wiki_float64] numbers. Larger or extremely precise values should be stored as a decimal. |
-| [`geometry`🔖][SurrealQL003_geometry] | [RFC 7946🚀][net__RFC_7946] compliant data type for storing geometry in the [GeoJson format🚀][net__geojson].  `geometry<feature>`, `geometry<point>`, `geometry<line>`, `geometry<polygon>`, `geometry<multipoint>`, `geometry<multiline>`, `geometry<multipolygon>`, `geometry<collection>` |
+| [`geometry`][SurrealQL003_geometry] | [RFC 7946🚀][net__RFC_7946] compliant data type for storing geometry in the [GeoJson format🚀][net__geojson].  `geometry<feature>`, `geometry<point>`, `geometry<line>`, `geometry<polygon>`, `geometry<multipoint>`, `geometry<multiline>`, `geometry<multipolygon>`, `geometry<collection>` |
 | `int` | Store a value in a 64 bit signed integer. Values can range between `-9223372036854775808` and `9223372036854775807` (inclusive). Larger values should be stored as a float or a decimal. |
 | `number` | Store numbers without specifying the type. SurrealDB will detect the type of number and store it using the minimal number of bytes. |
 | `object` | Store formatted objects containing values of any supported type including nested objects or arrays. |
 | `regex` | A compiled regular expression that can be used for matching strings. |
-| [`literal`🔖][SurrealQL015] | A value that may have multiple representations or formats, similar to an enum or a union type. Can be composed of strings, numbers, objects, arrays, or durations.  `”a” \| “b”`, `[number, “abc”]`, `123 \| 456 \| string \| 1y1m1d` |
+| [`literal`][SurrealQL015_DataTypes_Literals] | A value that may have multiple representations or formats, similar to an enum or a union type. Can be composed of strings, numbers, objects, arrays, or durations.  `”a” \| “b”`, `[number, “abc”]`, `123 \| 456 \| string \| 1y1m1d` |
 | `option` | Makes types optional and guarantees the field to be either empty (NONE) or some other type.  `option<number>` |
 | `range` | A range of possible values. Lower and upper bounds can be set, in the absence of which the range becomes open-ended. A range of integers can be used in a FOR loop.  `0..10`, `0..=10`, `..10`, `‘a’..‘z’` |
 | `record` | Store a reference to another record. The value must be a Record ID. Add the record name inside angle brackets to restrict the reference to only certain record names.  `record`,`record<user>`,`record<user \| administrator>` |
@@ -1570,7 +1570,7 @@ RETURN [1,2,3,4,5][0..=2];
 ]
 ```
 
-Working with arrays is one of the most important skills when working with SurrealDB, as [`SELECT`🔖][SurrealQL079] statements return an array of values by default unless the `ONLY` keyword is used on an array that contains a single item.
+Working with arrays is one of the most important skills when working with SurrealDB, as [`SELECT`][SurrealQL079_Statement_SELECT] statements return an array of values by default unless the `ONLY` keyword is used on an array that contains a single item.
 
 ```surql
 /**[test]
@@ -1675,7 +1675,7 @@ value = "[true, true]"
 [true, true]
 ```
 
-If a `WHERE` or `?` clause finds an item that by itself is not equal to `true` or `false`, it will check the item's [truthiness🔖][SurrealQL027] to determine whether to pass it on or not.
+If a `WHERE` or `?` clause finds an item that by itself is not equal to `true` or `false`, it will check the item's [truthiness][SurrealQL027_DataTypes_Values] to determine whether to pass it on or not.
 
 ```surql
 /**[test]
@@ -1755,7 +1755,7 @@ value = "[3, 5]"
 -- [3,5]
 ```
 
-While the [array functions🔖][SurrealQL101] section of the documentation contains the full details of each function, the following examples provide a glimpse into how they are commonly used.
+While the [array functions][SurrealQL101_FunctionsDatabase_Array] section of the documentation contains the full details of each function, the following examples provide a glimpse into how they are commonly used.
 
 The [`array::map()`](/docs/surrealql/functions/database/array#arraymap) function provides access to each item in an array, allowing an opearation to be performed on it before being passed on.
 
@@ -2072,12 +2072,679 @@ b"486F6262697473";
 
 ## _q007 - **Casting**_
 
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/casting)
+
+In the SurrealDB type system, values can be converted to other values efficiently. This is useful if input is specified in a query which must be of a certain type, or if a user may have provided a parameter with an incorrect type.
+
+| Type | Description |
+|------|-------------|
+| [`<array>`][] | Casts the subsequent value into an array |
+| [`<array<T>>`][] | Casts the subsequent value into an array of `T` (some indicated type) |
+| [`<bool>`][] | Casts the subsequent value into a boolean |
+| [`<datetime>`][] | Casts the subsequent value into a datetime |
+| [`<decimal>`][] | Casts the subsequent value into a decimal |
+| [`<duration>`][] | Casts the subsequent value into a duration |
+| [`<float>`][] | Casts the subsequent value into a float |
+| [`<int>`][] | Casts the subsequent value into an int |
+| [`<number>`][] | Casts the subsequent value into a decimal |
+| [`<record>`][] | Casts the subsequent value into a record |
+| [`<record<T>>`][] | Casts the subsequent value into a record of `T` (some indicated type) |
+| [`<set>`][] | Casts the subsequent value into a set |
+| [`<string>`][] | Casts the subsequent value into a string |
+| [`<regex>`][] | Casts the subsequent value into a regular expression |
+| [`<uuid>`][] | Casts the subsequent value into a UUID |
+
+
+
+### _q007a - **`<array>`**_
+
+The `<array>` casting function converts a range into an array.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[1, 2, 3]"
+
+*/
+
+<array>1..=3;
+-- Output:
+[1, 2, 3]
+```
+
+### _q007b - **`<array<T>>`**_
+
+The `<array<T>>` casting function converts a value into an array of the specified type.
+
+>[!NOTE]
+>When using this casting function, the value must be an array and each element in the array will be cast to the specified type. 
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[42, 314, 271, 137, 141]"
+
+*/
+
+<array<int>>["42", "314", "271", "137", "141"];
+-- Output:
+[42, 314, 271, 137, 141]
+```
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "['42', '314', '271', '137', '141']"
+
+*/
+
+<array<string>> [42, 314, 271, 137, 141];
+-- Output:
+['42', '314', '271', '137', '141']
+```
+
+A cast into an array of more than one possible type can also be used. In this case, the cast will attempt to cast into the possible types in order. As such, the `string` in the first query below will be cast into a `datetime` but not in the second.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[[d'2020-09-09T00:00:00Z', '21 Jan 2020'], ['2020-09-09', '21 Jan 2020']]"
+
+*/
+
+[
+  <array<datetime|string>>["2020-09-09", "21 Jan 2020"],
+  <array<string|datetime>>["2020-09-09", "21 Jan 2020"]
+];
+```
+
+```surql title="Output"
+[
+  [
+    d'2020-09-09T00:00:00Z',
+    '21 Jan 2020'
+  ],
+  [
+    '2020-09-09',
+    '21 Jan 2020'
+  ]
+]
+```
+
+An example of even more complex casting which attempts to cast each item in the input array into a `record<user>`, then `record<person>`, then `array<record<user>>`, and finally `string`.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "['person:one', 'user:two', "['user:three', 'user:four']", 'not_a_person_or_user']"
+
+*/
+
+<array<record<user | person> | array<record<user>> | string>> [
+  'person:one',
+  'user:two',
+  [
+    'user:three',
+    'user:four'
+  ],
+  'not_a_person_or_user'
+];
+```
+
+```surql title="Output"
+[
+  person:one,
+  user:two,
+  [
+    user:three,
+    user:four
+  ],
+  'not_a_person_or_user'
+]
+```
+
+### _q007c - **`<bool>`**_
+
+The `<bool` casting function converts a value into a boolean.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "true"
+
+*/
+
+<bool>"true";
+-- Output:
+true
+```
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "false"
+
+*/
+
+<bool>"false";
+-- Output:
+false
+```
+
+### _q007d - **`<datetime>`**_
+
+The `<datetime>` casting function converts a value into a datetime.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "d'2025-06-07T00:00:00Z'"
+
+*/
+
+<datetime>"2025-06-07";
+-- Output:
+d'2025-06-07T00:00:00Z'
+```
+
+### _q007e - **`<decimal>`**_
+
+The `<decimal>` casting function converts a value into a decimal which allows for 128 bits of precision.
+
+```surql
+<decimal>"13.5729484672938472938410938456";
+-- Output:
+13.572948467293847293841093846dec
+```
+
+Decimal casting should generally not be used to convert from floats with a large number of digits after the decimal point, because the input to the right will first be turned into a less precise float before the cast is performed.
+
+```surql
+<decimal>13.572948467293847293841093845679289;
+-- Output:
+13.57294846729385dec
+
+<decimal>1.193847193847193847193487E11;
+-- Output:
+119384719384.7194dec
+```
+
+In this case, the `dec` suffix is preferable as it will instruct the database to treat the **input** as a decimal, rather than create a float to then cast into a decimal.
+
+```surql
+13.572948467293847293841093845679289dec;
+-- Output:
+13.572948467293847293841093846dec
+
+1.193847193847193847193487E11dec;
+-- Output:
+1.193847193847193847193487E11dec;
+```
+
+### _q007f - **`<duration>`**_
+
+The `<duration>` casting function converts a value into a duration.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "1h30m"
+
+*/
+
+<duration>"1h30m";
+-- Output:
+1h30m
+```
+
+
+
+### _q007g - **`<float>`**_
+
+The `<float>` casting function converts a value into a floating point number. Floating point numbers by nature have a limited amount of precision.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "13.572948467293847f"
+
+*/
+
+<float>13.572948467293847293841093845679289;
+-- Output:
+13.572948467293847f
+```
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "13.572948467293847f"
+
+*/
+
+<float>"13.572948467293847293841093845679289";
+-- Output:
+13.572948467293847
+```
+
+### _q007h - **`<int>`**_
+
+The `<int>` casting function converts a value into an integer.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "53"
+
+*/
+
+<int>53;
+-- Output:
+53
+```
+
+### _q007i - **`<number>`**_
+
+The `<number>` casting function converts a value into a `number`.
+
+```surql
+<number>13.572948467293847293841093845679289;
+-- Output:
+"13.572948467293847293841093845679289"
+```
+
+```surql
+<number>"13.572948467293847293841093845679289";
+-- Output:
+"13.572948467293847293841093845679289"
+```
+
+```surql
+<number>1.193847193847193847193487E11;
+-- Output:
+"119384719384.7193847193487"
+```
+
+### _q007j - **`<record>`**_
+
+The `<record>` casting function converts a value into a record.
+
+Keep in mind when using this casting function that if the equivalent record id does not exist, it will not return anything.
+
+```surql
+SELECT id FROM <record>"person:hrebrffwm4sr2yifglta";
+```
+
+```surql title="Output"
+{ id: person:hrebrffwm4sr2yifglta }
+```
+
+### _q007k - **`<record<T>>`**_
+
+The `<record<T>>` casting function converts a value into a record.
+
+Keep in mind when using this casting function that if the equivalent record id does not exist, it will not return anything.
+
+```surql
+SELECT id FROM <record>"person:hrebrffwm4sr2yifglta";
+-- Output:
+{ id: person:hrebrffwm4sr2yifglta }
+```
+
+A cast into a number of possible record types can also be used.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[user:one, [person:one, user:two]]"
+
+*/
+
+[
+  <record<user|person>>"user:one",
+  <array<record<user|person>>>["person:one", "user:two"]
+];
+```
+
+```surql title="Output"
+[
+  user:one,
+  [
+    person:one,
+    user:two
+  ]
+]
+```
+
+### _q007l - **`<set>` and `<set<T>>`**_
+
+The `<set>` casting function converts a value into a set.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{'21 Jan 2020', d'2020-09-09T00:00:00Z'}, {'2020-09-09', '21 Jan 2020'}]"
+
+*/
+
+[
+  <set<datetime|string>>["2020-09-09", "21 Jan 2020"],
+  <set<string|datetime>>["2020-09-09", "21 Jan 2020"]
+];
+```
+
+```surql title="Output"
+[
+  [
+    d'2020-09-09T00:00:00Z',
+    '21 Jan 2020'
+  ],
+  [
+    '2020-09-09',
+    '21 Jan 2020'
+  ]
+]
+```
+
+### _q007m - **`<string>`**_
+
+The `<string>` casting function converts a value into a string.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "'true'"
+
+*/
+
+<string>true;
+-- Output:
+'true'
+```
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "'1.3463f'"
+
+*/
+
+<string>1.3463;
+-- Output:
+'1.3463f'
+```
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "'false'"
+
+*/
+
+<string>false;
+-- Output:
+"false"
+```
+
+### _q007n - **`<regex>`**_
+
+The `<regex>` casting function converts a value into a regular expression.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "true"
+
+*/
+
+<regex> "a|b" = "a";
+-- Output:
+true
+```
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "false"
+
+*/
+
+<regex> "a|b" = "c";
+-- Output:
+false
+```
+
+### _q007o - **`<uuid>`**_
+
+The `<uuid>` casting function converts a value into a UUID.
+
+```surql
+SELECT id FROM <uuid> "a8f30d8b-db67-47ec-8b38-ef703e05ad1b";
+-- Output:
+[ u'a8f30d8b-db67-47ec-8b38-ef703e05ad1b' ]
+```
+
+### _q007p - **General notes on casting**_
+
+#### _q007p1 - **Syntax and order**_
+
+As the parser ignores spaces and new lines, casting syntax can include spaces or new lines as desired.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "['9.1', true, '15h']"
+
+[[test.results]]
+value = "['9.1', true, '15h']"
+
+*/
+
+-- Surrealist formatted syntax
+ <array<bool | string | float>> [
+  '9.1',
+  'true',
+  15h
+];
+
+-- Maybe someone's preferred syntax?
+<array
+        <bool | string | float>
+      >
+[ '9.1', 'true', 15h ];
+```
+
+When more than one cast type is specified, SurrealDB will attempt to convert into the type in the order specified. In the example above, while the input `'9.1'` could have been converted to a float, the type `string` comes first in the cast syntax and thus `'9.1'` remains as a string.
+
+```surql title="Output"
+[
+  '9.1',
+  true,
+  '15h'
+]
+```
+
+#### _q007p2 - **Casting vs. affixes**_
+
+SurrealDB uses a number of affixes to force the parser to treat an input as a certain type instead of another. These affixes may seem at first glance to be identical to casts, as the following queries show.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "person:one"
+
+[[test.results]]
+value = "person:one"
+
+[[test.results]]
+value = "person:one"
+
+[[test.results]]
+value = "'person:one'"
+
+[[test.results]]
+value = "98dec"
+
+[[test.results]]
+value = "98dec"
+
+[[test.results]]
+value = "98"
+
+*/
+
+-- All return a record person:one
+r"person:one";
+<record>"person:one";
+<record<person>>"person:one";
+-- Returns a string 'person:one'
+'person:one';
+
+-- Both return a decimal 98dec
+98dec;
+<decimal>98;
+
+-- Returns an int 98
+98;
+```
+
+However, casts and affixes work in different ways:
+
+* A cast is a way to convert from one type into another.
+* An affix is an instruction to the parser to treat an input as a certain type.
+
+These differences become clear when working with input that is less than ideal or does not work with a certain type. For example, floats by nature become imprecise after a certain number of digits.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[8.888f, 8.88888888888889f]"
+
+*/
+
+[
+  8.888,
+  8.8888888888888888
+];
+```
+
+```surql title="Output"
+[
+  8.888f,
+  8.88888888888889f
+]
+```
+
+In this case, a `decimal` can be used which will allow a greater number of digits after the decimal point. However, casting the above numbers into a `decimal` will result in the same inaccurate output.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[8.888dec, 8.88888888888889dec]"
+
+*/
+
+[
+  <decimal>8.888,
+  <decimal>8.888888888888888
+];
+```
+
+```surql title="Output"
+[
+  8.888dec,
+  8.88888888888889dec
+]
+```
+
+This is because the parser will first treat the number as a float and then cast it into a `decimal`.
+
+However, using the `dec` suffix will inform the parser that the entire input is to be treated as a `decimal` and it will never pass through a stage in which it is a float.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[8.888dec, 8.888888888888888dec]"
+
+*/
+
+[
+  8.888dec,
+  8.888888888888888dec
+];
+```
+
+```surql title="Output"
+[
+  8.888dec,
+  8.888888888888888dec
+]
+```
+
+Similarly, an attempt to cast a number that is too large for an `int` into a `decimal` will not work, as the parser will first attempt to handle the number on the right before moving on to the cast.
+
+```surql
+/**[test]
+
+[test.results]
+parsing-error = """Failed to parse number: number cannot fit within a 64bit signed integer'
+ --> [1:10]
+  |
+1 | <decimal>9999999999999999999;
+  |          ^^^^^^^^^^^^^^^^^^^"""
+
+*/
+
+<decimal>9999999999999999999;
+```
+
+```surql title="Output"
+'Failed to parse number: number cannot fit within a 64bit signed integer'
+```
+
+However, if the same number is followed by the `dec` suffix, the parser will be aware that the input is meant to be treated as a `decimal` from the outset and the query will succeed.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "9999999999999999999dec"
+
+*/
+
+9999999999999999999dec;
+```
+
 ---
 ---
 
 ## _q008 - **Anonymous functions (closures)**_
 
-- [📓🔖][SurrealQL008_original](https://surrealdb.com/docs/3.x/surrealql/datamodel/closures)
+- [📓][SurrealQL008_original](https://surrealdb.com/docs/3.x/surrealql/datamodel/closures)
 
 > Available since: V2.0.0
 
@@ -2305,7 +2972,7 @@ These anonymous functions provide a flexible way to define small, reusable piece
 
 ## _q010 - **Files**_
 
-- [📓🔖][SurrealQL010_original]
+- [📓][SurrealQL010_original]
 
 > Available since: V3.0.0
 
@@ -2813,9 +3480,9 @@ RETURN [
 
 SurrealDB offers a number of functions that can be used to perform complex logic. These functions are grouped into the following categories:
 
-- [Database functions🔖][SurrealQL099]
-- [JavaScript functions🔖][SurrealQL127]
-- [SurrealML functions🔖][SurrealQL133]
+- [Database functions][SurrealQL099_FunctionsDatabase]
+- [JavaScript functions][SurrealQL127_FunctionsEmbedded]
+- [SurrealML functions][SurrealQL133_FunctionsML]
 
 ---
 ---
@@ -2838,64 +3505,64 @@ These functions can be used when working with, and manipulating arrays of data.
 
 | Function | Description |
 | :--- | :--- |
-| [`array::add()`🔖][SurrealQL101_add] | Adds an item to an array if it doesn't exist |
-| [`array::all()`🔖][SurrealQL101_all] | Checks whether all array values are truthy, or equal to a condition |
-| [`array::any()`🔖][SurrealQL101_any] | Checks whether any array value is truthy, or equal to a condition |
-| [`array::at()`🔖][SurrealQL101_at] | Returns value for X index, or in reverse for a negative index |
-| [`array::append()`🔖][SurrealQL101_append] | Appends an item to the end of an array |
-| [`array::boolean_and()`🔖][SurrealQL101_boolean_and] | Perform the [AND bitwise operations🚀][net__mdn_Bitwise_AND] on two arrays |
-| [`array::boolean_or()`🔖][SurrealQL101_boolean_or] | Perform the [OR bitwise operations🚀][net__mdn_Bitwise_OR] on two arrays |
-| [`array::boolean_xor()`🔖][SurrealQL101_boolean_xor] | Perform the [XOR bitwise operations🚀][net__mdn_Bitwise_XOR] on two arrays |
-| [`array::boolean_not()`🔖][SurrealQL101_boolean_not] | Perform the [NOT bitwise operations🚀][net__mdn_Bitwise_NOT] on an array |
-| [`array::combine()`🔖][SurrealQL101_combine] | Combines all values from two arrays together |
-| [`array::complement()`🔖][SurrealQL101_complement] | Returns the complement of two arrays |
-| [`array::clump()`🔖][SurrealQL101_clump] | Returns the original array split into multiple arrays of X size |
-| [`array::concat()`🔖][SurrealQL101_concat] | Returns the merged values from two arrays |
-| [`array::difference()`🔖][SurrealQL101_difference] | Returns the difference between two arrays |
-| [`array::distinct()`🔖][SurrealQL101_distinct] | Returns the unique items in an array |
-| [`array::fill()`🔖][SurrealQL101_fill] | Fills an existing array of the same value |
-| [`array::filter()`🔖][SurrealQL101_filter] | Filters out values that do not match a pattern |
-| [`array::filter_index()`🔖][SurrealQL101_filter_index] | Returns the indexes of all occurrences of all matching X value |
-| [`array::find()`🔖][SurrealQL101_find] | Returns the first matching value |
-| [`array::find_index()`🔖][SurrealQL101_find_index] | Returns the index of the first occurrence of X value |
-| [`array::first()`🔖][SurrealQL101_first] | Returns the first item in an array |
-| [`array::flatten()`🔖][SurrealQL101_flatten] | Flattens multiple arrays into a single array |
-| [`array::fold()`🔖][SurrealQL101_fold] | Applies an operation on an initial value plus every element in the array, returning the final result |
-| [`array::group()`🔖][SurrealQL101_group] | Flattens and returns the unique items in an array |
-| [`array::insert()`🔖][SurrealQL101_insert] | Inserts an item at the end of an array, or in a specific position |
-| [`array::intersect()`🔖][SurrealQL101_intersect] | Returns the values which intersect two arrays |
-| [`array::is_empty()`🔖][SurrealQL101_is_empty] | Checks if an array is empty |
-| [`array::join()`🔖][SurrealQL101_join] | Returns concatenated value of an array with a string in between |
-| [`array::last()`🔖][SurrealQL101_last] | Returns the last item in an array |
-| [`array::len()`🔖][SurrealQL101_len] | Returns the length of an array |
-| [`array::logical_and()`🔖][SurrealQL101_logical_and] | Performs the [AND logical operations🚀][net__mdn_Logical_AND] on two arrays |
-| [`array::logical_or()`🔖][SurrealQL101_logical_or] | Performs the [OR logical operations🚀][net__mdn_Logical_OR] on two arrays |
-| [`array::logical_xor()`🔖][SurrealQL101_logical_xor] | Performs the [XOR logical operations🚀][net__mdn_Logical_XOR] on two arrays |
-| [`array::map()`🔖][SurrealQL101_map] | Applies an operation to every item in an array and passes it on |
-| [`array::max()`🔖][SurrealQL101_max] | Returns the greatest item from an array |
-| [`array::matches()`🔖][SurrealQL101_matches] | Returns an array of booleans indicating which elements of the input array contain a specified value |
-| [`array::min()`🔖][SurrealQL101_min] | Returns the least item from an array |
-| [`array::pop()`🔖][SurrealQL101_pop] | Returns the last item from an array |
-| [`array::prepend()`🔖][SurrealQL101_prepend] | Prepends an item to the beginning of an array |
-| [`array::push()`🔖][SurrealQL101_push] | Appends an item to the end of an array |
-| [`array::range()`🔖][SurrealQL101_range] | Creates a number array from a range (start to end) |
-| [`array::reduce()`🔖][SurrealQL101_reduce] | Applies an operation on every element in the array, returning the final result |
-| [`array::remove()`🔖][SurrealQL101_remove] | Removes an item at a specific position from an array |
-| [`array::repeat()`🔖][SurrealQL101_repeat] | Creates an array a given size with a specified value used for each element |
-| [`array::reverse()`🔖][SurrealQL101_reverse] | Reverses the sorting order of an array |
-| [`array::sequence()`🔖][SurrealQL101_sequence] | Creates an array of sequential integers |
-| [`array::shuffle()`🔖][SurrealQL101_shuffle] | Randomly shuffles the contents of an array |
-| [`array::slice()`🔖][SurrealQL101_slice] | Returns a slice of an array |
-| [`array::sort()`🔖][SurrealQL101_sort] | Sorts the values in an array in ascending or descending order |
-| [`array::sort_lexical()`🔖][SurrealQL101_sort_lexical] | Sorts the values in an array, with strings sorted lexically |
-| [`array::sort_natural()`🔖][SurrealQL101_sort_natural] | Sorts the values in an array, with numeric strings sorted numerically |
-| [`array::sort_natural_lexical()`🔖][SurrealQL101_sort_natural_lexical] | Sorts values using natural numeric and lexical ordering |
-| [`array::sort::asc()`🔖][SurrealQL101_sort_asc] | Sorts the values in an array in ascending order |
-| [`array::sort::desc()`🔖][SurrealQL101_sort_desc] | Sorts the values in an array in descending order |
-| [`array::swap()`🔖][SurrealQL101_swap] | Swaps two items in an array |
-| [`array::transpose()`🔖][SurrealQL101_transpose] | Performs 2D array transposition |
-| [`array::union()`🔖][SurrealQL101_union] | Returns the unique merged values from two arrays |
-| [`array::windows()`🔖][SurrealQL101_windows] | Returns arrays of length `size`, sliding across the original array |
+| [`array::add()`][SurrealQL101aa_FunctionsDatabase_Array_add] | Adds an item to an array if it doesn't exist |
+| [`array::all()`][SurrealQL101ab_FunctionsDatabase_Array_all] | Checks whether all array values are truthy, or equal to a condition |
+| [`array::any()`][SurrealQL101ac_FunctionsDatabase_Array_any] | Checks whether any array value is truthy, or equal to a condition |
+| [`array::at()`][SurrealQL101ad_FunctionsDatabase_Array_at] | Returns value for X index, or in reverse for a negative index |
+| [`array::append()`][SurrealQL101ae_FunctionsDatabase_Array_append] | Appends an item to the end of an array |
+| [`array::boolean_and()`][SurrealQL101af_FunctionsDatabase_Array_booleanAND] | Perform the [AND bitwise operations🚀][net__mdn_Bitwise_AND] on two arrays |
+| [`array::boolean_or()`][SurrealQL101ag_FunctionsDatabase_Array_booleanOR] | Perform the [OR bitwise operations🚀][net__mdn_Bitwise_OR] on two arrays |
+| [`array::boolean_xor()`][SurrealQL101ah_FunctionsDatabase_Array_booleanXOR] | Perform the [XOR bitwise operations🚀][net__mdn_Bitwise_XOR] on two arrays |
+| [`array::boolean_not()`][SurrealQL101ai_FunctionsDatabase_Array_booleanNOT] | Perform the [NOT bitwise operations🚀][net__mdn_Bitwise_NOT] on an array |
+| [`array::combine()`][SurrealQL101aj_FunctionsDatabase_Array_combine] | Combines all values from two arrays together |
+| [`array::complement()`][SurrealQL101ak_FunctionsDatabase_Array_complement] | Returns the complement of two arrays |
+| [`array::clump()`][SurrealQL101am_FunctionsDatabase_Array_clump] | Returns the original array split into multiple arrays of X size |
+| [`array::concat()`][SurrealQL101al_FunctionsDatabase_Array_concat] | Returns the merged values from two arrays |
+| [`array::difference()`][SurrealQL101an_FunctionsDatabase_Array_difference] | Returns the difference between two arrays |
+| [`array::distinct()`][SurrealQL101ao_FunctionsDatabase_Array_distinct] | Returns the unique items in an array |
+| [`array::fill()`][SurrealQL101ap_FunctionsDatabase_Array_fill] | Fills an existing array of the same value |
+| [`array::filter()`][SurrealQL101aq_FunctionsDatabase_Array_filter] | Filters out values that do not match a pattern |
+| [`array::filter_index()`][SurrealQL101ar_FunctionsDatabase_Array_filterIndex] | Returns the indexes of all occurrences of all matching X value |
+| [`array::find()`][SurrealQL101as_FunctionsDatabase_Array_find] | Returns the first matching value |
+| [`array::find_index()`][SurrealQL101at_FunctionsDatabase_Array_findIndex] | Returns the index of the first occurrence of X value |
+| [`array::first()`][SurrealQL101au_FunctionsDatabase_Array_first] | Returns the first item in an array |
+| [`array::flatten()`][SurrealQL101av_FunctionsDatabase_Array_flatten] | Flattens multiple arrays into a single array |
+| [`array::fold()`][SurrealQL101aw_FunctionsDatabase_Array_fold] | Applies an operation on an initial value plus every element in the array, returning the final result |
+| [`array::group()`][SurrealQL101ax_FunctionsDatabase_Array_group] | Flattens and returns the unique items in an array |
+| [`array::insert()`][SurrealQL101ay_FunctionsDatabase_Array_insert] | Inserts an item at the end of an array, or in a specific position |
+| [`array::intersect()`][SurrealQL101az_FunctionsDatabase_Array_intersect] | Returns the values which intersect two arrays |
+| [`array::is_empty()`][SurrealQL101ba_FunctionsDatabase_Array_isEmpty] | Checks if an array is empty |
+| [`array::join()`][SurrealQL101bb_FunctionsDatabase_Array_join] | Returns concatenated value of an array with a string in between |
+| [`array::last()`][SurrealQL101bc_FunctionsDatabase_Array_last] | Returns the last item in an array |
+| [`array::len()`][SurrealQL101bd_FunctionsDatabase_Array_len] | Returns the length of an array |
+| [`array::logical_and()`][SurrealQL101be_FunctionsDatabase_Array_logicalAND] | Performs the [AND logical operations🚀][net__mdn_Logical_AND] on two arrays |
+| [`array::logical_or()`][SurrealQL101bf_FunctionsDatabase_Array_logicalOR] | Performs the [OR logical operations🚀][net__mdn_Logical_OR] on two arrays |
+| [`array::logical_xor()`][SurrealQL101bg_FunctionsDatabase_Array_logicalXOR] | Performs the [XOR logical operations🚀][net__mdn_Logical_XOR] on two arrays |
+| [`array::map()`][SurrealQL101bh_FunctionsDatabase_Array_map] | Applies an operation to every item in an array and passes it on |
+| [`array::max()`][SurrealQL101bi_FunctionsDatabase_Array_max] | Returns the greatest item from an array |
+| [`array::matches()`][SurrealQL101bk_FunctionsDatabase_Array_matches] | Returns an array of booleans indicating which elements of the input array contain a specified value |
+| [`array::min()`][SurrealQL101bj_FunctionsDatabase_Array_min] | Returns the least item from an array |
+| [`array::pop()`][SurrealQL101bl_FunctionsDatabase_Array_pop] | Returns the last item from an array |
+| [`array::prepend()`][SurrealQL101bm_FunctionsDatabase_Array_prepend] | Prepends an item to the beginning of an array |
+| [`array::push()`][SurrealQL101bn_FunctionsDatabase_Array_push] | Appends an item to the end of an array |
+| [`array::range()`][SurrealQL101bo_FunctionsDatabase_Array_range] | Creates a number array from a range (start to end) |
+| [`array::reduce()`][SurrealQL101bp_FunctionsDatabase_Array_reduce] | Applies an operation on every element in the array, returning the final result |
+| [`array::remove()`][SurrealQL101bq_FunctionsDatabase_Array_remove] | Removes an item at a specific position from an array |
+| [`array::repeat()`][SurrealQL101br_FunctionsDatabase_Array_repeat] | Creates an array a given size with a specified value used for each element |
+| [`array::reverse()`][SurrealQL101bs_FunctionsDatabase_Array_reverse] | Reverses the sorting order of an array |
+| [`array::sequence()`][SurrealQL101bt_FunctionsDatabase_Array_sequence] | Creates an array of sequential integers |
+| [`array::shuffle()`][SurrealQL101bu_FunctionsDatabase_Array_shuffle] | Randomly shuffles the contents of an array |
+| [`array::slice()`][SurrealQL101bv_FunctionsDatabase_Array_slice] | Returns a slice of an array |
+| [`array::sort()`][SurrealQL101bw_FunctionsDatabase_Array_sort] | Sorts the values in an array in ascending or descending order |
+| [`array::sort_lexical()`][SurrealQL101bx_FunctionsDatabase_Array_sortLexical] | Sorts the values in an array, with strings sorted lexically |
+| [`array::sort_natural()`][SurrealQL101by_FunctionsDatabase_Array_sortNatural] | Sorts the values in an array, with numeric strings sorted numerically |
+| [`array::sort_natural_lexical()`][SurrealQL101bz_FunctionsDatabase_Array_sortNaturalLexical] | Sorts values using natural numeric and lexical ordering |
+| [`array::sort::asc()`][SurrealQL101ca_FunctionsDatabase_Array_sortASC] | Sorts the values in an array in ascending order |
+| [`array::sort::desc()`][SurrealQL101cb_FunctionsDatabase_Array_sortDESC] | Sorts the values in an array in descending order |
+| [`array::swap()`][SurrealQL101cc_FunctionsDatabase_Array_swap] | Swaps two items in an array |
+| [`array::transpose()`][SurrealQL101cd_FunctionsDatabase_Array_transpose] | Performs 2D array transposition |
+| [`array::union()`][SurrealQL101ce_array_union] | Returns the unique merged values from two arrays |
+| [`array::windows()`][SurrealQL101cf_array_windows] | Returns arrays of length `size`, sliding across the original array |
 
 ### _q101aa - **`array::add`**_
 
@@ -2905,7 +3572,7 @@ The `array::add` function adds an item to an array only if it doesn't exist.
 array::add(array, $new_val: value) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -2923,7 +3590,7 @@ RETURN array::add(["one", "two"], "three");
 
 ### _q101ab - **`array::all`**_
 
-When called on an array without any extra arguments, the `array::all` function checks whether all array values are [truthy🔖][SurrealQL027].
+When called on an array without any extra arguments, the `array::all` function checks whether all array values are [truthy][SurrealQL027_DataTypes_Values].
 
 ```surql title="API DEFINITION"
 array::all(array) -> bool
@@ -2931,7 +3598,7 @@ array::all(array, $predicate: value) -> bool
 array::all(array, $predicate: closure) -> bool
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -2951,7 +3618,7 @@ RETURN ["all", "clear"].all();
 -- true
 ```
 
-The `array::all` function can also be followed with a value or a [closure🔖][SurrealQL008] to check if all elements conform to a condition.
+The `array::all` function can also be followed with a value or a [closure][SurrealQL008_DataTypes_ClosuresAnonymousFunctions] to check if all elements conform to a condition.
 
 ```surql
 /**[test]
@@ -2993,7 +3660,7 @@ The `array::all` function can also be called using its alias `array::every`.
 
 ### _q101ac - **`array::any`**_
 
-The `array::any` function checks whether any array values are [truthy🔖][SurrealQL027].
+The `array::any` function checks whether any array values are [truthy][SurrealQL027_DataTypes_Values].
 
 ```surql title="API DEFINITION"
 array::any(array) -> bool
@@ -3001,7 +3668,7 @@ array::any(array, $predicate: value) -> bool
 array::any(array, $predicate: closure) -> bool
 ```
 
-When called on an array without any extra arguments, the `array::any` function checks whether any array values are [truthy🔖][SurrealQL027].
+When called on an array without any extra arguments, the `array::any` function checks whether any array values are [truthy][SurrealQL027_DataTypes_Values].
 
 ```surql
 /**[test]
@@ -3021,7 +3688,7 @@ RETURN array::any([ 1, 2, 3, NONE, 'SurrealDB', 5 ]);
 -- false
 ```
 
-The `array::any` function can also be followed with a value or a [closure🔖][SurrealQL008] to check if any elements conform to a condition.
+The `array::any` function can also be followed with a value or a [closure][SurrealQL008_DataTypes_ClosuresAnonymousFunctions] to check if any elements conform to a condition.
 
 ```surql
 /**[test]
@@ -3082,7 +3749,7 @@ The `array::at` function returns the value at the specified index, or in reverse
 array::at(array, $index: int) -> any
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3120,7 +3787,7 @@ The `array::append` function appends a value to the end of an array.
 array::append(array, $new_val: value) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3144,7 +3811,7 @@ If one array is shorter than the other it is considered null and thus false.
 array::boolean_and($lh: array, $rh: array)
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3195,7 +3862,7 @@ It takes two arrays and if one array is shorter than the other or missing, the o
 array::boolean_or($lh: array, $rh: array)
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3227,7 +3894,7 @@ The `array::boolean_xor` function performs the [XOR bitwise operations🚀][net_
 array::boolean_xor($lh: array, $rh: array)
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3260,7 +3927,7 @@ It takes in one array and it returns false if its single operand can be converte
 array::boolean_not(array)
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3291,7 +3958,7 @@ The `array::combine` function combines all values from two arrays together, retu
 array::combine(array, $other: array) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3314,7 +3981,7 @@ The `array::complement` function returns the complement of two arrays, returning
 array::complement(array, $other: array) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3331,13 +3998,13 @@ RETURN array::complement([1, 2, 3, 4], [3, 4, 5, 6]);
 
 ### _q101al - **`array::concat`**_
 
-The `array::concat` function merges two arrays together, returning an array which may contain duplicate values. If you want to remove duplicate values from the resulting array, then use the [`array::union()`🔖][SurrealQL101_union] function.
+The `array::concat` function merges two arrays together, returning an array which may contain duplicate values. If you want to remove duplicate values from the resulting array, then use the [`array::union()`][SurrealQL101ce_array_union] function.
 
 ```surql title="API DEFINITION"
 array::concat(array, $other: array) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3375,7 +4042,7 @@ The `array::clump` function returns the original array split into sub-arrays of 
 array::clump(array, $size: int) -> array
 ```
 
-The following examples show this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following examples show this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3409,7 +4076,7 @@ The `array::difference` function determines the difference between two arrays, r
 array::difference(array, $other: array) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3432,7 +4099,7 @@ The `array::distinct` function calculates the unique values in an array, returni
 array::distinct(array) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3463,7 +4130,7 @@ The function also accepts a third and a fourth parameter which allows you to rep
 array::fill(array, $with: any, $start: int, $end: int) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3517,7 +4184,7 @@ array::filter(array, $predicate: value) -> array
 array::filter(array, $predicate: closure) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3537,7 +4204,7 @@ RETURN [true, false, false, false, true, true].filter(true);
 -- [ true, true, true ]
 ```
 
-The `array::filter` function can also take a [closure🔖][SurrealQL008] for more customized filtering.
+The `array::filter` function can also take a [closure][SurrealQL008_DataTypes_ClosuresAnonymousFunctions] for more customized filtering.
 
 ```surql
 /**[test]
@@ -3568,7 +4235,7 @@ value = "[{ importance: 10, message: 'I need some help with this query...' }, { 
 ]
 ```
 
-Note that the function checks whether the output of the inner closure [is truthy🔖][SurrealQL027], as opposed to only expecting a `bool`. As any and all values can be checked for truthiness, simply passing the closure argument as its output is enough to filter out values that are not truthy, such as `NONE` values and empty arrays.
+Note that the function checks whether the output of the inner closure [is truthy][SurrealQL027_DataTypes_Values], as opposed to only expecting a `bool`. As any and all values can be checked for truthiness, simply passing the closure argument as its output is enough to filter out values that are not truthy, such as `NONE` values and empty arrays.
 
 ```surql
 /**[test]
@@ -3629,7 +4296,7 @@ array::filter_index(array, $predicate: value) -> array
 array::filter_index(array, $predicate: closure) -> array
 ```
 
-The following examples show this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following examples show this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3649,7 +4316,7 @@ RETURN [0, 0, 1, 0, 0, 5, 1].filter_index(0);
 -- [ 0, 1, 3, 4 ]
 ```
 
-The `array::filter_index` function can also take a [closure🔖][SurrealQL008] for more customized filtering.
+The `array::filter_index` function can also take a [closure][SurrealQL008_DataTypes_ClosuresAnonymousFunctions] for more customized filtering.
 
 ```surql
 /**[test]
@@ -3680,7 +4347,7 @@ array::find(array, $predicate: value)   -> value | NONE
 array::find(array, $predicate: closure) -> value | NONE
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3700,7 +4367,7 @@ RETURN [1, 2, 3].find(4);
 -- [NONE]
 ```
 
-The `array::find` function is most useful when a [closure🔖][SurrealQL008] is passed in which allows for customized searching.
+The `array::find` function is most useful when a [closure][SurrealQL008_DataTypes_ClosuresAnonymousFunctions] is passed in which allows for customized searching.
 
 ```surql
 /**[test]
@@ -3748,7 +4415,7 @@ array::find_index(array, $predicate: value)   -> number | NONE
 array::find_index(array, $predicate: closure) -> number | NONE
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3768,7 +4435,7 @@ RETURN [1, 2, 3].find_index(4);
 -- NONE
 ```
 
-The `array::find_index` function can also take a [closure🔖][SurrealQL008] for more customized searching.
+The `array::find_index` function can also take a [closure][SurrealQL008_DataTypes_ClosuresAnonymousFunctions] for more customized searching.
 
 ```surql
 /**[test]
@@ -3804,7 +4471,7 @@ The `array::first` function returns the first value from an array.
 array::first(array) -> any
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3828,7 +4495,7 @@ The `array::flatten` function flattens an array of arrays, returning a new array
 array::flatten(array) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -3849,7 +4516,7 @@ RETURN array::flatten([ [1, 2], [3, 4], 'SurrealDB', [5, 6, [7, 8]] ]);
 
 > Available since: V2.1.0
 
-The `array::fold` function returns a final value from the elements of an array by allowing an operation to be performed at each step of the way as each subsequent item in the array is encountered. To use `array::fold`, pass in an initial value, followed by parameter names for the current value and the next value and an operation to perform on them. If you only want to perform an operation on each item and do not need an initial value, use the [`array::reduce`🔖][SurrealQL101_reduce] function instead.
+The `array::fold` function returns a final value from the elements of an array by allowing an operation to be performed at each step of the way as each subsequent item in the array is encountered. To use `array::fold`, pass in an initial value, followed by parameter names for the current value and the next value and an operation to perform on them. If you only want to perform an operation on each item and do not need an initial value, use the [`array::reduce`][SurrealQL101bp_FunctionsDatabase_Array_reduce] function instead.
 
 ```surql title="API DEFINITION"
 array::fold(array, $initial_value: value, $operator: closure) -> value
@@ -3933,7 +4600,7 @@ value = ""I_don't_like_whitespace""
 "I_don't_like_whitespace"
 ```
 
-The `array::fold()` function can be used to generate an array of values that can then be passed on to statements like [`INSERT`🔖][SurrealQL071] for bulk insertion.
+The `array::fold()` function can be used to generate an array of values that can then be passed on to statements like [`INSERT`][SurrealQL071_Statement_INSERT] for bulk insertion.
 
 ```surql
 INSERT INTO person (
@@ -4015,7 +4682,7 @@ The `array::group` function flattens and returns the unique items in an array.
 array::group(array) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -4080,7 +4747,7 @@ The `array::intersect` function calculates the values which intersect two arrays
 array::intersect(array, $other: array) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -4105,7 +4772,7 @@ The `array::is_empty` function checks whether the array contains values.
 array::is_empty(array) -> bool
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql title="An array that contain values"
 /**[test]
@@ -4141,7 +4808,7 @@ The `array::join` function takes an array and a string as parameters and returns
 array::join(array, $concat_with: string) -> string
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -4164,7 +4831,7 @@ The `array::last` function returns the last value from an array.
 array::last(array) -> any
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -4181,13 +4848,13 @@ RETURN array::last([ 's', 'u', 'r', 'r', 'e', 'a', 'l' ]);
 
 ### _q101bd - **`array::len`**_
 
-The `array::len` function calculates the length of an array, returning a number. This function includes all items when counting the number of items in the array. If you want to only count [truthy🔖][SurrealQL027] values, then use the [count()🔖][SurrealQL103] function.
+The `array::len` function calculates the length of an array, returning a number. This function includes all items when counting the number of items in the array. If you want to only count [truthy][SurrealQL027_DataTypes_Values] values, then use the [count()][SurrealQL103_FunctionsDatabase_Count] function.
 
 ```surql title="API DEFINITION"
 array::len(array) -> number
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -4215,7 +4882,7 @@ When one or both of the compared elements are not truthy, the resulting element 
 array::logical_and($lh: array, $rh: array)
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -4271,7 +4938,7 @@ When both of the compared elements are not truthy, the resulting element will ha
 array::logical_or($lh: array, $rh: array)
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -4319,7 +4986,7 @@ When neither of the compared elements are truthy, the resulting element will hav
 array::logical_xor($lh: array, $rh: array)
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 
@@ -4362,7 +5029,7 @@ RETURN array::logical_xor([0, 1], [])
 
 ### _q101bh - **`array::map`**_
 
-The `array::map` function allows the user to call an [anonymous function🔖][SurrealQL008] (closure) that is performed on every item in the array before passing it on.
+The `array::map` function allows the user to call an [anonymous function][SurrealQL008_DataTypes_ClosuresAnonymousFunctions] (closure) that is performed on every item in the array before passing it on.
 
 ```surql title="API DEFINITION"
 array::map(array, $operator: closure) -> array;
@@ -4486,7 +5153,7 @@ value = "['0: first used in the year 876', '1: the number of moons in the sky', 
 ]
 ```
 
-The `array::map()` function can be used to generate an array of values that can then be passed on to statements like [`INSERT`🔖][SurrealQL071] for bulk insertion.
+The `array::map()` function can be used to generate an array of values that can then be passed on to statements like [`INSERT`][SurrealQL071_Statement_INSERT] for bulk insertion.
 
 ```surql
 INSERT INTO person ((<array>0..=1000).map(|| {id: rand::ulid()}));
@@ -4502,7 +5169,7 @@ The `array::max` function returns the greatest value from an array of values.
 array::max(array<any>) -> any
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 
@@ -4539,7 +5206,51 @@ See also:
 - [`time::max`🚫][brakuje_func_db_time#timemax], which extracts the greatest datetime from an array of datetimes
 - [How values are compared and ordered in SurrealDB🚫][brakuje_func_db_values#comparing-and-ordering-values]
 
-### _q101bj - **`array::matches`**_
+### _q101bj - **`array::min`**_
+
+The `array::min` function returns the least value from an array of values.
+
+```surql title="API DEFINITION"
+array::min(array<any>) -> any
+```
+
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
+
+```surql
+
+/**[test]
+[[test.results]]
+value = "0"
+
+*/
+
+RETURN array::min([0, 1, 2]);
+
+-- 0
+```
+
+As any value can be compared with another value, the array can be an array of any SurrealQL value.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+*/
+
+array::min([NONE, NULL, 9, 9.9]);
+
+NONE
+```
+
+See also:
+
+- [`math::min`🚫][brakuje_func_db_math#mathmin], which extracts the least number from an array of numbers
+- [`time::min`🚫][brakuje_func_db_time#timemin], which extracts the least datetime from an array of datetimes
+- [How values are compared and ordered in SurrealDB🚫][brakuje_func_db_values#comparing-and-ordering-values]
+
+### _q101bk - **`array::matches`**_
 
 The `array::matches` function returns an array of booleans indicating which elements of the input array contain a specified value.
 
@@ -4547,7 +5258,7 @@ The `array::matches` function returns an array of booleans indicating which elem
 array::matches(array, $predicate: value) -> array<bool>
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 
@@ -4588,50 +5299,6 @@ RETURN array::matches([{id: r"ohno:0"}, {id: r"ohno:1"}], {id: r"ohno:1"});
 -- [false, true]
 ```
 
-### _q101bk - **`array::min`**_
-
-The `array::min` function returns the least value from an array of values.
-
-```surql title="API DEFINITION"
-array::min(array<any>) -> any
-```
-
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
-
-```surql
-
-/**[test]
-[[test.results]]
-value = "0"
-
-*/
-
-RETURN array::min([0, 1, 2]);
-
--- 0
-```
-
-As any value can be compared with another value, the array can be an array of any SurrealQL value.
-
-```surql
-/**[test]
-
-[[test.results]]
-value = "NONE"
-
-*/
-
-array::min([NONE, NULL, 9, 9.9]);
-
-NONE
-```
-
-See also:
-
-- [`math::min`🚫][brakuje_func_db_math#mathmin], which extracts the least number from an array of numbers
-- [`time::min`🚫][brakuje_func_db_time#timemin], which extracts the least datetime from an array of datetimes
-- [How values are compared and ordered in SurrealDB🚫][brakuje_func_db_values#comparing-and-ordering-values]
-
 ### _q101bl - **`array::pop`**_
 
 The `array::pop` function removes a value from the end of an array and returns it. If the array is empty, NONE is returned.
@@ -4640,7 +5307,7 @@ The `array::pop` function removes a value from the end of an array and returns i
 array::pop(array) -> value
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -4663,7 +5330,7 @@ The `array::prepend` function prepends a value to the beginning of an array.
 array::prepend(array, $new_val: value) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -4686,7 +5353,7 @@ The `array::push` function prepends a value to the end of an array.
 array::push(array, $new_val: value) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -4713,7 +5380,7 @@ array::range($start: int, $count: int) -> array
 array::range(range) -> array;
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -4745,7 +5412,7 @@ RETURN array::range(1..=5);
 
 > Available since: V2.1.0
 
-The `array::reduce` function reduces the elements of an array to a single final value by allowing an operation to be performed at each step of the way as each subsequent item in the array is encountered. To use `array::reduce`, pass in parameter names for the current value and the next value and an operation to perform on them. If you need an initial value to pass in before the other items are operated on, use the [`array::fold`🔖][SurrealQL101_fold] function instead.
+The `array::reduce` function reduces the elements of an array to a single final value by allowing an operation to be performed at each step of the way as each subsequent item in the array is encountered. To use `array::reduce`, pass in parameter names for the current value and the next value and an operation to perform on them. If you need an initial value to pass in before the other items are operated on, use the [`array::fold`][SurrealQL101aw_FunctionsDatabase_Array_fold] function instead.
 
 ```surql title="API DEFINITION"
 array::reduce(array, $operator: closure) -> value
@@ -4858,7 +5525,7 @@ The `array::remove` function removes an item from a specific position in an arra
 array::remove(array, $index: number) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -4898,7 +5565,7 @@ The `array::repeat` function creates an array of a given size contain the specif
 array::repeat(any, $count: int) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -4934,7 +5601,7 @@ The `array::reverse` function reverses the sorting order of an array.
 array::reverse(array) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -4984,7 +5651,7 @@ The `array::shuffle` function randomly shuffles the items of an array.
 array::shuffle(array) -> array
 ```
 
-The following example shows this function, and its possible output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its possible output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -5009,7 +5676,7 @@ array::slice(array, $start: int, $len: int) -> array
 array::slice(array, $slice: range) -> array;
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -5112,7 +5779,7 @@ The function also accepts a second string parameter which determines the sorting
 array::sort(array, $order: string) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -5235,7 +5902,7 @@ array::sort_natural(array, $order: string) -> array
 
 The following example shows that `array::sort_natural` will sort numeric strings as if they were numbers. The `array::sort` function, on the other hand, treats a string like '3' as greater than '11' due to the first character in '3' being greater than '1'.
 
-Note that strings sorted in numeric order will still appear after actual numbers, as [a string will always be greater than a number🔖][SurrealQL027].
+Note that strings sorted in numeric order will still appear after actual numbers, as [a string will always be greater than a number][SurrealQL027_DataTypes_Values].
 
 ```surql
 /**[test]
@@ -5317,7 +5984,7 @@ The `array::sort::asc` function is a shorthand convenience function for the `arr
 array::sort::asc(array) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -5340,7 +6007,7 @@ The `array::sort::desc` function is a shorthand convenience function for the `ar
 array::sort::desc(array) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -5365,7 +6032,7 @@ The `array::swap` function swaps two values of an array based on indexes.
 array::swap(array, $from: int, $to: int) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -5429,7 +6096,7 @@ The `array::transpose` function is used to perform 2d array transposition but it
 array::transpose(array<array>) -> array<array>
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -5634,7 +6301,7 @@ The `array::union` function combines two arrays together, removing duplicate val
 array::union(array, $other: array) -> array
 ```
 
-The following example shows this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following example shows this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -5659,7 +6326,7 @@ array::windows(array, $window_size: int) -> array
 
 The `array::windows` function returns a number of arrays of length `size` created by moving one index at a time down the original array. The arrays returned are guaranteed to be of length `size`. As a result, the function will return an empty array if the length of the original array is not large enough to create a single output array.
 
-The following examples show this function, and its output, when used in a [`RETURN`🔖][SurrealQL078] statement:
+The following examples show this function, and its output, when used in a [`RETURN`][SurrealQL078_Statement_RETURN] statement:
 
 ```surql
 /**[test]
@@ -5998,7 +6665,7 @@ COMMIT TRANSACTION;
 
 ### _q135b - **Committing a transaction**_
 
-The [COMMIT🔖][SurrealQL041] statement is used to commit a set of statements within a transaction, ensuring that all data modifications become a permanent part of the database.
+The [COMMIT][SurrealQL041_Statement_COMMIT] statement is used to commit a set of statements within a transaction, ensuring that all data modifications become a permanent part of the database.
 
 ```surql title="Committing a transaction"
 COMMIT [ TRANSACTION ];
@@ -6039,7 +6706,7 @@ COMMIT TRANSACTION;
 
 ### _q135c - **Cancelling a transaction**_
 
-The [CANCEL🔖][SurrealQL040] statement can be used to cancel a set of statements within a transaction, reverting or rolling back any data modification made within the transaction as a whole.
+The [CANCEL][SurrealQL040_Statement_CANCEL] statement can be used to cancel a set of statements within a transaction, reverting or rolling back any data modification made within the transaction as a whole.
 
 ```surql title="Cancelling a transaction"
 CANCEL [ TRANSACTION ];
@@ -6080,7 +6747,7 @@ CANCEL TRANSACTION;
 
 ### _q135d - **THROW to conditionally cancel a transaction**_
 
-While transactions are automatically rolled back if an error occurs in any of its statements, [THROW🔖][SurrealQL082] can also be used to explicitly break out of a transaction at any point. `THROW` can be followed by any value which serves as the error message, usually a string.
+While transactions are automatically rolled back if an error occurs in any of its statements, [THROW][SurrealQL082_Statement_THROW] can also be used to explicitly break out of a transaction at any point. `THROW` can be followed by any value which serves as the error message, usually a string.
 
 ```surql
 BEGIN TRANSACTION;
@@ -6193,474 +6860,477 @@ SELECT * FROM user;
 ---
 ---
 
-[SurrealQL002_and]: <#q002aa----or-and> "`&&` or `AND`"
+[SurrealQL000_SurrealQL]: <#q000---surrealql> "SurrealQL"
 
-[SurrealQL002_or]: <#q002ab----or-or> "`||` or `OR`"
+[SurrealQL001_DemoData]: <#q001---demo-data> "SurrealQL 🞂 Demo data"
 
-[SurrealQL002_not]: <#q002ac----not> "`!` (not)"
+[SurrealQL002_Operators]: <#q002---operators> "SurrealQL 🞂 Operators"
 
-[SurrealQL002_notnot]: <#q002ad----not-not> "`!!` (not not)"
+[SurrealQL002aa_OperatorAND]: <#q002aa----or-and> "`&&` or `AND`"
 
-[SurrealQL002_null]: <#q002ae----null-coalescing> "`??` (null coalescing)"
+[SurrealQL002ab_OperatorOR]: <#q002ab----or-or> "`||` or `OR`"
 
-[SurrealQL002_truthy]: <#q002af----truthy-coalescing> "`??` (truthy coalescing)"
+[SurrealQL002ac_OperatorNOT]: <#q002ac----not> "`!` (not)"
 
-[SurrealQL002_equal]: <#q002ag----or-is> "`=` or `IS`"
+[SurrealQL002ad_OperatorNotNOT]: <#q002ad----not-not> "`!!` (not not)"
 
-[SurrealQL002_notequal]: <#q002ah----or-is-not> "`=` or `IS`"
+[SurrealQL002ae_OperatorCoalescingNULL]: <#q002ae----null-coalescing> "`??` (null coalescing)"
 
-[SurrealQL002_exact]: <#q002ai----exact> "`==` (exact)"
+[SurrealQL002af_OperatorCoalescingTRUTHY]: <#q002af----truthy-coalescing> "`??` (truthy coalescing)"
 
-[SurrealQL002_anyequal]: <#q002aj----any-equal> "`?=` (any equal)"
+[SurrealQL002ag_OperatorEQUAL]: <#q002ag----or-is> "`=` or `IS`"
 
-[SurrealQL002_allequal]: <#q002ak----all-equal> "`*=` (all equal)"
+[SurrealQL002ah_OperatorNOTEQUAL]: <#q002ah----or-is-not> "`!=` or `IS NOT`"
 
-[SurrealQL002_similar]: <#q002al-------similarity> "`~` `?~` `!~` `*~` (similarity)"
+[SurrealQL002ai_OperatorEXACT]: <#q002ai----exact> "`==` (exact)"
 
-[SurrealQL002_less]: <#q002am----less> "`<` (less)"
+[SurrealQL002ai_OperatorANYEQUAL]: <#q002aj----any-equal> "`?=` (any equal)"
 
-[SurrealQL002_lessequal]: <#q002an----less-or-equal> "`<=` (less or equal)"
+[SurrealQL002ak_OperatorALLEQUAL]: <#q002ak----all-equal> "`*=` (all equal)"
 
-[SurrealQL002_more]: <#q002ao----more> "`>` (more)"
+[SurrealQL002al_OperatorSIMILARITY]: <#q002al-------similarity> "`~` `?~` `!~` `*~` (similarity)"
 
-[SurrealQL002_moreequal]: <#q002ap----more-or-equal> "`>=` (more or equal)"
+[SurrealQL002am_OperatorLESS]: <#q002am----less> "`<` (less)"
 
-[SurrealQL002_add]: <#q002aq----add> "`+` (add)"
+[SurrealQL002an_OperatorLESSEQUAL]: <#q002an----less-or-equal> "`<=` (less or equal)"
 
-[SurrealQL002_sub]: <#q002ar-----sub> "`-` (sub)"
+[SurrealQL002ao_OperatorMORE]: <#q002ao----more> "`>` (more)"
 
-[SurrealQL002_mul]: <#q002as----or--mul> "`*` or `×` (mul)"
+[SurrealQL002ap_OperatorMOREEQUAL]: <#q002ap----more-or-equal> "`>=` (more or equal)"
 
-[SurrealQL002_div]: <#q002at----or--div> "`/` or `÷` (div)"
+[SurrealQL002aq_OperatorADD]: <#q002aq----add> "`+` (add)"
 
-[SurrealQL002_pow]: <#q002au----pow> "`**` (pow)"
+[SurrealQL002ar_OperatorSUB]: <#q002ar-----sub> "`-` (sub)"
 
-[SurrealQL002_co_equ]: <#q002av---contains-or-> "`CONTAINS` or `∋`"
+[SurrealQL002as_OperatorMUL]: <#q002as----or--mul> "`*` or `×` (mul)"
 
-[SurrealQL002_co_not]: <#q002aw---containsnot-or-> "`CONTAINSNOT` or `∌`"
+[SurrealQL002at_OperatorDIV]: <#q002at----or--div> "`/` or `÷` (div)"
 
-[SurrealQL002_co_all]: <#q002ax---containsall-or-> "`CONTAINSALL` or `⊇`"
+[SurrealQL002au_OperatorPOW]: <#q002au----pow> "`**` (pow)"
 
-[SurrealQL002_co_any]: <#q002ay---containsany-or-> "`CONTAINSANY` or `⊃`"
+[SurrealQL002av_OperatorCoEQU]: <#q002av---contains-or-> "`CONTAINS` or `∋`"
 
-[SurrealQL002_co_non]: <#q002az---containsnone-or-> "`CONTAINSNONE` or `⊅`"
+[SurrealQL002aw_OperatorCoNOT]: <#q002aw---containsnot-or-> "`CONTAINSNOT` or `∌`"
 
-[SurrealQL002_in_equ]: <#q002ba---inside-or--or-in> "`INSIDE` or `∈` or `IN`"
+[SurrealQL002ax_OperatorCoALL]: <#q002ax---containsall-or-> "`CONTAINSALL` or `⊇`"
 
-[SurrealQL002_in_not]: <#q002bb---notinside-or--or-not-in> "`NOTINSIDE` or `∉` or `NOT IN`"
+[SurrealQL002ay_OperatorCoANY]: <#q002ay---containsany-or-> "`CONTAINSANY` or `⊃`"
 
-[SurrealQL002_in_all]: <#q002bc---allinside-or-> "`ALLINSIDE` or `⊆`"
+[SurrealQL002az_OperatorCoNON]: <#q002az---containsnone-or-> "`CONTAINSNONE` or `⊅`"
 
-[SurrealQL002_in_any]: <#q002bd---anyinside-or-> "`ANYINSIDE` or `⊂`"
+[SurrealQL002ba_OperatorInEQU]: <#q002ba---inside-or--or-in> "`INSIDE` or `∈` or `IN`"
 
-[SurrealQL002_in_non]: <#q002be---noneinside-or-> "`NONEINSIDE` or `⊄`"
+[SurrealQL002bb_OperatorInNOT]: <#q002bb---notinside-or--or-not-in> "`NOTINSIDE` or `∉` or `NOT IN`"
 
-[SurrealQL002_outside]: <#q002bf---outside> "`OUTSIDE`"
+[SurrealQL002bc_OperatorInALL]: <#q002bc---allinside-or-> "`ALLINSIDE` or `⊆`"
 
-[SurrealQL002_inter]: <#q002bg---intersects> "`INTERSECTS`"
+[SurrealQL002bd_OperatorInANY]: <#q002bd---anyinside-or-> "`ANYINSIDE` or `⊂`"
 
-[SurrealQL002_matches]: <#q002bh---matches> "`MATCHES`"
+[SurrealQL002be_OperatorInNON]: <#q002be---noneinside-or-> "`NONEINSIDE` or `⊄`"
 
-[SurrealQL002_knn]: <#q002bi---knn> "`KNN`"
+[SurrealQL002bf_OperatorOUTSIDE]: <#q002bf---outside> "`OUTSIDE`"
+
+[SurrealQL002bg_OperatorINTERSECTS]: <#q002bg---intersects> "`INTERSECTS`"
+
+[SurrealQL002bh_OperatorMATCHES]: <#q002bh---matches> "`MATCHES`"
+
+[SurrealQL002bi_OperatorKNN]: <#q002bi---knn> "`KNN`"
+
+[SurrealQL003_DataTypes]: <#q003---data-types> "SurrealQL 🞂 Data types"
 
 [SurrealQL003_geometry]: <#q003a---example-geometry> "Example geometry"
 
 [SurrealQL003_bytes]: <#q003b---example-bytes> "Example bytes"
 
-[SurrealQL101_add]: <#q101aa---arrayadd> "`array::add`"
+[SurrealQL004_DataTypes_Arrays]: <#q004---arrays> "SurrealQL 🞂 Data type 🞂 Arrays"
 
-[SurrealQL101_all]: <#q101ab---arrayall> "`array::all`"
+[SurrealQL005_DataTypes_Booleans]: <#q005---booleans> "SurrealQL 🞂 Data type 🞂 Booleans"
 
-[SurrealQL101_any]: <#q101ac---arrayany> "`array::any`"
+[SurrealQL006_DataTypes_Bytes]: <#q006---bytes> "SurrealQL 🞂 Data type 🞂 Bytes"
 
-[SurrealQL101_at]: <#q101ad---arrayat> "`array::at`"
+[SurrealQL007_DataTypes_Casting]: <#q007---casting> "SurrealQL 🞂 Data type 🞂 Casting"
 
-[SurrealQL101_append]: <#q101ae---arrayappend> "`array::append`"
+[SurrealQL008_DataTypes_ClosuresAnonymousFunctions]: <#q008---anonymous-functions-closures> "SurrealQL 🞂 Data type 🞂 Anonymous functions (closures)"
 
-[SurrealQL101_boolean_and]: <#q101af---arrayboolean_and> "`array::boolean_and`"
+[SurrealQL009_DataTypes_Datetimes]: <#q009---datetimes> "SurrealQL 🞂 Data type 🞂 Datetimes"
 
-[SurrealQL101_boolean_or]: <#q101ag---arrayboolean_or> "`array::boolean_or`"
+[SurrealQL010_DataTypes_Files]: <#q010---files> "SurrealQL 🞂 Data type 🞂 Files"
 
-[SurrealQL101_boolean_xor]: <#q101ah---arrayboolean_xor> "`array::boolean_xor`"
+[SurrealQL011_DataTypes_Formatters]: <#q011---formatters> "SurrealQL 🞂 Data type 🞂 Formatters"
 
-[SurrealQL101_boolean_not]: <#q101ai---arrayboolean_not> "`array::boolean_not`"
+[SurrealQL012_DataTypes_FuturesComputed]: <#q012---futures-computed-clause> "SurrealQL 🞂 Data type 🞂 Futures (`COMPUTED` clause)"
 
-[SurrealQL101_combine]: <#q101aj---arraycombine> "`array::combine`"
+[SurrealQL013_DataTypes_Geometries]: <#q013---geometries> "SurrealQL 🞂 Data type 🞂 Geometries"
 
-[SurrealQL101_complement]: <#q101ak---arraycomplement> "`array::complement`"
+[SurrealQL014_DataTypes_Idioms]: <#q014---idioms> "SurrealQL 🞂 Data type 🞂 Idioms"
 
-[SurrealQL101_clump]: <#q101am---arrayclump> "`array::clump`"
+[SurrealQL015_DataTypes_Literals]: <#q015---literals> "SurrealQL 🞂 Data type 🞂 Literals"
 
-[SurrealQL101_concat]: <#q101al---arrayconcat> "`array::concat`"
+[SurrealQL016_DataTypes_NoneNull]: <#q016---none-and-null> "SurrealQL 🞂 Data type 🞂 None and null"
 
-[SurrealQL101_difference]: <#q101an---arraydifference> "`array::difference`"
+[SurrealQL017_DataTypes_Numbers]: <#q017---numbers> "SurrealQL 🞂 Data type 🞂 Numbers"
 
-[SurrealQL101_distinct]: <#q101ao---arraydistinct> "`array::distinct`"
+[SurrealQL018_DataTypes_Objects]: <#q018---objects> "SurrealQL 🞂 Data type 🞂 Objects"
 
-[SurrealQL101_fill]: <#q101ap---arrayfill> "`array::fill`"
+[SurrealQL019_DataTypes_Ranges]: <#q019---ranges> "SurrealQL 🞂 Data type 🞂 Ranges"
 
-[SurrealQL101_filter]: <#q101aq---arrayfilter> "`array::filter`"
+[SurrealQL020_DataTypes_RecordIDs]: <#q020---record-ids> "SurrealQL 🞂 Data type 🞂 Record IDs"
 
-[SurrealQL101_filter_index]: <#q101ar---arrayfilter_index> "`array::filter_index`"
+[SurrealQL021_DataTypes_RecordLinks]: <#q021---record-links> "SurrealQL 🞂 Data type 🞂 Record links"
 
-[SurrealQL101_find]: <#q101as---arrayfind> "`array::find`"
+[SurrealQL022_DataTypes_RecordReferences]: <#q022---record-references> "SurrealQL 🞂 Data type 🞂 Record references"
 
-[SurrealQL101_find_index]: <#q101at---arrayfind_index> "`array::find_index`"
+[SurrealQL023_DataTypes_Regex]: <#q023---regex> "SurrealQL 🞂 Data type 🞂 Regex"
 
-[SurrealQL101_first]: <#q101au---arrayfirst> "`array::first`"
+[SurrealQL024_DataTypes_Sets]: <#q024---sets> "SurrealQL 🞂 Data type 🞂 Sets"
 
-[SurrealQL101_flatten]: <#q101av---arrayflatten> "`array::flatten`"
+[SurrealQL025_DataTypes_Strings]: <#q025---strings> "SurrealQL 🞂 Data type 🞂 Strings"
 
-[SurrealQL101_fold]: <#q101aw---arrayfold> "`array::fold`"
+[SurrealQL026_DataTypes_UUIDs]: <#q026---uuids> "SurrealQL 🞂 Data type 🞂 UUIDs"
 
-[SurrealQL101_group]: <#q101ax---arraygroup> "`array::group`"
+[SurrealQL027_DataTypes_Values]: <#q027---values> "SurrealQL 🞂 Data type 🞂 Values"
 
-[SurrealQL101_insert]: <#q101ay---arrayinsert> "`array::insert`"
+[SurrealQL028_Statements]: <#q028---statements> "SurrealQL 🞂 Statements"
 
-[SurrealQL101_intersect]: <#q101az---arrayintersect> "`array::intersect`"
+[SurrealQL029_Statement_ACCESS]: <#q029---access-statement> "SurrealQL 🞂 Statement 🞂 `ACCESS`"
 
-[SurrealQL101_is_empty]: <#q101ba---arrayis_empty> "`array::is_empty`"
+[SurrealQL030_Statement_ALTER]: <#q030---alter-statement> "SurrealQL 🞂 Statement 🞂 `ALTER`"
 
-[SurrealQL101_join]: <#q101bb---arrayjoin> "`array::join`"
+[SurrealQL031_Statement_ALTER_DATABASE]: <#q031---alter-database-statement> "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `DATABASE`"
 
-[SurrealQL101_last]: <#q101bc---arraylast> "`array::last`"
+[SurrealQL032_Statement_ALTER_FIELD]: <#q032---alter-field-statement> "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `FIELD`"
 
-[SurrealQL101_len]: <#q101bd---arraylen> "`array::len`"
+[SurrealQL033_Statement_ALTER_INDEX]: <#q033---alter-index-statement> "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `INDEX`"
 
-[SurrealQL101_logical_and]: <#q101be---arraylogical_and> "`array::logical_and`"
+[SurrealQL034_Statement_ALTER_NAMESPACE]: <#q034---alter-namespace-statement> "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `NAMESPACE`"
 
-[SurrealQL101_logical_or]: <#q101bf---arraylogical_or> "`array::logical_or`"
+[SurrealQL035_Statement_ALTER_SEQUENCE]: <#q035---alter-sequence-statement> "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `SEQUENCE`"
 
-[SurrealQL101_logical_xor]: <#q101bg---arraylogical_xor> "`array::logical_xor`"
+[SurrealQL036_Statement_ALTER_SYSTEM]: <#q036---alter-system-statement> "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `SYSTEM`"
 
-[SurrealQL101_map]: <#q101bh---arraymap> "`array::map`"
+[SurrealQL037_Statement_ALTER_TABLE]: <#q037---alter-table-statement> "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `TABLE`"
 
-[SurrealQL101_max]: <#q101bi---arraymax> "`array::max`"
+[SurrealQL038_Statement_BEGIN]: <#q038---begin-statement> "SurrealQL 🞂 Statement 🞂 `BEGIN`"
 
-[SurrealQL101_matches]: <#q101bj---arraymatches> "`array::matches`"
+[SurrealQL039_Statement_BREAK]: <#q039---break-statement> "SurrealQL 🞂 Statement 🞂 `BREAK`"
 
-[SurrealQL101_min]: <#q101bk---arraymin> "`array::min`"
+[SurrealQL040_Statement_CANCEL]: <#q040---cancel-statement> "SurrealQL 🞂 Statement 🞂 `CANCEL`"
 
-[SurrealQL101_pop]: <#q101bl---arraypop> "`array::pop`"
+[SurrealQL041_Statement_COMMIT]: <#q041---commit-statement> "SurrealQL 🞂 Statement 🞂 `COMMIT`"
 
-[SurrealQL101_prepend]: <#q101bm---arrayprepend> "`array::prepend`"
+[SurrealQL042_Statement_CONTINUE]: <#q042---continue-statement> "SurrealQL 🞂 Statement 🞂 `CONTINUE`"
 
-[SurrealQL101_push]: <#q101bn---arraypush> "`array::push`"
+[SurrealQL043_Statement_CREATE]: <#q043---create-statement> "SurrealQL 🞂 Statement 🞂 `CREATE`"
 
-[SurrealQL101_range]: <#q101bo---arrayrange> "`array::range`"
+[SurrealQL044_Statement_DEFINE]: <#q044---define-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE`"
 
-[SurrealQL101_reduce]: <#q101bp---arrayreduce> "`array::reduce`"
+[SurrealQL045_Statement_DEFINE_ACCESS]: <#q045---define-access-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ACCESS`"
 
-[SurrealQL101_remove]: <#q101bq---arrayremove> "`array::remove`"
+[SurrealQL046_Statement_DEFINE_ACCESSTYPEBEARER]: <#q046---define-access--type-bearer> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ACCESS` 🞂 `TYPE BEARER`"
 
-[SurrealQL101_repeat]: <#q101br---arrayrepeat> "`array::repeat`"
+[SurrealQL047_Statement_DEFINE_ACCESSTYPEJWT]: <#q047---define-access--type-jwt> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ACCESS` 🞂 `TYPE JWT`"
 
-[SurrealQL101_reverse]: <#q101bs---arrayreverse> "`array::reverse`"
+[SurrealQL048_Statement_DEFINE_ACCESSTYPERECORD]: <#q048---define-access--type-record> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ACCESS` 🞂 `TYPE RECORD`"
 
-[SurrealQL101_sequence]: <#q101bt---arraysequence> "`array::sequence`"
+[SurrealQL049_Statement_DEFINE_ANALYZER]: <#q049---define-analyzer-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ANALYZER`"
 
-[SurrealQL101_shuffle]: <#q101bu---arrayshuffle> "`array::shuffle`"
+[SurrealQL050_Statement_DEFINE_API]: <#q050---define-api-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `API`"
 
-[SurrealQL101_slice]: <#q101bv---arrayslice> "`array::slice`"
+[SurrealQL051_Statement_DEFINE_BUCKET]: <#q051---define-bucket-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `BUCKET`"
 
-[SurrealQL101_sort]: <#q101bw---arraysort> "`array::sort`"
+[SurrealQL052_Statement_DEFINE_CONFIG]: <#q052---define-config-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `CONFIG`"
 
-[SurrealQL101_sort_lexical]: <#q101bx---arraysort_lexical> "`array::sort_lexical`"
+[SurrealQL053_Statement_DEFINE_DATABASE]: <#q053---define-database-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `DATABASE`"
 
-[SurrealQL101_sort_natural]: <#q101by---arraysort_natural> "`array::sort_natural`"
+[SurrealQL054_Statement_DEFINE_EVENT]: <#q054---define-event-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `EVENT`"
 
-[SurrealQL101_sort_natural_lexical]: <#q101bz---arraysort_natural_lexical> "`array::sort_natural_lexical`"
+[SurrealQL055_Statement_DEFINE_FIELD]: <#q055---define-field-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `FIELD`"
 
-[SurrealQL101_sort_asc]: <#q101ca---arraysortasc> "`array::sort::asc`"
+[SurrealQL056_Statement_DEFINE_FUNCTION]: <#q056---define-function-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `FUNCTION`"
 
-[SurrealQL101_sort_desc]: <#q101cb---arraysortdesc> "`array::sort::desc`"
+[SurrealQL057_Statement_DEFINE_INDEX]: <#q057---define-index-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `INDEX`"
 
-[SurrealQL101_swap]: <#q101cc---arrayswap> "`array::swap`"
+[SurrealQL058_Statement_DEFINE_MODULE]: <#q058---define-module-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `MODULE`"
 
-[SurrealQL101_transpose]: <#q101cd---arraytranspose> "`array::transpose`"
+[SurrealQL059_Statement_DEFINE_NAMESPACE]: <#q059---define-namespace-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `NAMESPACE`"
 
-[SurrealQL101_union]: <#q101ce---arrayunion> "`array::union`"
+[SurrealQL060_Statement_DEFINE_PARAM]: <#q060---define-param-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `PARAM`"
 
-[SurrealQL101_windows]: <#q101cf---arraywindows> "`array::windows`"
+[SurrealQL061_Statement_DEFINE_SCOPE]: <#q061---define-scope-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `SCOPE`"
 
+[SurrealQL062_Statement_DEFINE_SEQUENCE]: <#q062---define-sequence-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `SEQUENCE`"
 
+[SurrealQL063_Statement_DEFINE_TABLE]: <#q063---define-table-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `TABLE`"
 
+[SurrealQL064_Statement_DEFINE_TOKEN]: <#q064---define-token-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `TOKEN`"
 
-[SurrealQL000]: <#q000---surrealql> "SurrealQL"
+[SurrealQL065_Statement_DEFINE_USER]: <#q065---define-user-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `USER`"
 
-[SurrealQL001]: <#q001---demo-data> "SurrealQL 🞂 Demo data"
+[SurrealQL066_Statement_DELETE]: <#q066---delete-statement> "SurrealQL 🞂 Statement 🞂 `DELETE`"
 
-[SurrealQL002]: <#q002---operators> "SurrealQL 🞂 Operators"
+[SurrealQL067_Statement_EXPLAIN]: <#q067---explain-statement> "SurrealQL 🞂 Statement 🞂 `EXPLAIN`"
 
-[SurrealQL003]: <#q003---data-types> "SurrealQL 🞂 Data types"
+[SurrealQL068_Statement_FOR]: <#q068---for-statement> "SurrealQL 🞂 Statement 🞂 `FOR`"
 
-[SurrealQL004]: <#q004---arrays> "SurrealQL 🞂 Data type 🞂 Arrays"
+[SurrealQL069_Statement_IF_ELSE]: <#q069---if-else-statement> "SurrealQL 🞂 Statement 🞂 `IF ELSE`"
 
-[SurrealQL005]: <#q005---booleans> "SurrealQL 🞂 Data type 🞂 Booleans"
+[SurrealQL070_Statement_INFO]: <#q070---info-statement> "SurrealQL 🞂 Statement 🞂 `INFO`"
 
-[SurrealQL006]: <#q006---bytes> "SurrealQL 🞂 Data type 🞂 Bytes"
+[SurrealQL071_Statement_INSERT]: <#q071---insert-statement> "SurrealQL 🞂 Statement 🞂 `INSERT`"
 
-[SurrealQL007]: <#q007---casting> "SurrealQL 🞂 Data type 🞂 Casting"
+[SurrealQL072_Statement_KILL]: <#q072---kill-statement> "SurrealQL 🞂 Statement 🞂 `KILL`"
 
-[SurrealQL008]: <#q008---anonymous-functions-closures> "SurrealQL 🞂 Data type 🞂 Anonymous functions (closures)"
+[SurrealQL073_Statement_LET]: <#q073---let-statement> "SurrealQL 🞂 Statement 🞂 `LET`"
 
-[SurrealQL009]: <#q009---datetimes> "SurrealQL 🞂 Data type 🞂 Datetimes"
+[SurrealQL074_Statement_LIVE_SELECT]: <#q074---live-select-statement> "SurrealQL 🞂 Statement 🞂 `LIVE SELECT`"
 
-[SurrealQL010]: <#q010---files> "SurrealQL 🞂 Data type 🞂 Files"
+[SurrealQL075_Statement_REBUILD]: <#q075---rebuild-statement> "SurrealQL 🞂 Statement 🞂 `REBUILD`"
 
-[SurrealQL011]: <#q011---formatters> "SurrealQL 🞂 Data type 🞂 Formatters"
+[SurrealQL076_Statement_RELATE]: <#q076---relate-statement> "SurrealQL 🞂 Statement 🞂 `RELATE`"
 
-[SurrealQL012]: <#q012---futures-computed-clause> "SurrealQL 🞂 Data type 🞂 Futures (`COMPUTED` clause)"
+[SurrealQL077_Statement_REMOVE]: <#q077---remove-statement> "SurrealQL 🞂 Statement 🞂 `REMOVE`"
 
-[SurrealQL013]: <#q013---geometries> "SurrealQL 🞂 Data type 🞂 Geometries"
+[SurrealQL078_Statement_RETURN]: <#q078---return-statement> "SurrealQL 🞂 Statement 🞂 `RETURN`"
 
-[SurrealQL014]: <#q014---idioms> "SurrealQL 🞂 Data type 🞂 Idioms"
+[SurrealQL079_Statement_SELECT]: <#q079---select-statement> "SurrealQL 🞂 Statement 🞂 `SELECT`"
 
-[SurrealQL015]: <#q015---literals> "SurrealQL 🞂 Data type 🞂 Literals"
+[SurrealQL080_Statement_SHOW]: <#q080---show-statement> "SurrealQL 🞂 Statement 🞂 `SHOW`"
 
-[SurrealQL016]: <#q016---none-and-null> "SurrealQL 🞂 Data type 🞂 None and null"
+[SurrealQL081_Statement_SLEEP]: <#q081---sleep-statement> "SurrealQL 🞂 Statement 🞂 `SLEEP`"
 
-[SurrealQL017]: <#q017---numbers> "SurrealQL 🞂 Data type 🞂 Numbers"
+[SurrealQL082_Statement_THROW]: <#q082---throw-statement> "SurrealQL 🞂 Statement 🞂 `THROW`"
 
-[SurrealQL018]: <#q018---objects> "SurrealQL 🞂 Data type 🞂 Objects"
+[SurrealQL083_Statement_UPDATE]: <#q083---update-statement> "SurrealQL 🞂 Statement 🞂 `UPDATE`"
 
-[SurrealQL019]: <#q019---ranges> "SurrealQL 🞂 Data type 🞂 Ranges"
+[SurrealQL084_Statement_UPSERT]: <#q084---upsert-statement> "SurrealQL 🞂 Statement 🞂 `UPSERT`"
 
-[SurrealQL020]: <#q020---record-ids> "SurrealQL 🞂 Data type 🞂 Record IDs"
+[SurrealQL085_Statement_USE]: <#q085---use-statement> "SurrealQL 🞂 Statement 🞂 `USE`"
 
-[SurrealQL021]: <#q021---record-links> "SurrealQL 🞂 Data type 🞂 Record links"
+[SurrealQL086_Clauses]: <#q086---clauses> "SurrealQL 🞂 Clauses"
 
-[SurrealQL022]: <#q022---record-references> "SurrealQL 🞂 Data type 🞂 Record references"
+[SurrealQL087_Clauses_EXPLAIN]: <#q087---explain-clauses> "SurrealQL 🞂 Clauses 🞂 `EXPLAIN`"
 
-[SurrealQL023]: <#q023---regex> "SurrealQL 🞂 Data type 🞂 Regex"
+[SurrealQL088_Clauses_FETCH]: <#q088---fetch-clauses> "SurrealQL 🞂 Clauses 🞂 `FETCH`"
 
-[SurrealQL024]: <#q024---sets> "SurrealQL 🞂 Data type 🞂 Sets"
+[SurrealQL089_Clauses_FROM]: <#q089---from-clauses> "SurrealQL 🞂 Clauses 🞂 `FROM`"
 
-[SurrealQL025]: <#q025---strings> "SurrealQL 🞂 Data type 🞂 Strings"
+[SurrealQL090_Clauses_GROUP_BY]: <#q090---group-by-clauses> "SurrealQL 🞂 Clauses 🞂 `GROUP BY`"
 
-[SurrealQL026]: <#q026---uuids> "SurrealQL 🞂 Data type 🞂 UUIDs"
+[SurrealQL091_Clauses_LIMIT]: <#q091---limit-clauses> "SurrealQL 🞂 Clauses 🞂 `LIMIT`"
 
-[SurrealQL027]: <#q027---values> "SurrealQL 🞂 Data type 🞂 Values"
+[SurrealQL092_Clauses_OMIT]: <#q092---omit-clauses> "SurrealQL 🞂 Clauses 🞂 `OMIT`"
 
-[SurrealQL028]: <#q028---statements> "SurrealQL 🞂 Statements"
+[SurrealQL093_Clauses_ORDER_BY]: <#q093---order-by-clauses> "SurrealQL 🞂 Clauses 🞂 `ORDER BY`"
 
-[SurrealQL029]: <#q029---access-statement> "SurrealQL 🞂 Statement 🞂 `ACCESS`"
+[SurrealQL094_Clauses_SPLIT]: <#q094---split-clauses> "SurrealQL 🞂 Clauses 🞂 `SPLIT`"
 
-[SurrealQL030]: <#q030---alter-statement> "SurrealQL 🞂 Statement 🞂 `ALTER`"
+[SurrealQL095_Clauses_WHERE]: <#q095---where-clauses> "SurrealQL 🞂 Clauses 🞂 `WHERE`"
 
-[SurrealQL031]: <#q031---alter-database-statement> "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `DATABASE`"
+[SurrealQL096_Clauses_WITH]: <#q096---with-clauses> "SurrealQL 🞂 Clauses 🞂 `WITH`"
 
-[SurrealQL032]: <#q032---alter-field-statement> "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `FIELD`"
+[SurrealQL097_Parameters]: <#q097---parameters> "SurrealQL 🞂 Parameters"
 
-[SurrealQL033]: <#q033---alter-index-statement> "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `INDEX`"
+[SurrealQL098_Functions]: <#q098---functions> "SurrealQL 🞂 Functions"
 
-[SurrealQL034]: <#q034---alter-namespace-statement> "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `NAMESPACE`"
+[SurrealQL099_FunctionsDatabase]: <#q099---database-functions> "SurrealQL 🞂 Functions 🞂 Database Functions"
 
-[SurrealQL035]: <#q035---alter-sequence-statement> "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `SEQUENCE`"
+[SurrealQL100_FunctionsDatabase_API]: <#q100---api-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 API functions"
 
-[SurrealQL036]: <#q036---alter-system-statement> "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `SYSTEM`"
+[SurrealQL101_FunctionsDatabase_Array]: <#q101---array-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Array functions"
 
-[SurrealQL037]: <#q037---alter-table-statement> "SurrealQL 🞂 Statement 🞂 `ALTER` 🞂 `TABLE`"
+[SurrealQL101aa_FunctionsDatabase_Array_add]: <#q101aa---arrayadd> "`array::add`"
 
-[SurrealQL038]: <#q038---begin-statement> "SurrealQL 🞂 Statement 🞂 `BEGIN`"
+[SurrealQL101ab_FunctionsDatabase_Array_all]: <#q101ab---arrayall> "`array::all`"
 
-[SurrealQL039]: <#q039---break-statement> "SurrealQL 🞂 Statement 🞂 `BREAK`"
+[SurrealQL101ac_FunctionsDatabase_Array_any]: <#q101ac---arrayany> "`array::any`"
 
-[SurrealQL040]: <#q040---cancel-statement> "SurrealQL 🞂 Statement 🞂 `CANCEL`"
+[SurrealQL101ad_FunctionsDatabase_Array_at]: <#q101ad---arrayat> "`array::at`"
 
-[SurrealQL041]: <#q041---commit-statement> "SurrealQL 🞂 Statement 🞂 `COMMIT`"
+[SurrealQL101ae_FunctionsDatabase_Array_append]: <#q101ae---arrayappend> "`array::append`"
 
-[SurrealQL042]: <#q042---continue-statement> "SurrealQL 🞂 Statement 🞂 `CONTINUE`"
+[SurrealQL101af_FunctionsDatabase_Array_booleanAND]: <#q101af---arrayboolean_and> "`array::boolean_and`"
 
-[SurrealQL043]: <#q043---create-statement> "SurrealQL 🞂 Statement 🞂 `CREATE`"
+[SurrealQL101ag_FunctionsDatabase_Array_booleanOR]: <#q101ag---arrayboolean_or> "`array::boolean_or`"
 
-[SurrealQL044]: <#q044---define-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE`"
+[SurrealQL101ah_FunctionsDatabase_Array_booleanXOR]: <#q101ah---arrayboolean_xor> "`array::boolean_xor`"
 
-[SurrealQL045]: <#q045---define-access-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ACCESS`"
+[SurrealQL101ai_FunctionsDatabase_Array_booleanNOT]: <#q101ai---arrayboolean_not> "`array::boolean_not`"
 
-[SurrealQL046]: <#q046---define-access--type-bearer> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ACCESS` 🞂 `TYPE BEARER`"
+[SurrealQL101aj_FunctionsDatabase_Array_combine]: <#q101aj---arraycombine> "`array::combine`"
 
-[SurrealQL047]: <#q047---define-access--type-jwt> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ACCESS` 🞂 `TYPE JWT`"
+[SurrealQL101ak_FunctionsDatabase_Array_complement]: <#q101ak---arraycomplement> "`array::complement`"
 
-[SurrealQL048]: <#q048---define-access--type-record> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ACCESS` 🞂 `TYPE RECORD`"
+[SurrealQL101al_FunctionsDatabase_Array_concat]: <#q101al---arrayconcat> "`array::concat`"
 
-[SurrealQL049]: <#q049---define-analyzer-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `ANALYZER`"
+[SurrealQL101am_FunctionsDatabase_Array_clump]: <#q101am---arrayclump> "`array::clump`"
 
-[SurrealQL050]: <#q050---define-api-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `API`"
+[SurrealQL101an_FunctionsDatabase_Array_difference]: <#q101an---arraydifference> "`array::difference`"
 
-[SurrealQL051]: <#q051---define-bucket-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `BUCKET`"
+[SurrealQL101ao_FunctionsDatabase_Array_distinct]: <#q101ao---arraydistinct> "`array::distinct`"
 
-[SurrealQL052]: <#q052---define-config-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `CONFIG`"
+[SurrealQL101ap_FunctionsDatabase_Array_fill]: <#q101ap---arrayfill> "`array::fill`"
 
-[SurrealQL053]: <#q053---define-database-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `DATABASE`"
+[SurrealQL101aq_FunctionsDatabase_Array_filter]: <#q101aq---arrayfilter> "`array::filter`"
 
-[SurrealQL054]: <#q054---define-event-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `EVENT`"
+[SurrealQL101ar_FunctionsDatabase_Array_filterIndex]: <#q101ar---arrayfilter_index> "`array::filter_index`"
 
-[SurrealQL055]: <#q055---define-field-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `FIELD`"
+[SurrealQL101as_FunctionsDatabase_Array_find]: <#q101as---arrayfind> "`array::find`"
 
-[SurrealQL056]: <#q056---define-function-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `FUNCTION`"
+[SurrealQL101at_FunctionsDatabase_Array_findIndex]: <#q101at---arrayfind_index> "`array::find_index`"
 
-[SurrealQL057]: <#q057---define-index-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `INDEX`"
+[SurrealQL101au_FunctionsDatabase_Array_first]: <#q101au---arrayfirst> "`array::first`"
 
-[SurrealQL058]: <#q058---define-module-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `MODULE`"
+[SurrealQL101av_FunctionsDatabase_Array_flatten]: <#q101av---arrayflatten> "`array::flatten`"
 
-[SurrealQL059]: <#q059---define-namespace-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `NAMESPACE`"
+[SurrealQL101aw_FunctionsDatabase_Array_fold]: <#q101aw---arrayfold> "`array::fold`"
 
-[SurrealQL060]: <#q060---define-param-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `PARAM`"
+[SurrealQL101ax_FunctionsDatabase_Array_group]: <#q101ax---arraygroup> "`array::group`"
 
-[SurrealQL061]: <#q061---define-scope-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `SCOPE`"
+[SurrealQL101ay_FunctionsDatabase_Array_insert]: <#q101ay---arrayinsert> "`array::insert`"
 
-[SurrealQL062]: <#q062---define-sequence-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `SEQUENCE`"
+[SurrealQL101az_FunctionsDatabase_Array_intersect]: <#q101az---arrayintersect> "`array::intersect`"
 
-[SurrealQL063]: <#q063---define-table-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `TABLE`"
+[SurrealQL101ba_FunctionsDatabase_Array_isEmpty]: <#q101ba---arrayis_empty> "`array::is_empty`"
 
-[SurrealQL064]: <#q064---define-token-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `TOKEN`"
+[SurrealQL101bb_FunctionsDatabase_Array_join]: <#q101bb---arrayjoin> "`array::join`"
 
-[SurrealQL065]: <#q065---define-user-statement> "SurrealQL 🞂 Statement 🞂 `DEFINE` 🞂 `USER`"
+[SurrealQL101bc_FunctionsDatabase_Array_last]: <#q101bc---arraylast> "`array::last`"
 
-[SurrealQL066]: <#q066---delete-statement> "SurrealQL 🞂 Statement 🞂 `DELETE`"
+[SurrealQL101bd_FunctionsDatabase_Array_len]: <#q101bd---arraylen> "`array::len`"
 
-[SurrealQL067]: <#q067---explain-statement> "SurrealQL 🞂 Statement 🞂 `EXPLAIN`"
+[SurrealQL101be_FunctionsDatabase_Array_logicalAND]: <#q101be---arraylogical_and> "`array::logical_and`"
 
-[SurrealQL068]: <#q068---for-statement> "SurrealQL 🞂 Statement 🞂 `FOR`"
+[SurrealQL101bf_FunctionsDatabase_Array_logicalOR]: <#q101bf---arraylogical_or> "`array::logical_or`"
 
-[SurrealQL069]: <#q069---if-else-statement> "SurrealQL 🞂 Statement 🞂 `IF ELSE`"
+[SurrealQL101bg_FunctionsDatabase_Array_logicalXOR]: <#q101bg---arraylogical_xor> "`array::logical_xor`"
 
-[SurrealQL070]: <#q070---info-statement> "SurrealQL 🞂 Statement 🞂 `INFO`"
+[SurrealQL101bh_FunctionsDatabase_Array_map]: <#q101bh---arraymap> "`array::map`"
 
-[SurrealQL071]: <#q071---insert-statement> "SurrealQL 🞂 Statement 🞂 `INSERT`"
+[SurrealQL101bi_FunctionsDatabase_Array_max]: <#q101bi---arraymax> "`array::max`"
 
-[SurrealQL072]: <#q072---kill-statement> "SurrealQL 🞂 Statement 🞂 `KILL`"
+[SurrealQL101bj_FunctionsDatabase_Array_min]: <#q101bj---arraymin> "`array::min`"
 
-[SurrealQL073]: <#q073---let-statement> "SurrealQL 🞂 Statement 🞂 `LET`"
+[SurrealQL101bk_FunctionsDatabase_Array_matches]: <#q101bk---arraymatches> "`array::matches`"
 
-[SurrealQL074]: <#q074---live-select-statement> "SurrealQL 🞂 Statement 🞂 `LIVE SELECT`"
+[SurrealQL101bl_FunctionsDatabase_Array_pop]: <#q101bl---arraypop> "`array::pop`"
 
-[SurrealQL075]: <#q075---rebuild-statement> "SurrealQL 🞂 Statement 🞂 `REBUILD`"
+[SurrealQL101bm_FunctionsDatabase_Array_prepend]: <#q101bm---arrayprepend> "`array::prepend`"
 
-[SurrealQL076]: <#q076---relate-statement> "SurrealQL 🞂 Statement 🞂 `RELATE`"
+[SurrealQL101bn_FunctionsDatabase_Array_push]: <#q101bn---arraypush> "`array::push`"
 
-[SurrealQL077]: <#q077---remove-statement> "SurrealQL 🞂 Statement 🞂 `REMOVE`"
+[SurrealQL101bo_FunctionsDatabase_Array_range]: <#q101bo---arrayrange> "`array::range`"
 
-[SurrealQL078]: <#q078---return-statement> "SurrealQL 🞂 Statement 🞂 `RETURN`"
+[SurrealQL101bp_FunctionsDatabase_Array_reduce]: <#q101bp---arrayreduce> "`array::reduce`"
 
-[SurrealQL079]: <#q079---select-statement> "SurrealQL 🞂 Statement 🞂 `SELECT`"
+[SurrealQL101bq_FunctionsDatabase_Array_remove]: <#q101bq---arrayremove> "`array::remove`"
 
-[SurrealQL080]: <#q080---show-statement> "SurrealQL 🞂 Statement 🞂 `SHOW`"
+[SurrealQL101br_FunctionsDatabase_Array_repeat]: <#q101br---arrayrepeat> "`array::repeat`"
 
-[SurrealQL081]: <#q081---sleep-statement> "SurrealQL 🞂 Statement 🞂 `SLEEP`"
+[SurrealQL101bs_FunctionsDatabase_Array_reverse]: <#q101bs---arrayreverse> "`array::reverse`"
 
-[SurrealQL082]: <#q082---throw-statement> "SurrealQL 🞂 Statement 🞂 `THROW`"
+[SurrealQL101bt_FunctionsDatabase_Array_sequence]: <#q101bt---arraysequence> "`array::sequence`"
 
-[SurrealQL083]: <#q083---update-statement> "SurrealQL 🞂 Statement 🞂 `UPDATE`"
+[SurrealQL101bu_FunctionsDatabase_Array_shuffle]: <#q101bu---arrayshuffle> "`array::shuffle`"
 
-[SurrealQL084]: <#q084---upsert-statement> "SurrealQL 🞂 Statement 🞂 `UPSERT`"
+[SurrealQL101bv_FunctionsDatabase_Array_slice]: <#q101bv---arrayslice> "`array::slice`"
 
-[SurrealQL085]: <#q085---use-statement> "SurrealQL 🞂 Statement 🞂 `USE`"
+[SurrealQL101bw_FunctionsDatabase_Array_sort]: <#q101bw---arraysort> "`array::sort`"
 
-[SurrealQL086]: <#q086---clauses> "SurrealQL 🞂 Clauses"
+[SurrealQL101bx_FunctionsDatabase_Array_sortLexical]: <#q101bx---arraysort_lexical> "`array::sort_lexical`"
 
-[SurrealQL087]: <#q087---explain-clauses> "SurrealQL 🞂 Clauses 🞂 `EXPLAIN`"
+[SurrealQL101by_FunctionsDatabase_Array_sortNatural]: <#q101by---arraysort_natural> "`array::sort_natural`"
 
-[SurrealQL088]: <#q088---fetch-clauses> "SurrealQL 🞂 Clauses 🞂 `FETCH`"
+[SurrealQL101bz_FunctionsDatabase_Array_sortNaturalLexical]: <#q101bz---arraysort_natural_lexical> "`array::sort_natural_lexical`"
 
-[SurrealQL089]: <#q089---from-clauses> "SurrealQL 🞂 Clauses 🞂 `FROM`"
+[SurrealQL101ca_FunctionsDatabase_Array_sortASC]: <#q101ca---arraysortasc> "`array::sort::asc`"
 
-[SurrealQL090]: <#q090---group-by-clauses> "SurrealQL 🞂 Clauses 🞂 `GROUP BY`"
+[SurrealQL101cb_FunctionsDatabase_Array_sortDESC]: <#q101cb---arraysortdesc> "`array::sort::desc`"
 
-[SurrealQL091]: <#q091---limit-clauses> "SurrealQL 🞂 Clauses 🞂 `LIMIT`"
+[SurrealQL101cc_FunctionsDatabase_Array_swap]: <#q101cc---arrayswap> "`array::swap`"
 
-[SurrealQL092]: <#q092---omit-clauses> "SurrealQL 🞂 Clauses 🞂 `OMIT`"
+[SurrealQL101cd_FunctionsDatabase_Array_transpose]: <#q101cd---arraytranspose> "`array::transpose`"
 
-[SurrealQL093]: <#q093---order-by-clauses> "SurrealQL 🞂 Clauses 🞂 `ORDER BY`"
+[SurrealQL101ce_array_union]: <#q101ce---arrayunion> "`array::union`"
 
-[SurrealQL094]: <#q094---split-clauses> "SurrealQL 🞂 Clauses 🞂 `SPLIT`"
+[SurrealQL101cf_array_windows]: <#q101cf---arraywindows> "`array::windows`"
 
-[SurrealQL095]: <#q095---where-clauses> "SurrealQL 🞂 Clauses 🞂 `WHERE`"
+[SurrealQL102_FunctionsDatabase_Bytes]: <#q102---bytes-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Bytes functions"
 
-[SurrealQL096]: <#q096---with-clauses> "SurrealQL 🞂 Clauses 🞂 `WITH`"
+[SurrealQL103_FunctionsDatabase_Count]: <#q103---count-function> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Count function"
 
-[SurrealQL097]: <#q097---parameters> "SurrealQL 🞂 Parameters"
+[SurrealQL104_FunctionsDatabase_Crypto]: <#q104---crypto-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Crypto functions"
 
-[SurrealQL098]: <#q098---functions> "SurrealQL 🞂 Functions"
+[SurrealQL105_FunctionsDatabase_Duration]: <#q105---duration-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Duration functions"
 
-[SurrealQL099]: <#q099---database-functions> "SurrealQL 🞂 Functions 🞂 Database Functions"
+[SurrealQL106_FunctionsDatabase_Encoding]: <#q106---encoding-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Encoding functions"
 
-[SurrealQL100]: <#q100---api-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 API functions"
+[SurrealQL107_FunctionsDatabase_File]: <#q107---file-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 File functions"
 
-[SurrealQL101]: <#q101---array-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Array functions"
+[SurrealQL108_FunctionsDatabase_Geo]: <#q108---geo-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Geo functions"
 
-[SurrealQL102]: <#q102---bytes-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Bytes functions"
+[SurrealQL109_FunctionsDatabase_HTTP]: <#q109---http-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 HTTP functions"
 
-[SurrealQL103]: <#q103---count-function> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Count function"
+[SurrealQL110_FunctionsDatabase_Math]: <#q110---math-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Math functions"
 
-[SurrealQL104]: <#q104---crypto-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Crypto functions"
+[SurrealQL111_FunctionsDatabase_Meta]: <#q111---meta-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Meta functions"
 
-[SurrealQL105]: <#q105---duration-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Duration functions"
+[SurrealQL112_FunctionsDatabase_Not]: <#q112---not-function> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Not function"
 
-[SurrealQL106]: <#q106---encoding-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Encoding functions"
+[SurrealQL113_FunctionsDatabase_Object]: <#q113---object-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Object functions"
 
-[SurrealQL107]: <#q107---file-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 File functions"
+[SurrealQL114_FunctionsDatabase_Parse]: <#q114---parse-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Parse functions"
 
-[SurrealQL108]: <#q108---geo-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Geo functions"
+[SurrealQL115_FunctionsDatabase_Rand]: <#q115---rand-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Rand functions"
 
-[SurrealQL109]: <#q109---http-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 HTTP functions"
+[SurrealQL116_FunctionsDatabase_Record]: <#q116---record-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Record functions"
 
-[SurrealQL110]: <#q110---math-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Math functions"
+[SurrealQL117_FunctionsDatabase_Search]: <#q117---search-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Search functions"
 
-[SurrealQL111]: <#q111---meta-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Meta functions"
+[SurrealQL118_FunctionsDatabase_Sequence]: <#q118---sequence-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Sequence functions"
 
-[SurrealQL112]: <#q112---not-function> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Not function"
+[SurrealQL119_FunctionsDatabase_Session]: <#q119---session-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Session functions"
 
-[SurrealQL113]: <#q113---object-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Object functions"
+[SurrealQL120_FunctionsDatabase_Set]: <#q120---set-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Set functions"
 
-[SurrealQL114]: <#q114---parse-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Parse functions"
+[SurrealQL121_FunctionsDatabase_Sleep]: <#q121---sleep-function> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Sleep function"
 
-[SurrealQL115]: <#q115---rand-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Rand functions"
+[SurrealQL122_FunctionsDatabase_String]: <#q122---string-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 String Functions"
 
-[SurrealQL116]: <#q116---record-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Record functions"
+[SurrealQL123_FunctionsDatabase_Time]: <#q123---time-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Time Functions"
 
-[SurrealQL117]: <#q117---search-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Search functions"
+[SurrealQL124_FunctionsDatabase_Type]: <#q124---type-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Type Functions"
 
-[SurrealQL118]: <#q118---sequence-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Sequence functions"
+[SurrealQL125_FunctionsDatabase_Value]: <#q125---value-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Value functions"
 
-[SurrealQL119]: <#q119---session-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Session functions"
+[SurrealQL126_FunctionsDatabase_Vector]: <#q126---vector-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Vector functions"
 
-[SurrealQL120]: <#q120---set-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Set functions"
+[SurrealQL127_FunctionsEmbedded]: <#q127---embedded-scripting-functions> "SurrealQL 🞂 Functions 🞂 Embedded scripting functions"
 
-[SurrealQL121]: <#q121---sleep-function> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Sleep function"
+[SurrealQL128_FunctionsEmbedded_Arguments]: <#q128---arguments> "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 Arguments"
 
-[SurrealQL122]: <#q122---string-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 String Functions"
+[SurrealQL129_FunctionsEmbedded_BuiltIn]: <#q129---built-in-functions> "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 Built-in functions"
 
-[SurrealQL123]: <#q123---time-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Time Functions"
+[SurrealQL130_FunctionsEmbedded_Context]: <#q130---function-context> "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 Function context"
 
-[SurrealQL124]: <#q124---type-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Type Functions"
+[SurrealQL131_FunctionsEmbedded_TypeConversion]: <#q131---type-conversion> "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 Type conversion"
 
-[SurrealQL125]: <#q125---value-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Value functions"
+[SurrealQL132_FunctionsEmbedded_SurrealQL]: <#q132---surrealql-functions> "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 SurrealQL functions"
 
-[SurrealQL126]: <#q126---vector-functions> "SurrealQL 🞂 Functions 🞂 Database Functions 🞂 Vector functions"
+[SurrealQL133_FunctionsML]: <#q133---machine-learning-functions> "SurrealQL 🞂 Functions 🞂 Machine Learning functions"
 
-[SurrealQL127]: <#q127---embedded-scripting-functions> "SurrealQL 🞂 Functions 🞂 Embedded scripting functions"
+[SurrealQL134_FunctionsML_Extended]: <#q134---machine-learning-functions> "SurrealQL 🞂 Functions 🞂 ML Functions 🞂 Machine Learning functions"
 
-[SurrealQL128]: <#q128---arguments> "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 Arguments"
+[SurrealQL135_Transactions]: <#q135---transactions> "SurrealQL 🞂 Transactions"
 
-[SurrealQL129]: <#q129---built-in-functions> "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 Built-in functions"
+[SurrealQL136_Comments]: <#q136---comments> "SurrealQL 🞂 Comments"
 
-[SurrealQL130]: <#q130---function-context> "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 Function context"
+[getSURQL_001]: <https://datasets.surrealdb.com/surreal-deal-store.surql>
 
-[SurrealQL131]: <#q131---type-conversion> "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 Type conversion"
+[getSURQL_002]: <https://datasets.surrealdb.com/surreal-deal-store-mini.surql>
 
-[SurrealQL132]: <#q132---surrealql-functions> "SurrealQL 🞂 Functions 🞂 Scripting Functions 🞂 SurrealQL functions"
+[trySURQL_001]: <https://app.surrealdb.com/mini?query=--+Query+1%3A+Using+record+links+to+select+from+the+seller+table+%0ASELECT%0A++name%2C%0A++seller.name%0AFROM+product+LIMIT+4%3B%0A%0A%0A--+Query+2%3A+Using+graph+relations+to+select+from+the+person+and+product+table%0ASELECT%0A++++time.created_at as order_date%2C%0A++++product_name%2C%0A++++%3C-person.name+as+person_name%2C%0A++++-%3Eproduct.details%0AFROM+order+LIMIT+4%3B%0A%0A%0A--+Query+3%3A+Conditional+filtering+based+on+an+embedded+object+property.%0ASELECT+%0A++name%2C%0A++email+%0AFROM+person+%0AWHERE+address.country+%3F%3D+%22England%22+LIMIT+4%3B%09%0A%0A%0A--+Query+4%3A+Conditional+filtering+using+relationships.%0ASELECT+*+FROM+review%0AWHERE+-%3Eproduct.sub_category+%3F%3D+%22Activewear%22+LIMIT+4%3B%0A%0A%0A--+Query+5%3A+Count+orders+based+on+order+status%0ASELECT+count%28%29+FROM+order%0AWHERE+order_status+IN+%5B+%22processed%22%2C+%22shipped%22%5D%0AGROUP+ALL+LIMIT+4%3B%0A%0A%0A--+Query+6%3A+Get+a+deduplicated+list+of+products+that+were+ordered%0ASELECT+%0A++++array%3A%3Adistinct%28product_name%29+as+ordered_products%0AFROM+order%0AGROUP+ALL+LIMIT+4%3B%0A%0A%0A--+Query+7%3A+Get+the+average+price+per+product+category%0ASELECT+%0A++++-%3Eproduct.category+AS+product_category%2C%0A++++math%3A%3Amean%28price%29+AS+avg_price%0AFROM+order%0AGROUP+BY+product_category%0AORDER+BY+avg_price+DESC+LIMIT+4%3B%0A%0A%0A--+Query+8%3A+encapsulating+logic+in+a+function%0ARETURN+fn%3A%3Anumber_of_unfulfilled_orders%28%29%3B%0A%0A%0A--+Query+9%3A+using+a+custom+fuction+for+currency+conversion%0ASELECT+%0A++++product_name%2C%0A++++fn%3A%3Apound_to_usd%28price%29+AS+price_usd%0AFROM+order+LIMIT+4%3B&dataset=surreal-deal-store&orientation=horizontal> "SurrealistMini"
 
-[SurrealQL133]: <#q133---machine-learning-functions> "SurrealQL 🞂 Functions 🞂 Machine Learning functions"
-
-[SurrealQL134]: <#q134---machine-learning-functions> "SurrealQL 🞂 Functions 🞂 ML Functions 🞂 Machine Learning functions"
-
-[SurrealQL135]: <#q135---transactions> "SurrealQL 🞂 Transactions"
-
-[SurrealQL136]: <#q136---comments> "SurrealQL 🞂 Comments"
-
-
+[yt01]: <https://www.youtube.com/watch?v=TyX45cyZ-W0> "SurrealDB: Document-Style Relationships in SurrealDB"
 
 [net__SurrealDB_Store]: <https://surrealdb.store/>
 
@@ -6690,25 +7360,11 @@ SELECT * FROM user;
 
 [net__geojson]: <https://geojson.org/>
 
+[ico__YT]: <https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/YouTube_2024.svg/300px-YouTube_2024.svg.webp>
 
+[ico__SurrealQL]: <https://surrealdb.com/docs/_astro/ql-light.70PDiXa1_Z2othTk.webp>
 
-[getSURQL_001]: <https://datasets.surrealdb.com/surreal-deal-store.surql>
-
-[getSURQL_002]: <https://datasets.surrealdb.com/surreal-deal-store-mini.surql>
-
-[trySURQL_001]: <https://app.surrealdb.com/mini?query=--+Query+1%3A+Using+record+links+to+select+from+the+seller+table+%0ASELECT%0A++name%2C%0A++seller.name%0AFROM+product+LIMIT+4%3B%0A%0A%0A--+Query+2%3A+Using+graph+relations+to+select+from+the+person+and+product+table%0ASELECT%0A++++time.created_at as order_date%2C%0A++++product_name%2C%0A++++%3C-person.name+as+person_name%2C%0A++++-%3Eproduct.details%0AFROM+order+LIMIT+4%3B%0A%0A%0A--+Query+3%3A+Conditional+filtering+based+on+an+embedded+object+property.%0ASELECT+%0A++name%2C%0A++email+%0AFROM+person+%0AWHERE+address.country+%3F%3D+%22England%22+LIMIT+4%3B%09%0A%0A%0A--+Query+4%3A+Conditional+filtering+using+relationships.%0ASELECT+*+FROM+review%0AWHERE+-%3Eproduct.sub_category+%3F%3D+%22Activewear%22+LIMIT+4%3B%0A%0A%0A--+Query+5%3A+Count+orders+based+on+order+status%0ASELECT+count%28%29+FROM+order%0AWHERE+order_status+IN+%5B+%22processed%22%2C+%22shipped%22%5D%0AGROUP+ALL+LIMIT+4%3B%0A%0A%0A--+Query+6%3A+Get+a+deduplicated+list+of+products+that+were+ordered%0ASELECT+%0A++++array%3A%3Adistinct%28product_name%29+as+ordered_products%0AFROM+order%0AGROUP+ALL+LIMIT+4%3B%0A%0A%0A--+Query+7%3A+Get+the+average+price+per+product+category%0ASELECT+%0A++++-%3Eproduct.category+AS+product_category%2C%0A++++math%3A%3Amean%28price%29+AS+avg_price%0AFROM+order%0AGROUP+BY+product_category%0AORDER+BY+avg_price+DESC+LIMIT+4%3B%0A%0A%0A--+Query+8%3A+encapsulating+logic+in+a+function%0ARETURN+fn%3A%3Anumber_of_unfulfilled_orders%28%29%3B%0A%0A%0A--+Query+9%3A+using+a+custom+fuction+for+currency+conversion%0ASELECT+%0A++++product_name%2C%0A++++fn%3A%3Apound_to_usd%28price%29+AS+price_usd%0AFROM+order+LIMIT+4%3B&dataset=surreal-deal-store&orientation=horizontal> "SurrealistMini"
-
-
-
-[yt01]: <https://www.youtube.com/watch?v=TyX45cyZ-W0> "SurrealDB: Document-Style Relationships in SurrealDB"
-
-[icon_YT]: <https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/YouTube_2024.svg/300px-YouTube_2024.svg.webp>
-
-[icon_SurrealQL]: <https://surrealdb.com/docs/_astro/ql-light.70PDiXa1_Z2othTk.webp>
-
-[img_demo_overview]: <https://surrealdb.com/docs/_astro/surreal-deal-store.C2015pX2_Z2r7lvb.webp>
-
-
+[img__demo_overview]: <https://surrealdb.com/docs/_astro/surreal-deal-store.C2015pX2_Z2r7lvb.webp>
 
 [SurrealDB_cli]: </docs/surrealdb/cli> "CLI"
 [SurrealDB_cli_import]: </docs/surrealdb/cli/import> "import"
@@ -6718,9 +7374,11 @@ SELECT * FROM user;
 [brakuje_func_db_math#mathmin]: </docs/surrealql/functions/database/math#mathmin>
 [brakuje_func_db_time#timemax]: </docs/surrealql/functions/database/time#timemax>
 [brakuje_func_db_time#timemin]: </docs/surrealql/functions/database/time#timemin>
-[brakuje_func_db_values#comparing-and-ordering-values]: </docs/surrealql/datamodel/values#comparing-and-ordering-values>
 [brakuje_func_db_value#chain]: </docs/surrealql/functions/database/value#chain>
 [brakuje_func_db_file]:  </docs/surrealql/functions/database/file>
 [brakuje_func_db_encoding#encodingcbordecod]: </docs/surrealql/functions/database/encoding#encodingcbordecode>
+
+[brakuje_func_db_values#comparing-and-ordering-values]: </docs/surrealql/datamodel/values#comparing-and-ordering-values>
 [brakuje_model_ids#record-ranges]: </docs/surrealql/datamodel/ids#record-ranges>
+
 [brakuje_stat_def_bucket]: </docs/surrealql/statements/define/bucket>
