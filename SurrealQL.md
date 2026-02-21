@@ -3340,12 +3340,325 @@ fn::delete_file("temp_cart_user_24567");
 
 - [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/literals)
 
+> Available since: V2.0.0
+
+A literal is a value that may have multiple representations or formats, similar to an enum or a union type. A literal can be composed of strings, numbers, objects, arrays, or durations.
+
+### _q015a - **Examples**_
+
+A literal can be as simple as a declaration that a parameter must be a certain value.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+error = ""Tried to set `$nine`, but couldn't coerce value: Expected `9` but found `10`""
+
+*/
+
+LET $nine: 9 = 9;
+LET $nine: 9 = 10;
+```
+
+```surql title="Response"
+-------- Query --------
+
+NONE
+
+-------- Query --------
+
+"Tried to set `$nine`, but couldn't coerce value: Expected `9` but found `10`"
+```
+
+Using `|` allows a literal to be a number of possible options.
+
+```surql
+/**[test]
+
+[[test.results]]
+error = ""Tried to set `$nine`, but couldn't coerce value: Expected `9 | '9' | 'nine'` but found `'Nein'`""
+
+*/
+
+LET $nine: 9 | "9" | "nine" = "Nein";
+```
+
+```surql title="Response"
+"Tried to set `$nine`, but couldn't coerce value: Expected `9 | '9' | 'nine'` but found `'Nein'`"
+```
+
+A literal can contain possible types in addition to possible values.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+*/
+
+LET $flexible_param: datetime | uuid | "N/A" = "N/A";
+LET $flexible_param: datetime | uuid | "N/A" = <datetime>"2024-09-01";
+```
+
+Literals that include the option to be an array or an object can contain rich data.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+*/
+
+LET $status: "Ok" | { err: string } = { err: "Forgot to plug it in" };
+```
+
+### _q015b - **Literals in database schema**_
+
+Literals can be defined inside a database schema by using a [DEFINE FIELD🚫][brakuje_stat_def_field] statement.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "[{ error_info: { error: 'Deprecated', message: "You shouldn't use this anymore" }, id: information:obqulsqif466kp1t3agq }]"
+skip-record-id-key = true
+
+[[test.results]]
+error = ""Couldn't coerce value for field `error_info` of `information:qbohn4wu4l2t81wj2fb3`: Expected `{ error: 'Continue' } | { error: 'RetryWithId', id: string } | { error: 'Deprecated', message: string }` but found `\"You shouldn't use this anymore\"`""
+
+*/
+
+DEFINE FIELD error_info ON TABLE information TYPE
+      { error: "Continue" }
+    | { error: "RetryWithId", id: string }
+    | { error: "Deprecated", message: string };
+
+CREATE information SET
+  error_info = { error: "Deprecated", message: "You shouldn't use this anymore" };
+-- Doesn't conform to definition, will not work
+CREATE information SET
+  error_info = "You shouldn't use this anymore";
+```
+
+```surql title="Response"
+-------- Query --------
+
+[
+  {
+    error_info: {
+      error: 'Deprecated',
+      message: "You shouldn't use this anymore"
+    },
+    id: info:pkckjrri8q1pg12unyuo
+  }
+]
+
+-------- Query --------
+
+"Couldn't coerce value for field `error_info` of `information:qbohn4wu4l2t81wj2fb3`: Expected `{ error: 'Continue' } | { error: 'RetryWithId', id: string } | { error: 'Deprecated', message: string }` but found `\"You shouldn't use this anymore\"`"
+```
+
+### _q015c - **Matching on literals**_
+
+While SurrealQL does not have a `match` or `switch` operator, `IF ELSE` statements can be used to match on a literal, particularly if each possible type is an object. The following shows a similar example to the above except that each object begins with a field containing the name of the type of error.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+*/
+
+DEFINE FIELD error_info ON TABLE information TYPE
+  { Continue:    { message: "" }} |
+  { Retry: { error: "Retrying", after: duration }} |
+  { Deprecated:  { message: string }};
+```
+
+Next, we will [define a function🚫][brakuje_stat_def_function] to handle this field and return a certain type of message depending on the error. Note the following:
+
+- The `LET` statement in the first line is simply to shorten the path to the information contained inside `error_info`
+- `IF ELSE` statement works here because [IF🚫][brakuje_stat_throw] involves a check for [truthiness][SurrealQL027b_DataTypes_ValuesTruthiness], returning `true` as long as it finds a value that is not none, empty, or zero.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+*/
+
+DEFINE FUNCTION fn::handle_error($data: record<information>) -> string {
+  LET $err = $data.error_info;
+  RETURN IF $err.Continue {
+    "Continue"
+  }
+  ELSE IF $err.Retry {
+    sleep($err.Retry.after);
+    "Now retrying again"
+  }
+  ELSE IF $err.Deprecated {
+    $err.Deprecated.message
+  }
+};
+```
+
+With the function set up, the `info` records can be inserted and run one at a time through the function.
+
+```surql
+LET $info = INSERT INTO information [
+  { error_info: { Continue: { message: "" } }},
+  { error_info: { Retry: { error: "Retrying", after: 1s } }},
+  { error_info: { Deprecated: { message: "Thought I said you shouldn't use this anymore" } }}
+];
+
+fn::handle_error($info[0].id);
+fn::handle_error($info[1].id);
+fn::handle_error($info[2].id);
+```
+
+```surql title="Output"
+-------- Query --------
+
+'Continue'
+
+-------- Query --------
+
+-- After waiting 1 second
+'Now retrying again'
+
+-------- Query --------
+
+"Thought I said you shouldn't use this anymore"
+```
+
+
 ---
 ---
 
 ## _q016 - **None and null**_
 
 - [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/none-and-null)
+
+SurrealDB uses two types called `None` and `Null` to represent two different ways in which data may not exist. While these may appear similar, they have different meanings and are used in different contexts.
+
+### _q016a - **None values**_
+
+`None` is used to denote that "something does not exist", for example, a field which is not present on a record.
+Because of this, values of `None` can not be stored within records, meaning uses of `None` are typically limited to SurrealQL statements
+where it is used to denote a value or response that does not exist.
+
+#### _q016a1 - **Example**_
+
+Setting a record field to `None` is analogous to using `UNSET` to remove the field entirely. While inside the query it may appear that `None` is being written to the `children` field, what is actually happening is that the `children` field is being removed from the record.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: person:two }]"
+
+[[test.results]]
+value = "[{ children: [person:two], id: person:one }]"
+
+[[test.results]]
+value = "[{ id: person:one }]"
+
+[[test.results]]
+value = "[{ id: person:one }, { id: person:two }]"
+
+*/
+
+CREATE person:two;
+CREATE person:one SET children = [person:two];
+UPDATE person:one SET children = NONE;
+SELECT * FROM person;
+```
+
+```surql title="Output"
+[
+  { id: person:one },
+  { id: person:two }
+]
+```
+
+### _q016b - **Null values**_
+
+`Null` values are used to denote that "something exists, but has no value". This is useful when a field is present on a record, but the value of that field is unknown or not applicable. Unlike `None`, `Null` is written into records and can be stored as a value.
+
+#### _q016b1 - **Example**_
+
+Setting a record field to `Null` will create the field on the record, but denotes that the field is considered empty. In this example, the `children` field is present on the record, but the value of that field is `null`.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ children: NULL, id: person:dgwjn0ldg8ep3e8y39jw }]"
+skip-record-id-key = true
+
+*/
+
+CREATE person SET children = null;
+```
+
+```surql title="Output"
+[
+  { 
+    children: NULL, 
+    id: person:dgwjn0ldg8ep3e8y39jw
+  }
+]
+```
+
+### _q016c - **When to use None or Null**_
+
+How you use `None` or `Null` is largely dependent on the context in which you are working.
+
+If you are writing SurrealQL and need to denote something that does not exist, such as the absence of a field, use `None`.
+
+If you are working with data and need to represent a value which is empty, use `Null`. This is particularly useful when needing to deserialize SurrealQL output into a type in another programming language that requires a field name to be present.
+
+### _q016d - **NONE as a datatype**_
+
+> Available since: V3.0.0
+
+Since SurrealDB 3.0, NONE has been usable as a datatype of its own. This allows syntax like the following to be used without returning a parsing error.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+[[test.results]]
+value = "NONE"
+
+*/
+
+DEFINE FUNCTION fn::do_stuff() -> NONE {
+  // Code that should return nothing
+};
+
+DEFINE FIELD middle_name ON TABLE user TYPE string | NONE; // Equivalent to option<string>
+
+DEFINE FIELD value ON temperature TYPE float | decimal | NONE; // Equivalent to option<float|decimal>
+```
 
 ---
 ---
@@ -3354,6 +3667,208 @@ fn::delete_file("temp_cart_user_24567");
 
 - [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/numbers)
 
+In SurrealDB, numbers can be one of three types: 64-bit integers, 64-bit floating point numbers, or 128-bit decimal numbers.
+
+### _q017a - **Integer numbers**_
+
+If a numeric value is specified without a decimal point and is within the range `-9223372036854775808` to `9223372036854775807` then the value will be parsed, stored, and treated as a 64-bit integer.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: event:j3tdh7wrm2kv1ymbbsek, year: 2022 }]"
+skip-record-id-key = true
+
+*/
+
+CREATE event SET year = 2022;
+```
+
+### _q017b - **Floating point numbers**_
+
+If a number value is specified with a decimal point, or is outside of the maximum range specified above, then the number will automatically be parsed, stored, and treated as a 64-bit floating point value. This ensures efficiency when performing mathematical calculations within SurrealDB.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: event:5h756te17xakgdzfbghe, temperature: 41.5f }]"
+skip-record-id-key = true
+
+*/
+
+CREATE event SET temperature = 41.5;
+```
+
+### _q017c - **Decimal numbers**_
+
+To opt into 128-bit decimal numbers when specifying numeric values, you can use the `dec` suffix.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: product:64vljvh12gdfwolgfhux, price: 99.99dec }]"
+skip-record-id-key = true
+
+*/
+
+CREATE product SET price = 99.99dec;
+```
+
+The `dec` suffix is an instruction to the parser and not a cast, and is thus preferred when making a decimal.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "3.888888888888889dec"
+
+[[test.results]]
+value = "3.8888888888888888dec"
+
+*/
+
+-- Creates the imprecise float 3.888888888888889 and casts it into a decimal as 3.888888888888889dec
+RETURN <decimal>3.8888888888888888;
+-- Uses the input 3.8888888888888888 to directly create a decimal
+RETURN 3.8888888888888888dec;
+```
+
+### _q017d - **Using a specific numeric type**_
+
+To use a specific type when specifying numeric values, you can cast the value to a specific numeric type or use the appropriate suffix.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ horizon: 34dec, id: event:8vpjsysxnskyfuh9ve87, temperature: 46.5f, year: 2022 }]"
+skip-record-id-key = true
+
+*/
+
+CREATE event SET
+  year = <int> 2022,
+  temperature = <float> 41.5 + 5f,
+  horizon = <decimal> 31 + 3dec
+;
+```
+
+### _q017e - **Numeric precision**_
+
+Different numeric types can be compared and used together in calculations.
+
+The benefits of floating point numeric values are speed and storage size, but there is a limit to the numeric precision.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "13.571938471938472f"
+
+*/
+
+RETURN 13.5719384719384719385639856394139476937756394756;
+
+-- 13.571938471938472f
+```
+
+In addition, when using floating point numbers specifically, mathematical operations can result in a loss of precision (as is normal with other databases).
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "0.9999999999999999f"
+
+*/
+
+RETURN 0.3 + 0.3 + 0.3 + 0.1;
+
+-- 0.9999999999999999f
+```
+
+Common rounding errors can be avoided by performing calculations using decimals.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "1.0dec"
+
+*/
+
+RETURN 0.3dec + 0.3dec + 0.3dec + 0.1dec;
+
+-- 1.0dec
+```
+
+### _q017f - **Underscores**_
+
+As a convenience, underscores are ignored when using a number. This allows input to be more readable than it would otherwise. Because underscores are ignored, they will not display in the output.
+
+```surql
+RELATE dr:evil->bribes->other:character SET dollars = 1_000_000.99;
+-- [{ dollars: 1000000.99, id: bribes:4bfld2ukwnja24dzrpw9, in: dr:evil, out: other:character }]
+
+-- Input Korean currency counted in units of 10000, not 1000
+RELATE korean:purchaser->buys_house_from->korean:seller
+              -- 10억 4천만 5천
+    SET amount = 10_4000_5000;
+-- [{ amount: 1040005000, id: buys_house_from:9070t2ctgwwg202cpw1z, in: korean:purchaser, out: korean:seller }]
+```
+
+### _q017g - **Mathematical constants**_
+
+A set of floating point numeric constants are available in SurrealDB. Constant names are case insensitive, and can be specified with either lowercase or capital letters, or a mixture of both.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ circumference: 10, id: circle:uvw3g4dli4x77xejcjej }]"
+skip-record-id-key = true
+
+[[test.results]]
+value = "[{ circumference: 10, id: circle:uvw3g4dli4x77xejcjej, radius: 15.707963267948966f }]"
+skip-record-id-key = true
+
+*/
+
+CREATE circle SET circumference = 10;
+UPDATE circle SET radius = circumference / ( 2 * MATH::PI );
+```
+
+| Constant | Description | Value |
+| :--- | :--- | :--- |
+| `MATH::E` | Euler’s number (e) | 2.718281828459045 |
+| `MATH::FRAC_1_PI` | 1/π | 0.3183098861837907 |
+| `MATH::FRAC_1_SQRT_2` | 1/sqrt(2) | 0.7071067811865476 |
+| `MATH::FRAC_2_PI` | 2/π | 0.6366197723675814 |
+| `MATH::FRAC_2_SQRT_PI` | 2/sqrt(π) | 1.1283791670955126 |
+| `MATH::FRAC_PI_2` | π/2 | 1.5707963267948966 |
+| `MATH::FRAC_PI_3` | π/3 | 1.0471975511965979 |
+| `MATH::FRAC_PI_4` | π/4 | 0.7853981633974483 |
+| `MATH::FRAC_PI_6` | π/6 | 0.5235987755982989 |
+| `MATH::FRAC_PI_8` | π/8 | 0.39269908169872414 |
+| `MATH::INF` | Positive infinity | inf |
+| `MATH::LN_10` | ln(10) | 2.302585092994046 |
+| `MATH::LN_2` | ln(2) | 0.6931471805599453 |
+| `MATH::LOG10_2` | log₁₀(2) | 0.3010299956639812 |
+| `MATH::LOG10_E` | log₁₀(e) | 0.4342944819032518 |
+| `MATH::LOG2_10` | log₂(10) | 3.321928094887362 |
+| `MATH::LOG2_E` | log₂(e) | 1.4426950408889634 |
+| `MATH::NEG_INF` | Negative infinity | -inf |
+| `MATH::PI` | Archimedes’ constant (π) | 3.141592653589793 |
+| `MATH::SQRT_2` | sqrt(2) | 1.4142135623730951 |
+| `MATH::TAU` | The full circle constant (τ) | 6.283185307179586 |
+
+### _q017h - **Next steps**_
+
+You've now seen how to use numeric values in SurrealDB. For more advanced functionality, take a look at the operators and math functions, which enable advanced calculations on numeric values and sets of numeric values.
+
 ---
 ---
 
@@ -3361,12 +3876,457 @@ fn::delete_file("temp_cart_user_24567");
 
 - [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/objects)
 
+An object is a collection of named fields and values.
+
+As a record is essentially an object with a required [`id` field][SurrealQL020_DataTypes_RecordIDs] that can be created, updated, or deleted, they can be worked with in almost exactly the same way as a standalone object.
+
+A field of an object can be of any value type, including another object or array at multiple levels of depth. This allows objects and arrays to be stored within each other in order to model complex data scenarios.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ id: person:ix25bwtvcx5s543eejrk, metadata: { activities: ['clicked link', 'contact form', 'read email', 'viewed website', 'viewed website', 'viewed website', 'read email'], information: { age: 23, gender: 'm' }, interest_level: 83.67f, marketing: true } }]"
+skip-record-id-key = true
+
+*/
+
+CREATE person SET metadata = {
+  interest_level: 83.67,
+  information: {
+    age: 23,
+    gender: 'm',
+  },
+  marketing: true,
+  activities: [
+    "clicked link",
+    "contact form",
+    "read email",
+    "viewed website",
+    "viewed website",
+    "viewed website",
+    "read email",
+  ]
+};
+```
+
+### _q018a - **Field names**_
+
+#### _q018a1 - **Valid field names**_
+
+Similar to record IDs, field names can be constructed from ASCII characters, underscores, and numbers. To create a field name with complex characters, backticks can be used.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "{ id: user:3lgc83vechgblizli263, my_name: 'name' }"
+skip-record-id-key = true
+
+[[test.results]]
+value = "{ id: user:nyzy7aeyup2ygt33ci95, "mi_nómine😊": 'name' }"
+skip-record-id-key = true
+
+*/
+
+CREATE ONLY user SET my_name = 'name';
+CREATE ONLY user SET `mi_nómine😊` = 'name';
+```
+
+```surql title="Output"
+-------- Query --------
+
+{
+  id: user:nronupvxvdm7r1n5hlzm,
+  my_name: 'name'
+}
+
+-------- Query 2 --------
+
+{
+  id: user:eb5pu7u9g67dy773hsv9,
+  "mi_nómine😊": 'name'
+}
+```
+
+Inside a standalone object, non-ASCII field names can also be set by using a string.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "{ "mi nómine": 'Edgar' }"
+
+*/
+
+SELECT * FROM ONLY {
+    "mi nómine": "Edgar"
+};
+```
+
+```surql title="Output"
+{
+  "mi nómine": 'Edgar'
+}
+```
+
+#### _q018a2 - **Automatically generated field names**_
+
+A field created from an operation will have a field name that represents the operation(s) used to construct it.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ "[math::min(temps), math::max(temps)]": [-5, 9], "math::mean": 4f }]"
+
+*/
+
+SELECT
+    math::mean(temps),
+    [ math::min(temps), math::max(temps) ]
+FROM { temps: [-5, 8, 9] };
+```
+
+```surql title="Output"
+[
+    {
+        "[math::min(temps), math::max(temps)]": [
+            -5,
+            9
+        ],
+        "math::mean": 4f
+    }
+]
+```
+
+Using `AS` allows these automatically calculated field names to be replaced with custom names.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ avg_temps: [-5, 9], mean_temps: 4f }]"
+
+*/
+
+SELECT
+    math::mean(temps) AS mean_temps,
+    [ math::min(temps), math::max(temps) ] AS avg_temps
+FROM { temps: [-5, 8, 9] };
+```
+
+```surql title="Output"
+[
+    {
+        "avg_temps": [
+            -5,
+            9
+        ],
+        "mean_temps": 4
+    }
+]
+```
+
+### _q018b - **Extending objects and removing fields**_
+
+> Available since: V3.0.0
+
+Two objects can be merged by using either the `+` operator or the `object::extend()` function. Any fields in the second object will be added to the first object, thereby updating any existing fields and adding new fields to those that were not present.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "{ name: 'Venus', orbital_period: 1y31w1d22h, radius: 6051.8f }"
+
+[[test.results]]
+value = "{ name: 'Venus', orbital_period: 1y31w1d22h, radius: 6051.8f }"
+
+*/
+
+{ name: "Venus", radius: 6000 } + { radius: 6051.8, orbital_period: 1y31w1d22h };
+{ name: "Venus", radius: 6000 }.extend({ radius: 6051.8, orbital_period: 1y31w1d22h });
+```
+
+```surql title="Output"
+-------- Query 1 --------
+
+{
+  name: 'Venus',
+  orbital_period: 1y31w1d22h,
+  radius: 6051.8f
+}
+
+-------- Query 2 --------
+
+{
+  name: 'Venus',
+  orbital_period: 1y31w1d22h,
+  radius: 6051.8f
+}
+```
+
+Fields of an object can be removed with the `object::remove()` function, which takes either a single string or an array of strings of the field names to remove.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "{ name: 'Venus', orbital_period: 1y31w1d22h }"
+
+[[test.results]]
+value = "{ name: 'Venus' }"
+
+*/
+{ name: 'Venus', orbital_period: 1y31w1d22h, radius: 6051.8 }.remove("radius");
+{ name: 'Venus', orbital_period: 1y31w1d22h, radius: 6051.8 }.remove(["radius", "orbital_period"]);
+```
+
+```surql title="Output"
+-------- Query 1 --------
+
+{
+  name: 'Venus',
+  orbital_period: 1y31w1d22h
+}
+
+-------- Query 2 --------
+
+{
+  name: 'Venus'
+}
+```
+
+### _q018c - **See also**_
+
+- [Object functions🚫][brakuje_func_db_object]
+- [Destructuring nested objects🚫][brakuje_model_idioms#destructuring]
+
 ---
 ---
 
 ## _q019 - **Ranges**_
 
 - [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/ranges)
+
+> Available since: V2.0.0
+
+A range is composed of `..` and possible delimiters to set the maximum and minimum possible values. The default syntax includes the lower limit and excludes the upper limit. A `=` can be used to make the upper limit inclusive, and `>` can be used to make the lower limit exclusive.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "0..10"
+
+[[test.results]]
+value = "0..=10"
+
+[[test.results]]
+value = "0>..10"
+
+[[test.results]]
+value = "0>..=10"
+
+*/
+
+-- From 0 up to 9
+0..10;
+-- From 0 up to 10
+0..=10;
+-- From 1 to 9
+0>..10;
+-- From 1 to 10
+0>..=10;
+```
+
+A range becomes open ended if a delimiter is not specified.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "0.."
+
+[[test.results]]
+value = "0>.."
+
+[[test.results]]
+value = "..10"
+
+[[test.results]]
+value = "..=100"
+
+[[test.results]]
+value = ".."
+
+*/
+
+-- Anything from 0 and up
+0..;
+-- Anything from 1 and up
+0>..;
+-- Anything up to 99
+..100;
+-- Anything up to 100
+..=100;
+-- An infinite range
+..;
+```
+
+A range can be constructed from any type of value. This is most useful when comparing one value to another.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "true"
+
+[[test.results]]
+value = "true"
+
+[[test.results]]
+value = "true"
+
+[[test.results]]
+value = "false"
+
+[[test.results]]
+value = "false"
+
+[[test.results]]
+value = "false"
+
+*/
+
+
+-- All true
+'g' IN 'a'..'z';
+d"2024-01-01" IN d"2020-01-01"..=d"2025-01-01";
+['London', d"2022-02-02", 5.7] IN ['London', d"2020-01-01"]..=['London', d"2024-12-31"];
+
+-- All false
+"ㅋㅋㅋ" IN "a".."z";
+d"2028-01-01" IN d"2020-01-01"..=d"2025-01-01";
+['Philadelphia', d"2022-02-02", 5.7] IN ['London', d"2020-01-01"]..=['London', d"2024-12-31"];
+```
+
+### _q019a - **Ranges in FOR loops**_
+
+Ranges of integers have the added convenience of being able to be used in a [FOR loop🚫][brakuje_stat_for].
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "NONE"
+
+*/
+
+FOR $year IN 0..=2024 {
+    CREATE historical_events SET
+        for_year = $year,
+        events = "To be added";
+}
+```
+
+### _q019b - **Ranges in WHERE clauses**_
+
+A range can be used in a `WHERE` clause in place of operators like `<` and `>`. This is especially useful when checking for a number that must be within a certain range. Using a range carries two main benefits. One is that it produces shorter code that is easier to read and maintain.
+
+```surql
+SELECT * FROM person WHERE age >= 18 AND age <= 65;
+SELECT * FROM person WHERE age IN 18..=65;
+```
+
+Another benefit is performance. The following code should show a modest but measurable improvement in performance between the first and second `SELECT` statement, as only one condition needs to be checked instead of two.
+
+```surql
+CREATE |person:20000| SET age = (rand::float() * 120).round() RETURN NONE;
+
+-- Assign output to a parameter so the SELECT output is not displayed
+LET $_ = SELECT * FROM person WHERE age > 18 AND age < 65;
+LET $_ = SELECT * FROM person WHERE age in 18..=65;
+```
+
+### _q019c - **Casting and functional usage**_
+
+A range can be cast into an array.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[1, 2]"
+
+*/
+
+<array> 1..3;
+```
+
+```surql title="Output"
+[
+  1,
+  2
+]
+```
+
+This opens up a range of functional programming patterns that are made possible by SurrealDB's [array functions][SurrealQL101_FunctionsDatabase_Array], many of which can use [anonymous functions][SurrealQL008_DataTypes_ClosuresAnonymousFunctions] (closures) to perform an operation on each item in the array.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "[{ original: 130, square_root: 11.40175425099138f }, { original: 140, square_root: 11.832159566199232f }]"
+
+*/
+
+-- Construct an array
+(<array> 1..=100)
+-- Turn it into an array that increments by 10
+    .map(|$v| $v * 10)
+-- Turn each number into a object with original and square root value
+    .map(|$v| { original: $v, square_root: math::sqrt($v) })
+-- Keep only those with square roots in between 11 and 12
+    .filter(|$obj| $obj.square_root IN 11..12);
+```
+
+```surql title="Output"
+[
+  {
+    original: 130,
+    square_root: 11.40175425099138f
+  },
+  {
+    original: 140,
+    square_root: 11.832159566199232f
+  }
+]
+```
+
+### _q019d - **Ranges in mock syntax for `CREATE` statements**_
+
+> Available since: V3.0.0
+
+`CREATE` statements have always been able to work on more than one record by enclosing either a single number or a range-like operator between two `||` bars.
+
+```surql title="Before 3.0.0"
+-- Create 10 person records with random IDs
+CREATE |person:10|;
+-- Create `person` records from person:1 to person:10
+CREATE |person:1..10|;
+```
+
+Originally an internal syntax for mock testing, this syntax become known to the user community and is now commonly used. However, the original syntax differed from true ranges in always being inclusive, in that `1..10` was treated as "from 1 up to and including 10". A change has since been made to have the mock syntax take a true range with a syntax equivalent to that demonstrated in this page.
+
+```surql title="Since 3.0.0"
+-- All of these create ten records from person:1 to person:10
+CREATE |person:1..=10|;
+CREATE |person:1..11|;
+CREATE |person:0>..11|;
+CREATE |person:0>..=10|;
+```
 
 ---
 ---
@@ -10152,24 +11112,28 @@ SELECT * FROM user;
 [brakuje_func_db_type#typerecord]:  </docs/surrealql/functions/database/type#typerecord>
 [brakuje_func_db_value#chain]:   </docs/surrealql/functions/database/value#chain>
 [brakuje_func_db_record#recordid]:   </docs/surrealql/functions/database/record#recordid>
-
-
-
 [brakuje_func_db_file]:           </docs/surrealql/functions/database/file>
 [brakuje_func_db_encoding#encodingcbordecod]: </docs/surrealql/functions/database/encoding#encodingcbordecode>
 [brakuje_func_db_rand#randuuidv4]: </docs/surrealql/functions/database/rand#randuuidv4>
+[brakuje_func_db_object]:           </docs/surrealql/functions/database/object>
+
+[brakuje_model_idioms#destructuring]:   </docs/surrealql/datamodel/idioms#destructuring>
 
 
 [brakuje_stat_def_bucket]: </docs/surrealql/statements/define/bucket>
 [brakuje_stat_def_field]: </docs/surrealql/statements/define/field>
+[brakuje_stat_def_function]: </docs/surrealql/statements/define/function>
 [brakuje_stat_select]: </docs/surrealql/statements/selectt>
+[brakuje_stat_for]: </docs/surrealql/statements/for>
 [brakuje_stat_begin]: </docs/surrealql/statements/begin>
 [brakuje_stat_create]: </docs/surrealql/statements/create>
 [brakuje_stat_update]: </docs/surrealql/statements/update>
 [brakuje_stat_relate]: </docs/surrealql/statements/relate>
 [brakuje_stat_upsert]: </docs/surrealql/statements/upsert>
 [brakuje_stat_delete]: </docs/surrealql/statements/delete>
+[brakuje_stat_throw]: </docs/surrealql/statements/throw>
 [brakuje_stat_insert#example-usage]: </docs/surrealql/statements/insert#example-usage>
+
 
 [brakuje_blog_recordIDS]: </blog/the-life-changing-magic-of-surrealdb-record-ids#the-performance-at-scale>
 [brakuje_blog_visualisation]: </blog/whats-new-in-surrealist-3-2#graph-visualisation>
