@@ -1,6 +1,6 @@
 # _q000 - **SurrealQL**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql)
+- [📓][surrealdb_docs_3x_surrealql]
 
 ![SurrealQL🖼️][ico__SurrealQL]
 
@@ -39,7 +39,7 @@ SurrealQL empowers you to leverage the full potential of SurrealDB and enables y
 
 ## _q001 - **Demo data**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/demo)
+- [📓][surrealdb_docs_3x_surrealql_demo]
 
 To quickly test out SurrealDB and SurrealQL functionality, we've included two demo datasets here in `.surql` files which you can download and [`import`🚫][SurrealDB_cli_import] into SurrealDB using the [CLI🚫][SurrealDB_cli].
 
@@ -127,7 +127,7 @@ Here are some sample queries you can run on the Surreal Deal Store dataset. We'v
 
 ## _q002 - **Operators**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/operators)
+- [📓][surrealdb_docs_3x_surrealql_operators]
 
 A variety of operators in SurrealQL allow for complex manipulation of data, and advanced logic.
 
@@ -1467,7 +1467,7 @@ value = "20dec"
 
 ## _q003 - **Data types**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel)
+- [📓][surrealdb_docs_3x_surrealql_datamodel]
 
 SurrealQL allows you to describe data with specific data types. These data types are used to validate data and to generate the appropriate database schema.
 
@@ -1524,7 +1524,7 @@ CREATE foo SET value = <bytes>"bar";
 
 ## _q004 - **Arrays**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/arrays)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_arrays]
 
 An array is a collection of values contained inside `[]` (square brackets), each of which is stored at a certain index. Individual indexes and slices of indexes can be accesses using the same square bracket syntax.
 
@@ -1880,7 +1880,7 @@ value = "[1, 2, 3, 4]"
 
 ## _q005 - **Booleans**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/booleans)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_booleans]
 
 Boolean values can be used to mark whether a field is `true` or `false`.
 
@@ -1986,7 +1986,7 @@ SELECT * FROM person:one;
 
 ## _q006 - **Bytes**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/bytes)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_bytes]
 
 Bytes can be created by casting from a string, and are displayed using hexidecimal encoding.
 
@@ -2076,7 +2076,7 @@ b"486F6262697473";
 
 ## _q007 - **Casting**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/casting)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_casting]
 
 In the SurrealDB type system, values can be converted to other values efficiently. This is useful if input is specified in a query which must be of a certain type, or if a user may have provided a parameter with an incorrect type.
 
@@ -2748,7 +2748,7 @@ value = "9999999999999999999dec"
 
 ## _q008 - **Anonymous functions (closures)**_
 
-- [📓][SurrealQL008_original](https://surrealdb.com/docs/3.x/surrealql/datamodel/closures)
+- [📓][SurrealQL008_original][surrealdb_docs_3x_surrealql_datamodel_closures]
 
 > Available since: V2.0.0
 
@@ -2971,7 +2971,7 @@ These anonymous functions provide a flexible way to define small, reusable piece
 
 ## _q009 - **Datetimes**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/datetimes)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_datetimes]
 
 SurrealDB has native support for datetimes with nanosecond precision. SurrealDB automatically parses and understands datetimes which are written as strings in the SurrealQL language. Times must also be formatted in [RFC 3339][net__RFC_3339] format.
 
@@ -3200,7 +3200,7 @@ You've now seen how to store, modify, and handle dates and times in SurrealDB. F
 
 ## _q010 - **Files**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/files)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_files]
 
 > Available since: V3.0.0
 
@@ -3310,28 +3310,28 @@ fn::delete_file("temp_cart_user_24567");
 
 ## _q011 - **Formatters**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/formatters)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_formatters]
 
 ---
 ---
 
 ## _q012 - **Futures (`COMPUTED` clause)**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/futures)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_futures]
 
 ---
 ---
 
 ## _q013 - **Geometries**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/geometries)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_geometries]
 
 ---
 ---
 
 ## _q014 - **Idioms**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/idioms)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_idioms]
 
 Idioms in SurrealQL provide a powerful and flexible way to access and manipulate data within records using paths. They allow you to navigate through nested data structures, access fields, array elements, call methods, and perform complex queries with ease. Idioms are similar to expressions in other query languages that provide a path to data within documents or records.
 
@@ -3339,16 +3339,16 @@ An idiom is composed of a sequence of **parts** that define the path to a value 
 
 An idiom is made up of one or more **parts**, each of which can be one of several types:
 
-- [**Field**](#field-access): Access a field by name.
-- [**Index**](#index-access): Access an element of an array by its index.
-- [**All**](#all-elements): Access all elements or fields.
-- [**Last**](#last-element): Access the last element of an array.
-- [**Where**](#where-filter): Filter elements based on a condition.
-- [**Method**](#method-chaining): Call a method on the current data.
-- [**Graph**](#graph-navigation): Navigate through graph relationships.
-- [**Destructure**](#destructuring): Destructure nested objects.
-- [**Optional**](#optional-parts): Indicate that the following part is optional.
-- [**Recurse**](#recursive-paths): Recursively traverse paths such as graph and record links.
+- [**Field**][SurrealQL014a_DataTypes_Idioms_Field]: Access a field by name.
+- [**Index**][SurrealQL014b_DataTypes_Idioms_Index]: Access an element of an array by its index.
+- [**All**][SurrealQL014c_DataTypes_Idioms_AllElements]: Access all elements or fields.
+- [**Last**][SurrealQL014d_DataTypes_Idioms_LastElements]: Access the last element of an array.
+- [**Where**][SurrealQL014c1_DataTypes_Idioms_Where]: Filter elements based on a condition.
+- [**Method**][SurrealQL014e_DataTypes_Idioms_MethodChaining]: Call a method on the current data.
+- [**Graph**][SurrealQL014f_DataTypes_Idioms_GraphNavigation]: Navigate through graph relationships.
+- [**Destructure**][SurrealQL014g_DataTypes_Idioms_Destructuring]: Destructure nested objects.
+- [**Optional**][SurrealQL014h_DataTypes_Idioms_OptionalPart]: Indicate that the following part is optional.
+- [**Recurse**][SurrealQL014j_DataTypes_Idioms_RecursivePaths]: Recursively traverse paths such as graph and record links.
 
 In this section, we'll explore each part in detail with examples to help you understand how to use idioms in SurrealQL.
 
@@ -3686,7 +3686,7 @@ SELECT results[$].score FROM student;
 
 This idiom accesses the last element of the `score` array.
 
-### _q014e - **## Method chaining**_
+### _q014e - **Method chaining**_
 
 > Available since: v2.0.0
 
@@ -3909,7 +3909,7 @@ SELECT * OMIT obj.c.{ d, f } FROM ONLY person:1;
 ]
 ```
 
-Extending the example in the [Graph Navigation](#graph-navigation) section, we can use the `->` idiom to navigate through the graph and destructure the `city` field.
+Extending the example in the [Graph Navigation][SurrealQL014f_DataTypes_Idioms_GraphNavigation] section, we can use the `->` idiom to navigate through the graph and destructure the `city` field.
 
 ```surql
 SELECT ->visited->city.{name, id}
@@ -4082,7 +4082,7 @@ FROM planet)
     .map(|$obj| $obj.values());
 ```
 
-Most importantly, however, the `@` operator is often necessary when using [recursive paths](#recursive-paths).
+Most importantly, however, the `@` operator is often necessary when using [recursive paths][SurrealQL014j_DataTypes_Idioms_RecursivePaths].
 
 #### _q014g3 - **Using expressions while destructuring**_
 
@@ -4942,7 +4942,7 @@ person:you.{..2+shortest=person:star}->knows->person;
 []
 ```
 
-As shown in [a previous section](#using--to-provide-instructions-at-each-depth), parentheses can be used to show which path should be repeated during the recursion. After the path inside the parentheses, the destructuring operator, methods and so on can be used to modify the output. The query can also be written over multiple lines if desired.
+As shown in [a previous section][SurrealQL014j3_DataTypes_Idioms_RecursivePathsProvideInstructions], parentheses can be used to show which path should be repeated during the recursion. After the path inside the parentheses, the destructuring operator, methods and so on can be used to modify the output. The query can also be written over multiple lines if desired.
 
 ```surql
 -- Start with you
@@ -5164,7 +5164,7 @@ Idioms in SurrealQL are a powerful tool for navigating and manipulating data wit
 
 ## _q015 - **Literals**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/literals)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_literals]
 
 > Available since: V2.0.0
 
@@ -5376,7 +5376,7 @@ fn::handle_error($info[2].id);
 
 ## _q016 - **None and null**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/none-and-null)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_none-and-null]
 
 SurrealDB uses two types called `None` and `Null` to represent two different ways in which data may not exist. While these may appear similar, they have different meanings and are used in different contexts.
 
@@ -5491,7 +5491,7 @@ DEFINE FIELD value ON temperature TYPE float | decimal | NONE; // Equivalent to 
 
 ## _q017 - **Numbers**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/numbers)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_numbers]
 
 In SurrealDB, numbers can be one of three types: 64-bit integers, 64-bit floating point numbers, or 128-bit decimal numbers.
 
@@ -5700,7 +5700,7 @@ You've now seen how to use numeric values in SurrealDB. For more advanced functi
 
 ## _q018 - **Objects**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/objects)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_objects]
 
 An object is a collection of named fields and values.
 
@@ -5934,7 +5934,7 @@ value = "{ name: 'Venus' }"
 
 ## _q019 - **Ranges**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/ranges)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_ranges]
 
 > Available since: V2.0.0
 
@@ -6159,7 +6159,7 @@ CREATE |person:0>..=10|;
 
 ## _q020 - **Record IDs**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/ids)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_ids]
 
 > [!NOTE]
 > As of `v2.0.0`, SurrealDB no longer eagerly converts a string into a record. An [implicit `r` prefix or cast][SurrealQL007p2_DataTypes_CastingVaAffixes] is required instead.
@@ -7145,7 +7145,7 @@ Learn more about record IDs [in this blogpost🚫][brakuje_blog_recordIDS] and o
 
 ## _q021 - **Record links**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/records)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_records]
 
 One of the most powerful features of SurrealDB is the ability to traverse from record-to-record without the need for traditional SQL JOINs. Each record ID points directly to a specific record in the database, without needing to run a table scan query. Record IDs can be stored within other records, allowing them to be linked together.
 
@@ -7284,7 +7284,7 @@ Also check out this explainer video on using record links in SurrealDB:
 
 ## _q022 - **Record references**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/references)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_references]
 
 > Available since: V2.2.0
 
@@ -7901,7 +7901,7 @@ SELECT * FROM person:one;
 
 ## _q023 - **Regex**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/regex)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_regex]
 
 > Available since: V3.0.0
 
@@ -7959,7 +7959,7 @@ string::matches("COULEUR", "((?i)col(o|ou)r|couleur)");
 
 ## _q024 - **Sets**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/sets)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_sets]
 
 > [!NOTE]
 > Before version 3.0.0-beta, sets were simply arrays that deduplicated their items. To emulate the former behaviour, add the clause `VALUE $value.distinct()` to a `DEFINE FIELD` definition.
@@ -8084,7 +8084,7 @@ value = "[3, 4, 5, 6, 7, 9, 18]"
 
 ## _q025 - **Strings**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/strings)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_strings]
 
 Strings can be used to store text values. All string values can include Unicode values, emojis, tab characters, and line breaks.
 
@@ -8366,7 +8366,7 @@ This also allows for immediate error messages on which part of the input is inco
 
 ## _q026 - **UUIDs**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/uuid)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_uuid]
 
 UUIDs represent UUID v4 and v7 values. They can be obtained via either the:
 
@@ -8407,7 +8407,7 @@ u"a8f30d8b-db67-47ec-8b38-ef703e05ad1b";
 
 ## _q027 - **Values**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/values)
+- [📓][surrealdb_docs_3x_surrealql_datamodel_values]
 
 Each of the types mentioned in the data model is a subset of an all-encompassing type called a value.
 
@@ -8942,7 +8942,7 @@ RETURN [
 
 ## _q098 - **Functions**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/functions)
+- [📓][surrealdb_docs_3x_surrealql_functions]
 
 SurrealDB offers a number of functions that can be used to perform complex logic. These functions are grouped into the following categories:
 
@@ -8965,7 +8965,7 @@ SurrealDB offers a number of functions that can be used to perform complex logic
 
 ## _q101 - **Array functions**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/functions/database/array)
+- [📓][surrealdb_docs_3x_surrealql_functions_database_array]
 
 These functions can be used when working with, and manipulating arrays of data.
 
@@ -12074,7 +12074,7 @@ array::join(array::push(["Again", "again"], "again"), " and ");
 
 ## _q135 - **Transactions**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/transactions)
+- [📓][surrealdb_docs_3x_surrealql_transactions]
 
 Each statement within SurrealDB is run within its own transaction by default. If a set of changes need to be made together, then groups of statements can be run together as a single transaction. If all of the statements within a transaction succeed, and the transaction is successful, then all of the data modifications made during the transaction are committed and become a permanent part of the database. If a transaction encounters errors and must be cancelled or rolled back, then any data modification made within the transaction is rolled back, and will not become a permanent part of the database.
 
@@ -12300,7 +12300,7 @@ COMMIT TRANSACTION;
 
 ## _q136 - **Comments**_
 
-- [📓](https://surrealdb.com/docs/3.x/surrealql/comments)
+- [📓][surrealdb_docs_3x_surrealql_comments]
 
 In SurrealQL, comments can be written in a number of different ways.
 
@@ -12465,6 +12465,37 @@ SELECT * FROM user;
 [SurrealQL013_DataTypes_Geometries]: <#q013---geometries> "SurrealQL 🞂 Data type 🞂 Geometries"
 
 [SurrealQL014_DataTypes_Idioms]: <#q014---idioms> "SurrealQL 🞂 Data type 🞂 Idioms"
+
+[SurrealQL014a_DataTypes_Idioms_Field]:<#q014a---field-access> "Field Access"
+
+[SurrealQL014b_DataTypes_Idioms_Index]:<#q014b---index-access> "Index Access"
+
+[SurrealQL014c_DataTypes_Idioms_AllElements]:<#q014c---all-elements> "All Elements"
+
+[SurrealQL014c1_DataTypes_Idioms_Where]:<#q014c1---using--to-return-values> "Using `.*` to return values"
+
+[SurrealQL014c2_DataTypes_Idioms_AllValues]:<#q014c2---accessing-all-values-in-an-object> "Accessing all values in an object"
+
+[SurrealQL014d_DataTypes_Idioms_LastElements]:<#q014d---last-element> "Last Element"
+
+[SurrealQL014e_DataTypes_Idioms_MethodChaining]:<#q014e---method-chaining> "Method chaining"
+
+[SurrealQL014f_DataTypes_Idioms_GraphNavigation]:<#q014f---graph-navigation> "Graph Navigation"
+
+[SurrealQL014g_DataTypes_Idioms_Destructuring]:<#q014g---destructuring> "Destructuring"
+
+[SurrealQL014h_DataTypes_Idioms_OptionalPart]:<#q014h---optional-parts> "Optional Parts"
+
+[SurrealQL014i_DataTypes_Idioms_UsingOptionalPart]:<#q014i---using-optional-parts> "Using Optional Parts"
+
+[SurrealQL014j_DataTypes_Idioms_RecursivePaths]:<#q014j---recursive-paths> "Recursive paths"
+[SurrealQL014j3_DataTypes_Idioms_RecursivePathsProvideInstructions]:<#q014j3---using--to-provide-instructions-at-each-depth> "Using `()` to provide instructions at each depth"
+
+[SurrealQL014k_DataTypes_Idioms_CombiningIdiomParts]:<#q014k---combining-idiom-parts> "Combining Idiom Parts"
+
+[SurrealQL014l_DataTypes_Idioms_NotesIdioms]:<#q014l---notes-on-idioms> "Notes on Idioms"
+
+[SurrealQL014m_DataTypes_Idioms_BestPractices]:<#q014m---best-practices> "Best Practices"
 
 [SurrealQL015_DataTypes_Literals]: <#q015---literals> "SurrealQL 🞂 Data type 🞂 Literals"
 
@@ -12879,6 +12910,70 @@ SELECT * FROM user;
 [SurrealQL135_Transactions]: <#q135---transactions> "SurrealQL 🞂 Transactions"
 
 [SurrealQL136_Comments]: <#q136---comments> "SurrealQL 🞂 Comments"
+
+[surrealdb_docs_3x_surrealql]: <https://surrealdb.com/docs/3.x/surrealql>
+
+[surrealdb_docs_3x_surrealql_demo]: <https://surrealdb.com/docs/3.x/surrealql/demo>
+
+[surrealdb_docs_3x_surrealql_operators]: <https://surrealdb.com/docs/3.x/surrealql/operators>
+
+[surrealdb_docs_3x_surrealql_datamodel]: <https://surrealdb.com/docs/3.x/surrealql/datamodel>
+
+[surrealdb_docs_3x_surrealql_datamodel_arrays]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/arrays>
+
+[surrealdb_docs_3x_surrealql_datamodel_booleans]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/booleans>
+
+[surrealdb_docs_3x_surrealql_datamodel_bytes]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/bytes>
+
+[surrealdb_docs_3x_surrealql_datamodel_casting]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/casting>
+
+[surrealdb_docs_3x_surrealql_datamodel_closures]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/closures>
+
+[surrealdb_docs_3x_surrealql_datamodel_datetimes]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/datetimes>
+
+[surrealdb_docs_3x_surrealql_datamodel_files]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/files>
+
+[surrealdb_docs_3x_surrealql_datamodel_formatters]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/formatters>
+
+[surrealdb_docs_3x_surrealql_datamodel_futures]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/futures>
+
+[surrealdb_docs_3x_surrealql_datamodel_geometries]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/geometries>
+
+[surrealdb_docs_3x_surrealql_datamodel_idioms]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/idioms>
+
+[surrealdb_docs_3x_surrealql_datamodel_literals]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/literals>
+
+[surrealdb_docs_3x_surrealql_datamodel_none-and-null]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/none-and-null>
+
+[surrealdb_docs_3x_surrealql_datamodel_numbers]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/numbers>
+
+[surrealdb_docs_3x_surrealql_datamodel_objects]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/objects>
+
+[surrealdb_docs_3x_surrealql_datamodel_ranges]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/ranges>
+
+[surrealdb_docs_3x_surrealql_datamodel_ids]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/ids>
+
+[surrealdb_docs_3x_surrealql_datamodel_records]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/records>
+
+[surrealdb_docs_3x_surrealql_datamodel_references]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/references>
+
+[surrealdb_docs_3x_surrealql_datamodel_regex]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/regex>
+
+[surrealdb_docs_3x_surrealql_datamodel_sets]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/sets>
+
+[surrealdb_docs_3x_surrealql_datamodel_strings]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/strings>
+
+[surrealdb_docs_3x_surrealql_datamodel_uuid]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/uuid>
+
+[surrealdb_docs_3x_surrealql_datamodel_values]: <https://surrealdb.com/docs/3.x/surrealql/datamodel/values>
+
+[surrealdb_docs_3x_surrealql_functions]: <https://surrealdb.com/docs/3.x/surrealql/functions>
+
+[surrealdb_docs_3x_surrealql_functions_database_array]: <https://surrealdb.com/docs/3.x/surrealql/functions/database/array>
+
+[surrealdb_docs_3x_surrealql_transactions]: <https://surrealdb.com/docs/3.x/surrealql/transactions>
+
+[surrealdb_docs_3x_surrealql_comments]: <https://surrealdb.com/docs/3.x/surrealql/comments>
 
 [getSURQL_001]: <https://datasets.surrealdb.com/surreal-deal-store.surql>
 
