@@ -2081,24 +2081,26 @@ b"486F6262697473";
 In the SurrealDB type system, values can be converted to other values efficiently. This is useful if input is specified in a query which must be of a certain type, or if a user may have provided a parameter with an incorrect type.
 
 | Type | Description |
-|------|-------------|
-| [`<array>`][] | Casts the subsequent value into an array |
-| [`<array<T>>`][] | Casts the subsequent value into an array of `T` (some indicated type) |
-| [`<bool>`][] | Casts the subsequent value into a boolean |
-| [`<datetime>`][] | Casts the subsequent value into a datetime |
-| [`<decimal>`][] | Casts the subsequent value into a decimal |
-| [`<duration>`][] | Casts the subsequent value into a duration |
-| [`<float>`][] | Casts the subsequent value into a float |
-| [`<int>`][] | Casts the subsequent value into an int |
-| [`<number>`][] | Casts the subsequent value into a decimal |
-| [`<record>`][] | Casts the subsequent value into a record |
-| [`<record<T>>`][] | Casts the subsequent value into a record of `T` (some indicated type) |
-| [`<set>`][] | Casts the subsequent value into a set |
-| [`<string>`][] | Casts the subsequent value into a string |
-| [`<regex>`][] | Casts the subsequent value into a regular expression |
-| [`<uuid>`][] | Casts the subsequent value into a UUID |
-
-
+| :--- | :--- |
+| [`<bool>`][SurrealQL007c_DataTypes_Casting_bool] | Casts the subsequent value into a boolean |
+| [`<string>`][SurrealQL007m_DataTypes_Casting_string] | Casts the subsequent value into a string |
+| [`<regex>`][SurrealQL007n_DataTypes_Casting_regex] | Casts the subsequent value into a regular expression |
+| [`<uuid>`][SurrealQL007o_DataTypes_Casting_uuid] | Casts the subsequent value into a UUID |
+| | |
+| [`<int>`][SurrealQL007h_DataTypes_Casting_int] | Casts the subsequent value into an int |
+| [`<decimal>`][SurrealQL007e_DataTypes_Casting_decimal] | Casts the subsequent value into a decimal |
+| [`<float>`][SurrealQL007g_DataTypes_Casting_float] | Casts the subsequent value into a float |
+| [`<number>`][SurrealQL007i_DataTypes_Casting_number] | Casts the subsequent value into a decimal |
+| | |
+| [`<datetime>`][SurrealQL007d_DataTypes_Casting_datetime] | Casts the subsequent value into a datetime |
+| [`<duration>`][SurrealQL007f_DataTypes_Casting_duration] | Casts the subsequent value into a duration |
+| | |
+| [`<set>`][SurrealQL007l_DataTypes_Casting_set_setT] | Casts the subsequent value into a set |
+| [`<array>`][SurrealQL007a_DataTypes_Casting_array] | Casts the subsequent value into an array |
+| [`<array<T>>`][SurrealQL007b_DataTypes_Casting_arrayT] | Casts the subsequent value into an array of `T` (some indicated type) |
+| | |
+| [`<record>`][SurrealQL007j_DataTypes_Casting_record] | Casts the subsequent value into a record |
+| [`<record<T>>`][SurrealQL007k_DataTypes_Casting_recordT] | Casts the subsequent value into a record of `T` (some indicated type) |
 
 ### _q007a - **`<array>`**_
 
@@ -2122,7 +2124,7 @@ value = "[1, 2, 3]"
 The `<array<T>>` casting function converts a value into an array of the specified type.
 
 >[!NOTE]
->When using this casting function, the value must be an array and each element in the array will be cast to the specified type. 
+>When using this casting function, the value must be an array and each element in the array will be cast to the specified type.
 
 ```surql
 /**[test]
@@ -2309,8 +2311,6 @@ value = "1h30m"
 -- Output:
 1h30m
 ```
-
-
 
 ### _q007g - **`<float>`**_
 
@@ -2635,8 +2635,8 @@ r"person:one";
 
 However, casts and affixes work in different ways:
 
-* A cast is a way to convert from one type into another.
-* An affix is an instruction to the parser to treat an input as a certain type.
+- A cast is a way to convert from one type into another.
+- An affix is an instruction to the parser to treat an input as a certain type.
 
 These differences become clear when working with input that is less than ideal or does not work with a certain type. For example, floats by nature become imprecise after a certain number of digits.
 
@@ -6953,6 +6953,42 @@ SELECT * FROM user;
 [SurrealQL006_DataTypes_Bytes]: <#q006---bytes> "SurrealQL 🞂 Data type 🞂 Bytes"
 
 [SurrealQL007_DataTypes_Casting]: <#q007---casting> "SurrealQL 🞂 Data type 🞂 Casting"
+
+[SurrealQL007a_DataTypes_Casting_array]: <#q007a---array> "`<array>`"
+
+[SurrealQL007b_DataTypes_Casting_arrayT]: <#q007b---arrayt> "`<array<T>>`"
+
+[SurrealQL007c_DataTypes_Casting_bool]: <#q007c---bool> "`<bool>`"
+
+[SurrealQL007d_DataTypes_Casting_datetime]: <#q007d---datetime> "`<datetime>`"
+
+[SurrealQL007e_DataTypes_Casting_decimal]: <#q007e---decimal> "`<decimal>`"
+
+[SurrealQL007f_DataTypes_Casting_duration]: <#q007f---duration> "`<duration>`"
+
+[SurrealQL007g_DataTypes_Casting_float]: <#q007g---float> "`<float>`"
+
+[SurrealQL007h_DataTypes_Casting_int]: <#q007h---int> "`<int>`"
+
+[SurrealQL007i_DataTypes_Casting_number]: <#q007i---number> "`<number>`"
+
+[SurrealQL007j_DataTypes_Casting_record]: <#q007j---record> "`<record>`"
+
+[SurrealQL007k_DataTypes_Casting_recordT]: <#q007k---recordt> "`<record<T>>`"
+
+[SurrealQL007l_DataTypes_Casting_set_setT]: <#q007l---set-and-sett> "`<set>` and `<set<T>>`"
+
+[SurrealQL007m_DataTypes_Casting_string]: <#q007m---string> "`<string>`"
+
+[SurrealQL007n_DataTypes_Casting_regex]: <#q007n---regex> "`<regex>`"
+
+[SurrealQL007o_DataTypes_Casting_uuid]: <#q007o---uuid> "`<uuid>`"
+
+[SurrealQL007p_DataTypes_CastingGeneral]: <#q007p---general-notes-on-casting> "General notes on casting"
+
+[SurrealQL007p1_DataTypes_CastingGeneral1]: <#q007p1---syntax-and-order> "Syntax and order"
+
+[SurrealQL007p2_DataTypes_CastingGeneral2]: <#q007p2---casting-vs-affixes> "Casting vs. affixes"
 
 [SurrealQL008_DataTypes_ClosuresAnonymousFunctions]: <#q008---anonymous-functions-closures> "SurrealQL 🞂 Data type 🞂 Anonymous functions (closures)"
 
