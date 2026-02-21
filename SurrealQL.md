@@ -3490,7 +3490,7 @@ Previously, in SurrealQL version `1.0`, literal values of these types were simpl
 
 #### _q025a2 - **Record ID literal values using the `r` prefix**_
 
-The `r` prefix tells the parser that the contents of the string represent a [`record ID`][brakuje_model_ids]. The parser expects record IDs to have the following format: `table_name:record ID`.
+The `r` prefix tells the parser that the contents of the string represent a [`record ID`🚫][brakuje_model_ids]. The parser expects record IDs to have the following format: `table_name:record ID`.
 
 > [!NOTE]
 > All strings since SurrealDB 2.0 without the `r` prefix are of type `string` and are not parsed as records unless the prefix is present.
@@ -3515,7 +3515,7 @@ RETURN r"person:john";
 person:john
 ```
 
-In the example below, using the [`type::is_string()`][brakuje_func_db_type#typeis_string] and [`type::is_record()`][brakuje_func_db_type#typeis_record] functions respectively, you can check the type of the string.
+In the example below, using the [`type::is_string()`🚫][brakuje_func_db_type#typeis_string] and [`type::is_record()`🚫][brakuje_func_db_type#typeis_record] functions respectively, you can check the type of the string.
 
 ```surql
 /**
@@ -3693,9 +3693,9 @@ This also allows for immediate error messages on which part of the input is inco
 
 UUIDs represent UUID v4 and v7 values. They can be obtained via either the:
 
-- [`rand::uuid::*` functions][brakuje_func_db_rand#randuuidv4]
+- [`rand::uuid::*` functions🚫][brakuje_func_db_rand#randuuidv4]
 - [casted from strings][SurrealQL007o_DataTypes_Casting_uuid]
-- or via [string prefixes][brakuje_model_strings#uuid]
+- or via [string prefixes][SurrealQL025a4_DataTypes_Strings_UUID]
 
 > [!NOTE]
 > As of `v2.0.0`, SurrealDB no longer eagerly converts a string into a UUID. An implicit `u` prefix or cast using `<uuid>` is required instead.
@@ -7811,6 +7811,22 @@ SELECT * FROM user;
 
 [SurrealQL025_DataTypes_Strings]: <#q025---strings> "SurrealQL 🞂 Data type 🞂 Strings"
 
+[SurrealQL025a_DataTypes_Strings_Specifying]: <#q025a---specifying-data-type-literal-values-using-string-prefixes> "Specifying data type literal values using string prefixes"
+
+[SurrealQL025a1_DataTypes_Strings_Overview]: <#q025a1---overview> "Overview"
+
+[SurrealQL025a2_DataTypes_Strings_Record]: <#q025a2---record-id-literal-values-using-the-r-prefix> "Record ID literal values using the `r` prefix"
+
+[SurrealQL025a3_DataTypes_Strings_Datetime]: <#q025a3---datetime-literal-values-using-the-d-prefix> "Datetime literal values using the `d` prefix"
+
+[SurrealQL025a4_DataTypes_Strings_UUID]: <#q025a4---uuid-literal-values-with-the-u-prefix> "UUID literal values with the `u` prefix"
+
+[SurrealQL025a5_DataTypes_Strings_Bytes]: <#q025a5---byte-values-using-the-b-prefix> "Byte values using the `b` prefix"
+
+[SurrealQL025a6_DataTypes_Strings_Files]: <#q025a6---file-paths-using-the-f-prefix> "File paths using the `f` prefix*"
+
+[SurrealQL025a7_DataTypes_Strings_Casting]: <#q025a7---string-prefixes-vs-casting> "String prefixes vs. casting"
+
 [SurrealQL026_DataTypes_UUIDs]: <#q026---uuids> "SurrealQL 🞂 Data type 🞂 UUIDs"
 
 [SurrealQL027_DataTypes_Values]: <#q027---values> "SurrealQL 🞂 Data type 🞂 Values"
@@ -8212,6 +8228,5 @@ SELECT * FROM user;
 [brakuje_func_db_values#comparing-and-ordering-values]: </docs/surrealql/datamodel/values#comparing-and-ordering-values>
 [brakuje_model_ids]: </docs/surrealql/datamodel/ids>
 [brakuje_model_ids#record-ranges]: </docs/surrealql/datamodel/ids#record-ranges>
-[brakuje_model_strings#uuid]: </docs/surrealql/datamodel/strings#uuid>
 
 [brakuje_stat_def_bucket]: </docs/surrealql/statements/define/bucket>
