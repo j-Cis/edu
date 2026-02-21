@@ -3200,7 +3200,7 @@ You've now seen how to store, modify, and handle dates and times in SurrealDB. F
 
 ## _q010 - **Files**_
 
-- [📓][SurrealQL010_original]
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/files)
 
 > Available since: V3.0.0
 
@@ -3310,44 +3310,431 @@ fn::delete_file("temp_cart_user_24567");
 
 ## _q011 - **Formatters**_
 
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/formatters)
+
+---
+---
+
 ## _q012 - **Futures (`COMPUTED` clause)**_
+
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/futures)
+
+---
+---
 
 ## _q013 - **Geometries**_
 
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/geometries)
+
+---
+---
+
 ## _q014 - **Idioms**_
+
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/idioms)
+
+---
+---
 
 ## _q015 - **Literals**_
 
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/literals)
+
+---
+---
+
 ## _q016 - **None and null**_
+
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/none-and-null)
+
+---
+---
 
 ## _q017 - **Numbers**_
 
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/numbers)
+
+---
+---
+
 ## _q018 - **Objects**_
+
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/objects)
+
+---
+---
 
 ## _q019 - **Ranges**_
 
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/ranges)
+
+---
+---
+
 ## _q020 - **Record IDs**_
+
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/ids)
+
+---
+---
 
 ## _q021 - **Record links**_
 
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/records)
+
+---
+---
+
 ## _q022 - **Record references**_
+
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/references)
+
+---
+---
 
 ## _q023 - **Regex**_
 
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/regex)
+
+---
+---
+
 ## _q024 - **Sets**_
+
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/sets)
+
+---
+---
 
 ## _q025 - **Strings**_
 
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/strings)
+
+Strings can be used to store text values. All string values can include Unicode values, emojis, tab characters, and line breaks.
+
+```surql
+/**
+[test]
+
+[[test.results]]
+value = "[{ id: person:95uvwaw161b9qqquxixf, text: 'Lorem ipsum dolor sit amet' }]"
+skip-record-id-key = true
+
+**/
+
+CREATE person SET text = 'Lorem ipsum dolor sit amet';
+```
+
+Strings can be created using single quotation marks, or double quotation marks.
+
+```surql
+/**
+[test]
+
+[[test.results]]
+value = "[{ id: person:7qrqr6tyodgwngpx73b1, text: 'Lorem ipsum dolor sit amet' }]"
+skip-record-id-key = true
+
+**/
+
+CREATE person SET text = "Lorem ipsum dolor sit amet";
+```
+
+Any string in SurrealDB can include Unicode text.
+
+```surql
+/**
+[test]
+
+[[test.results]]
+value = "[{ id: person:6tazjj7yko5ot2lujpfk, text: 'I ❤️ SurrealDB' }]"
+skip-record-id-key = true
+
+**/
+
+CREATE person SET text = "I ❤️ SurrealDB";
+```
+
+Strings can also include line breaks.
+
+```surql
+/**
+[test]
+
+[[test.results]]
+value = "[{ id: person:v4lgc1sfs4xegf86gfcv, text: 'This
+is
+over
+multiple
+lines' }]"
+skip-record-id-key = true
+
+**/
+
+CREATE person SET text = "This
+is
+over
+multiple
+lines";
+```
+
+### _q025a - **Specifying data type literal values using string prefixes**_
+
+
+
+#### _q025a1 - **Overview**_
+
+In SurrealQL, there are several data types for which literal values are specified using string values, with a prefix indicating the intended type for the value to be interpreted as.
+
+Previously, in SurrealQL version `1.0`, literal values of these types were simply specified using a string without any prefix, and SurrealDB would eagerly convert the strings into the relevant data type in any case where the string matched the format expected for that type. However, since SurrealQL version `2.0`, strings are no longer eagerly converted into other data types. Instead, if you want to specify a literal value of one of these data types, you must explicitly use a string with the appropriate prefix.
+
+#### _q025a2 - **Record ID literal values using the `r` prefix**_
+
+The `r` prefix tells the parser that the contents of the string represent a [`record ID`][brakuje_model_ids]. The parser expects record IDs to have the following format: `table_name:record ID`.
+
+> [!NOTE]
+> All strings since SurrealDB 2.0 without the `r` prefix are of type `string` and are not parsed as records unless the prefix is present.
+
+Here is an example of a record ID literal value, specified using a string with the `r` prefix.
+
+```surql
+/**
+[test]
+
+[[test.results]]
+value = "person:john"
+
+**/
+
+RETURN r"person:john";
+```
+
+```surql title="Response"
+-------- Query 1 --------
+
+person:john
+```
+
+In the example below, using the [`type::is_string()`][brakuje_func_db_type#typeis_string] and [`type::is_record()`][brakuje_func_db_type#typeis_record] functions respectively, you can check the type of the string.
+
+```surql
+/**
+[test]
+
+[[test.results]]
+value = "true"
+
+[[test.results]]
+value = "false"
+
+[[test.results]]
+value = "true"
+
+**/
+
+RETURN type::is_string("person:john");
+RETURN type::is_record("person:john");
+RETURN type::is_record(r"person:john");
+```
+```surql title="Response"
+-------- Query 1 --------
+
+true
+
+-------- Query 2 --------
+
+false
+
+-------- Query 3 --------
+
+true
+```
+
+#### _q025a3 - **Datetime literal values using the `d` prefix**_
+
+The `d` prefix tells the parser that the contents of the string represent a [`datetime`][SurrealQL009_DataTypes_Datetimes]. The parser expects `datetime` values to have a valid [RFC 3339][net__RFC_3339] format. Here are a few examples:
+
+
+```surql
+/**
+[test]
+
+[[test.results]]
+value = "d'2025-11-28T11:41:20.262Z'"
+
+[[test.results]]
+value = "d'2025-11-28T07:41:20.262Z'"
+
+[[test.results]]
+value = "d'2025-11-28T15:41:20.262Z'"
+
+[[test.results]]
+value = "d'2025-11-28T11:41:20Z'"
+
+[[test.results]]
+value = "d'2025-11-28T07:41:20Z'"
+
+**/
+
+RETURN d"2025-11-28T11:41:20.262Z";       --- Sub-second precision included, timezone defaulted to UTC
+RETURN d"2025-11-28T11:41:20.262+04:00";  --- Sub-second precision included, timezone specified as UTC + 4:00
+RETURN d"2025-11-28T11:41:20.262-04:00";  --- Sub-second precision included, timezone specified as UTC - 4:00
+RETURN d"2025-11-28T11:41:20Z";           --- Sub-second precision excluded, timezone defaulted to UTC
+RETURN d"2025-11-28T11:41:20+04:00";      --- Sub-second precision excluded, timezone specified as UTC + 4:00
+```
+```surql title="Response"
+-------- Query 1 --------
+
+d'2025-11-28T11:41:20.262Z'
+
+-------- Query 2 --------
+
+d'2025-11-28T07:41:20.262Z'
+
+-------- Query 3 --------
+
+d'2025-11-28T15:41:20.262Z'
+
+-------- Query 4 --------
+
+d'2025-11-28T11:41:20Z'
+
+-------- Query 5 --------
+
+d'2025-11-28T07:41:20Z'
+```
+
+#### _q025a4 - **UUID literal values with the `u` prefix**_
+
+The `u` prefix tells the parser that the contents of the string represent a [`uuid`][SurrealQL026_DataTypes_UUIDs]. The parser expects `uuid` values to follow the format of an UUID, `ffffffff-ffff-ffff-ffff-ffffffffffff`, where each non-hyphen character can be a digit (0-9) or a letter between `a` and `f` (representing a single hexadecimal digit).
+
+```surql
+/**
+[test]
+
+[[test.results]]
+value = "u'8c54161f-d4fe-4a74-9409-ed1e137040c1'"
+
+**/
+
+RETURN u"8c54161f-d4fe-4a74-9409-ed1e137040c1";
+```
+
+```surql title="Response"
+-------- Query 1 --------
+
+u'8c54161f-d4fe-4a74-9409-ed1e137040c1'
+```
+
+#### _q025a5 - **Byte values using the `b` prefix**_
+
+```surql
+/**
+[test]
+
+[[test.results]]
+value = "b"0099AAFF""
+
+**/
+
+b"0099aaff"
+```
+
+#### _q025a6 - **File paths using the `f` prefix**_
+
+```surql
+f"bucket:/some/key/to/a/file.txt";
+f"bucket:/some/key/with\ escaped";
+f"bucket:/some/key".put(b"00aa");
+f"bucket:/some/key".get();
+```
+
+#### _q025a7 - **String prefixes vs. casting**_
+
+String prefixes seem outwardly similar to casting, but differ in behaviour. A string prefix is an instruction to the parser to treat an input in a certain way, whereas a cast is an instruction to the database to convert one type into another.
+
+As a result, incorrect input with a cast will generate an error:
+
+```surql
+// Change _ to - in both examples to fix the input
+RETURN <uuid>"018f0e6a_9b95-7ecc-8a38-aea7bf3627dd";
+RETURN <datetime>"2024_06-06T12:00:00Z";
+```
+```surql title="Response"
+-------- Query 1 --------
+
+"Expected a uuid but cannot convert '018f0e6a-9b95-7ecc-8a38-aea7bf3627d' into a uuid"
+
+-------- Query 2 --------
+
+"Expected a datetime but cannot convert '2024-06-06T12:00:00' into a datetime"
+```
+
+But the same input using a string prefix will not even parse until the input is valid.
+
+```surql
+// Will not parse in either case until _ is changed to -
+RETURN u"018f0e6a_9b95-7ecc-8a38-aea7bf3627dd";
+RETURN d"2024_06-06T12:00:00Z";
+```
+
+This also allows for immediate error messages on which part of the input is incorrect. As seen in the image below, the parser is able to inform the user that an underscore at column 18 is the issue.
+
+![A screenshot showing how a string prefix allows incorrect UUID input to be identified before a query can be run. In this case, the parser is able to inform the user that an underscore at column 18 is the issue.🖼️][img__parse_error]
+
+
+
+---
+---
+
 ## _q026 - **UUIDs**_
+
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/uuid)
+
+UUIDs represent UUID v4 and v7 values. They can be obtained via either the:
+
+- [`rand::uuid::*` functions][brakuje_func_db_rand#randuuidv4]
+- [casted from strings][SurrealQL007o_DataTypes_Casting_uuid]
+- or via [string prefixes][brakuje_model_strings#uuid]
+
+> [!NOTE]
+> As of `v2.0.0`, SurrealDB no longer eagerly converts a string into a UUID. An implicit `u` prefix or cast using `<uuid>` is required instead.
+
+```surql
+/**[test]
+
+[[test.results]]
+value = "u'4048a7ac-9c1a-486e-9a12-e39d76670eac'"
+skip-uuid = true
+
+[[test.results]]
+value = "u'0199a85c-5e24-7901-9053-9d898d881d9e'"
+skip-uuid = true
+
+[[test.results]]
+value = "u'a8f30d8b-db67-47ec-8b38-ef703e05ad1b'"
+
+[[test.results]]
+value = "u'a8f30d8b-db67-47ec-8b38-ef703e05ad1b'"
+
+*/
+
+rand::uuid::v4();
+rand::uuid::v7();
+<uuid> "a8f30d8b-db67-47ec-8b38-ef703e05ad1b";
+u"a8f30d8b-db67-47ec-8b38-ef703e05ad1b";
+```
 
 ---
 ---
 
 ## _q027 - **Values**_
 
+- [📓](https://surrealdb.com/docs/3.x/surrealql/datamodel/values)
+
 Each of the types mentioned in the data model is a subset of an all-encompassing type called a value.
 
-## Comparing and ordering values
+### _q027a - **Comparing and ordering values**_
 
 While it is unsurprising that a data type can be compared with itself, it may be surprising that different types can also be compared with each other.
 
@@ -3511,7 +3898,7 @@ value = "NONE"
 DEFINE FIELD anything ON TABLE person TYPE any;
 ```
 
-## Values and truthiness
+### _q027b - **Values and truthiness**_
 
 Any value is considered to be truthy if it is not NONE, NULL, or a default value for the data type. A data type at its default value is one that is empty, such as an empty string or array or object, or a number set to 0.
 
@@ -3558,119 +3945,293 @@ RETURN [
 
 ## _q028 - **Statements**_
 
+---
+---
+
 ## _q029 - **`ACCESS` statement**_
+
+---
+---
 
 ## _q030 - **`ALTER` statement**_
 
+---
+---
+
 ## _q031 - **`ALTER DATABASE` statement**_
+
+---
+---
 
 ## _q032 - **`ALTER FIELD` statement**_
 
+---
+---
+
 ## _q033 - **`ALTER INDEX` statement**_
+
+---
+---
 
 ## _q034 - **`ALTER NAMESPACE` statement**_
 
+---
+---
+
 ## _q035 - **`ALTER SEQUENCE` statement**_
+
+---
+---
 
 ## _q036 - **`ALTER SYSTEM` statement**_
 
+---
+---
+
 ## _q037 - **`ALTER TABLE` statement**_
+
+---
+---
 
 ## _q038 - **`BEGIN` statement**_
 
+---
+---
+
 ## _q039 - **`BREAK` statement**_
+
+---
+---
 
 ## _q040 - **`CANCEL` statement**_
 
+---
+---
+
 ## _q041 - **`COMMIT` statement**_
+
+---
+---
 
 ## _q042 - **`CONTINUE` statement**_
 
+---
+---
+
 ## _q043 - **`CREATE` statement**_
+
+---
+---
 
 ## _q044 - **`DEFINE` statement**_
 
+---
+---
+
 ## _q045 - **`DEFINE ACCESS` statement**_
+
+---
+---
 
 ## _q046 - **`DEFINE ACCESS ... TYPE BEARER`**_
 
+---
+---
+
 ## _q047 - **`DEFINE ACCESS ... TYPE JWT`**_
+
+---
+---
 
 ## _q048 - **`DEFINE ACCESS ... TYPE RECORD`**_
 
+---
+---
+
 ## _q049 - **`DEFINE ANALYZER` statement**_
+
+---
+---
 
 ## _q050 - **`DEFINE API` statement**_
 
+---
+---
+
 ## _q051 - **`DEFINE BUCKET` statement**_
+
+---
+---
 
 ## _q052 - **`DEFINE CONFIG` statement**_
 
+---
+---
+
 ## _q053 - **`DEFINE DATABASE` statement**_
+
+---
+---
 
 ## _q054 - **`DEFINE EVENT` statement**_
 
+---
+---
+
 ## _q055 - **`DEFINE FIELD` statement**_
+
+---
+---
 
 ## _q056 - **`DEFINE FUNCTION` statement**_
 
+---
+---
+
 ## _q057 - **`DEFINE INDEX` statement**_
+
+---
+---
 
 ## _q058 - **`DEFINE MODULE` statement**_
 
+---
+---
+
 ## _q059 - **`DEFINE NAMESPACE` statement**_
+
+---
+---
 
 ## _q060 - **`DEFINE PARAM` statement**_
 
+---
+---
+
 ## _q061 - **`DEFINE SCOPE` statement**_
+
+---
+---
 
 ## _q062 - **`DEFINE SEQUENCE` statement**_
 
+---
+---
+
 ## _q063 - **`DEFINE TABLE` statement**_
+
+---
+---
 
 ## _q064 - **`DEFINE TOKEN` statement**_
 
+---
+---
+
 ## _q065 - **`DEFINE USER` statement**_
+
+---
+---
 
 ## _q066 - **`DELETE` statement**_
 
+---
+---
+
 ## _q067 - **`EXPLAIN` statement**_
+
+---
+---
 
 ## _q068 - **`FOR` statement**_
 
+---
+---
+
 ## _q069 - **`IF ELSE` statement**_
+
+---
+---
 
 ## _q070 - **`INFO` statement**_
 
+---
+---
+
 ## _q071 - **`INSERT` statement**_
+
+---
+---
 
 ## _q072 - **`KILL` statement**_
 
+---
+---
+
 ## _q073 - **`LET` statement**_
+
+---
+---
 
 ## _q074 - **`LIVE SELECT` statement**_
 
+---
+---
+
 ## _q075 - **`REBUILD` statement**_
+
+---
+---
 
 ## _q076 - **`RELATE` statement**_
 
+---
+---
+
 ## _q077 - **`REMOVE` statement**_
+
+---
+---
 
 ## _q078 - **`RETURN` statement**_
 
+---
+---
+
 ## _q079 - **`SELECT` statement**_
+
+---
+---
 
 ## _q080 - **`SHOW` statement**_
 
+---
+---
+
 ## _q081 - **`SLEEP` statement**_
+
+---
+---
 
 ## _q082 - **`THROW` statement**_
 
+---
+---
+
 ## _q083 - **`UPDATE` statement**_
+
+---
+---
 
 ## _q084 - **`UPSERT` statement**_
 
+---
+---
+
 ## _q085 - **`USE` statement**_
+
+---
+---
 
 ## _q086 - **Clauses**_
 
@@ -7629,21 +8190,28 @@ SELECT * FROM user;
 [ico__SurrealQL]: <https://surrealdb.com/docs/_astro/ql-light.70PDiXa1_Z2othTk.webp>
 
 [img__demo_overview]: <https://surrealdb.com/docs/_astro/surreal-deal-store.C2015pX2_Z2r7lvb.webp>
+[img__parse_error]: <https://surrealdb.com/docs/_astro/surrealql-parse-error.g1VFFr3O_1ncJQv.webp>
 
 [SurrealDB_cli]: </docs/surrealdb/cli> "CLI"
 [SurrealDB_cli_import]: </docs/surrealdb/cli/import> "import"
 [SurrealDB_cli_start]: </docs/surrealdb/cli/start>
 
-[brakuje_func_db_math#mathmax]: </docs/surrealql/functions/database/math#mathmax>
-[brakuje_func_db_math#mathmin]: </docs/surrealql/functions/database/math#mathmin>
-[brakuje_func_db_time]: </docs/surrealql/functions/database/time>
-[brakuje_func_db_time#timemax]: </docs/surrealql/functions/database/time#timemax>
-[brakuje_func_db_time#timemin]: </docs/surrealql/functions/database/time#timemin>
-[brakuje_func_db_value#chain]: </docs/surrealql/functions/database/value#chain>
-[brakuje_func_db_file]:  </docs/surrealql/functions/database/file>
+[brakuje_func_db_math#mathmax]:  </docs/surrealql/functions/database/math#mathmax>
+[brakuje_func_db_math#mathmin]:  </docs/surrealql/functions/database/math#mathmin>
+[brakuje_func_db_time]:          </docs/surrealql/functions/database/time>
+[brakuje_func_db_time#timemax]:  </docs/surrealql/functions/database/time#timemax>
+[brakuje_func_db_time#timemin]:  </docs/surrealql/functions/database/time#timemin>
+[brakuje_func_db_type#typeis_string]:  </docs/surrealql/functions/database/type#typeis_strin>
+[brakuje_func_db_type#typeis_record]:  </docs/surrealql/functions/database/type#typeis_record>
+[brakuje_func_db_value#chain]:   </docs/surrealql/functions/database/value#chain>
+
+[brakuje_func_db_file]:           </docs/surrealql/functions/database/file>
 [brakuje_func_db_encoding#encodingcbordecod]: </docs/surrealql/functions/database/encoding#encodingcbordecode>
+[brakuje_func_db_rand#randuuidv4]: </docs/surrealql/functions/database/rand#randuuidv4>
 
 [brakuje_func_db_values#comparing-and-ordering-values]: </docs/surrealql/datamodel/values#comparing-and-ordering-values>
+[brakuje_model_ids]: </docs/surrealql/datamodel/ids>
 [brakuje_model_ids#record-ranges]: </docs/surrealql/datamodel/ids#record-ranges>
+[brakuje_model_strings#uuid]: </docs/surrealql/datamodel/strings#uuid>
 
 [brakuje_stat_def_bucket]: </docs/surrealql/statements/define/bucket>
