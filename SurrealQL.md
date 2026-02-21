@@ -1761,7 +1761,7 @@ value = "[3, 5]"
 
 While the [array functions][SurrealQL101_FunctionsDatabase_Array] section of the documentation contains the full details of each function, the following examples provide a glimpse into how they are commonly used.
 
-The [`array::map()`](/docs/surrealql/functions/database/array#arraymap) function provides access to each item in an array, allowing an opearation to be performed on it before being passed on.
+The [`array::map()`][SurrealQL101bh_FunctionsDatabase_Array_map] function provides access to each item in an array, allowing an opearation to be performed on it before being passed on.
 
 ```surql
 /**[test]
@@ -2873,7 +2873,7 @@ LET $my_func = |$num| <number>$num * 1000;
   .chain($my_func);
 ```
 
-The following example shows a chain of array functions used to remove useless data, followed by a check to see if all items in the array match a certain condition, and then a cast into another type. The [`array::filter`](/docs/surrealql/functions/database/array#arrayfilter) call in the middle ensures that the [`string::len`](/docs/surrealql/functions/database/string#stringlen) function that follows is being called on string values.
+The following example shows a chain of array functions used to remove useless data, followed by a check to see if all items in the array match a certain condition, and then a cast into another type. The [`array::filter`][SurrealQL101aq_FunctionsDatabase_Array_filter] call in the middle ensures that the [`string::len`🚫][brakuje_func_db_string#stringlen] function that follows is being called on string values.
 
 ```surql
 /**[test]
@@ -2974,7 +2974,6 @@ These anonymous functions provide a flexible way to define small, reusable piece
 - [📓][surrealdb_docs_3x_surrealql_datamodel_datetimes]
 
 SurrealDB has native support for datetimes with nanosecond precision. SurrealDB automatically parses and understands datetimes which are written as strings in the SurrealQL language. Times must also be formatted in [RFC 3339][net__RFC_3339] format.
-
 
 > [!NOTE]
 > As of `v2.0.0`, SurrealDB no longer eagerly converts a string into a datetime. An implicit `d` prefix or cast using `<datetime>` is required instead.
@@ -3127,12 +3126,13 @@ CREATE event SET time = d"2025-07-03T07:18:52.84114Z";
 ```
 
 #### _q009a1 - **Datetime comparison**_
+
 A datetime can be compared with another using the advanced SurrealDB operators.
 
 ```surql
 d"2025-07-03T07:18:52Z" < d"2025-07-03T07:18:52.84114Z";
 ```
-    
+
 ```surql title="Response"
 true
 ```
@@ -3152,7 +3152,7 @@ skip-record-id-key = true
 
 CREATE event SET time = d"2025-07-03T07:18:52Z" + 2w;
 ```
-    
+
 ```surql title="Response"
 [{ id: event:`9ey7v8r0fd46xblf9dsf`, time: d'2025-07-17T07:18:52Z' }]
 ```
@@ -3332,20 +3332,20 @@ SurrealDB makes working with GeoJSON easy, with support for `Point`, `LineString
 
 | Type | Description |
 | :--- | :--- |
-| [`Point`](#point) | A geolocation point with longitude and latitude |
-| [`LineString`](#linestring) | A GeoJSON LineString value for storing a geometric path |
-| [`Polygon`](#polygon) | A GeoJSON Polygon value for storing a geometric area |
-| [`MultiPoint`](#multipoint) | A value which contains multiple geometry points |
-| [`MultiLineString`](#multilinestring) | A value which contains multiple geometry lines |
-| [`MultiPolygon`](#multipolygon) | A value which contains multiple geometry polygons |
-| [`Collection`](#collection) | A value which contains multiple different geometry types |
+| [`Point`][SurrealQL013b_DataTypes_Geometries_Point] | A geolocation point with longitude and latitude |
+| [`LineString`][SurrealQL013c_DataTypes_Geometries_LineString] | A GeoJSON LineString value for storing a geometric path |
+| [`Polygon`][SurrealQL013d_DataTypes_Geometries_Polygon] | A GeoJSON Polygon value for storing a geometric area |
+| [`MultiPoint`][SurrealQL013e_DataTypes_Geometries_MultiPoint] | A value which contains multiple geometry points |
+| [`MultiLineString`][SurrealQL013f_DataTypes_Geometries_MultiLineString] | A value which contains multiple geometry lines |
+| [`MultiPolygon`][SurrealQL013g_DataTypes_Geometries_MultiPolygon] | A value which contains multiple geometry polygons |
+| [`Collection`][SurrealQL013h_DataTypes_Geometries_Collection] | A value which contains multiple different geometry types |
 
 ### _q013a - **The GeoJSON spec**_
 
 There are two main points to keep in mind when creating a `geometry` type in SurrealDB. They are:
 
-* Points are defined according to the GeoJSON spec, which specificies longitude before latitude. Many sites - including Google Maps - provide location data in the opposite order, so be sure to confirm that any data being used to create a `Point` is in the order `(longitude, latitude)`, and not the other way around.
-* A `geometry` created from an object must contain a `type` field and a `coordinates` field, no more and no less.
+- Points are defined according to the GeoJSON spec, which specificies longitude before latitude. Many sites - including Google Maps - provide location data in the opposite order, so be sure to confirm that any data being used to create a `Point` is in the order `(longitude, latitude)`, and not the other way around.
+- A `geometry` created from an object must contain a `type` field and a `coordinates` field, no more and no less.
 
 This can be shown by calling the [`type::is_geometry()`🚫][brakuje_func_db_type#typeis_geometry] function on some sample objects.
 
@@ -3409,7 +3409,7 @@ CREATE city:london SET distance = {
 };
 ```
 
-### _q013d - **`Polygon`
+### _q013d - **`Polygon`**_
 
 A GeoJSON Polygon value for storing a geometric area.
 
@@ -3579,7 +3579,6 @@ SELECT name, id, ->close_to->city AS neighbours FROM city;
 ### _q013j - **Next steps**_
 
 You've now seen how to use geometries to store locations, paths, and polygonal areas in SurrealDB. For more advanced functionality, take a look at the [operators][SurrealQL002_Operators] and [geo🚫][brakuje_func_db_geo] functions, which enable area, distance, and bearing geometric calculations, and the ability to detect whether geometries contain or intersect other geometry types.
-
 
 ---
 ---
@@ -4143,7 +4142,7 @@ SELECT obj.{ a, c.{ e, f } } FROM ONLY person:1;
 
 You can also OMIT fields that you don't want to destructure using the `OMIT` clause.
 
-```surql 
+```surql
 SELECT * OMIT obj.c.{ d, f } FROM ONLY person:1;
 ```
 
@@ -4454,6 +4453,8 @@ person:one.{
 ### _q014h - **Optional Parts**_
 
 > Available since: v2.0.0
+
+---
 
 > [!NOTE]
 > Until SurrealDB 3.0.0-beta, this operator was a single `?` question mark. Since this version, it was changed to `.?` to avoid conflicts with the `??` operator when parsing.
@@ -5035,7 +5036,7 @@ RELATE person:acquaintance3->knows->person:star;
 
 This representation of this small network of friends allows us to visualize the issues that these three algorithms solve. Using `+path` will output all of the possible paths from `person:you`, `+collect` will collect all of the records in this network, and `+shortest=person:star` will find the shortest path.
 
-```
+```text
 
                   ┌───────►  person:friend1  
      ┌───►person:acquaintance1    │                                                                    
@@ -5624,7 +5625,6 @@ fn::handle_error($info[2].id);
 
 "Thought I said you shouldn't use this anymore"
 ```
-
 
 ---
 ---
@@ -8484,7 +8484,6 @@ true
 
 The `d` prefix tells the parser that the contents of the string represent a [`datetime`][SurrealQL009_DataTypes_Datetimes]. The parser expects `datetime` values to have a valid [RFC 3339][net__RFC_3339] format. Here are a few examples:
 
-
 ```surql
 /**
 [test]
@@ -8613,8 +8612,6 @@ RETURN d"2024_06-06T12:00:00Z";
 This also allows for immediate error messages on which part of the input is incorrect. As seen in the image below, the parser is able to inform the user that an underscore at column 18 is the issue.
 
 ![A screenshot showing how a string prefix allows incorrect UUID input to be identified before a query can be run. In this case, the parser is able to inform the user that an underscore at column 18 is the issue.🖼️][img__parse_error]
-
-
 
 ---
 ---
@@ -8855,7 +8852,7 @@ RETURN array::all([{}, 1, 2, 3]); // false because of {}
 RETURN array::all(["SurrealDB", { is_nice_database: true }, 1, 2, 3]);  // true
 ```
 
-As [the ! operator](/docs/surrealql/operators) reverses the truthiness of a value, a doubling of this operator can also be used to check for truthiness.
+As [the ! operator][SurrealQL002_Operators] reverses the truthiness of a value, a doubling of this operator can also be used to check for truthiness.
 
 ```surql
 /**[test]
@@ -12719,6 +12716,24 @@ SELECT * FROM user;
 
 [SurrealQL013_DataTypes_Geometries]: <#q013---geometries> "SurrealQL 🞂 Data type 🞂 Geometries"
 
+[SurrealQL013a_DataTypes_Geometries_GeoJSON]: <#q013a---the-geojson-spec> "The GeoJSON spec"
+
+[SurrealQL013b_DataTypes_Geometries_Point]: <#q013b---point> "`Point`"
+
+[SurrealQL013c_DataTypes_Geometries_LineString]: <#q013c---linestring> "`LineString`"
+
+[SurrealQL013d_DataTypes_Geometries_Polygon]: <#q013d---polygon> "`Polygon`"
+
+[SurrealQL013e_DataTypes_Geometries_MultiPoint]: <#q013e---multipoint> "`MultiPoint`"
+
+[SurrealQL013f_DataTypes_Geometries_MultiLineString]: <#q013f---multilinestring> "`MultiLineString`"
+
+[SurrealQL013g_DataTypes_Geometries_MultiPolygon]: <#q013g---multipolygon> "`MultiPolygon`"
+
+[SurrealQL013h_DataTypes_Geometries_Collection]: <#q013h---collection> "`Collection`"
+
+[SurrealQL013i_DataTypes_Geometries_Example]: <#q013i---example> "Example"
+
 [SurrealQL014_DataTypes_Idioms]: <#q014---idioms> "SurrealQL 🞂 Data type 🞂 Idioms"
 
 [SurrealQL014a_DataTypes_Idioms_Field]:<#q014a---field-access> "Field Access"
@@ -13291,6 +13306,7 @@ SELECT * FROM user;
 [brakuje_func_db_object#objectvalues]:</docs/surrealql/functions/database/object#objectvalues>
 [brakuje_func_db_record#recordid]:   </docs/surrealql/functions/database/record#recordid>
 [brakuje_func_db_rand#randuuidv4]: </docs/surrealql/functions/database/rand#randuuidv4>
+[brakuje_func_db_string#stringlen]: </docs/surrealql/functions/database/string#stringlen>
 [brakuje_func_db_string#stringuppercase]: </docs/surrealql/functions/database/string#stringuppercase>
 [brakuje_func_db_string#method-chaining]: </docs/surrealql/functions/database/string#method-chaining>
 [brakuje_func_db_time]:          </docs/surrealql/functions/database/time>
@@ -13303,7 +13319,6 @@ SELECT * FROM user;
 [brakuje_func_db_value#chain]:   </docs/surrealql/functions/database/value#chain>
 
 [brakuje_model_idioms#destructuring]:   </docs/surrealql/datamodel/idioms#destructuring>
-
 
 [brakuje_stat_def_bucket]: </docs/surrealql/statements/define/bucket>
 [brakuje_stat_def_field]: </docs/surrealql/statements/define/field>
@@ -13320,9 +13335,7 @@ SELECT * FROM user;
 [brakuje_stat_throw]: </docs/surrealql/statements/throw>
 [brakuje_stat_insert#example-usage]: </docs/surrealql/statements/insert#example-usage>
 
-
 [brakuje_parameters#parent-this]: </docs/surrealql/parameters#parent-this>
-
 
 [brakuje_blog_recordIDS]: </blog/the-life-changing-magic-of-surrealdb-record-ids#the-performance-at-scale>
 [brakuje_blog_visualisation]: </blog/whats-new-in-surrealist-3-2#graph-visualisation>
